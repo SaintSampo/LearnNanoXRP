@@ -6,6 +6,7 @@
   <title>Lesson 4 – Following a Line</title>
   <link rel="stylesheet" href="../../lessons/shared/lesson.css" />
   <script src="../../lessons/shared/scorm-runtime.js"></script>
+  <script src="../../lessons/shared/image-loader.js"></script>
 </head>
 <body>
 <div id="lesson-shell">
@@ -30,7 +31,7 @@
       <p>One of the coolest things robots can do is follow a line on the floor! Self-driving cars, warehouse robots, and even amusement park rides use this technology.</p>
 
       <div class="photo-slot">
-        <img src="images/01-robot-on-line.svg" alt="NanoXRP robot following a black tape line on a white surface" />
+        <img data-src="images/01-robot-on-line.svg" alt="NanoXRP robot following a black tape line on a white surface" />
         <div class="photo-caption">The NanoXRP following a black tape line on the floor</div>
       </div>
 
@@ -57,7 +58,7 @@
       <p>Your robot has a <strong>line follower board</strong> on the bottom with two tiny sensors: a <strong>left sensor</strong> and a <strong>right sensor</strong>.</p>
 
       <div class="photo-slot">
-        <img src="images/02-sensor-bottom-view.svg" alt="Bottom view of robot showing reflectance sensors" />
+        <img data-src="images/02-sensor-bottom-view.svg" alt="Bottom view of robot showing reflectance sensors" />
         <div class="photo-caption">Bottom of the robot — the two reflectance sensors are at the front</div>
       </div>
 
@@ -74,7 +75,7 @@
       </div>
 
       <div class="photo-slot">
-        <img src="images/03-ir-diagram.svg" alt="Diagram of how infrared reflection works" />
+        <img data-src="images/03-ir-diagram.svg" alt="Diagram of how infrared reflection works" />
         <div class="photo-caption">How IR reflection works: black absorbs light, white reflects it</div>
       </div>
     </div>
@@ -85,7 +86,7 @@
       <p>In Blockly, you can read the sensor values using blocks in the <strong>Sensors → Reflectance</strong> category.</p>
 
       <div class="photo-slot">
-        <img src="images/04-sensor-blocks.svg" alt="Blockly sensor blocks for left and right reflectance" />
+        <img data-src="images/04-sensor-blocks.svg" alt="Blockly sensor blocks for left and right reflectance" />
         <div class="photo-caption">The left and right reflectance sensor blocks</div>
       </div>
 
@@ -127,7 +128,7 @@
       <p>Before you can test line following, you need to create a track on the floor!</p>
 
       <div class="photo-slot">
-        <img src="images/05-tape-track.svg" alt="Black tape track on a white surface in an oval shape" />
+        <img data-src="images/05-tape-track.svg" alt="Black tape track on a white surface in an oval shape" />
         <div class="photo-caption">Use black electrical tape or masking tape on a white or light-colored surface</div>
       </div>
 
@@ -181,7 +182,7 @@
       </div>
 
       <div class="photo-slot">
-        <img src="images/06-steering-logic.svg" alt="Diagram showing robot steering left and right based on sensor readings" />
+        <img data-src="images/06-steering-logic.svg" alt="Diagram showing robot steering left and right based on sensor readings" />
         <div class="photo-caption">Steering logic: sensors detect drift and correct the robot's path</div>
       </div>
 
@@ -200,7 +201,7 @@
       <p>Here's the Blockly program for basic line following. This is a <strong>non-blocking</strong> approach because we need to constantly check the sensors while driving.</p>
 
       <div class="photo-slot">
-        <img src="images/07-blockly-line-follow.svg" alt="Blockly line following program in the workspace" />
+        <img data-src="images/07-blockly-line-follow.svg" alt="Blockly line following program in the workspace" />
         <div class="photo-caption">Your complete line-following program in Blockly</div>
       </div>
 
@@ -245,7 +246,7 @@
       <p>Run your line-following program and watch the robot go! If it doesn't work perfectly the first time, that's okay — tuning is part of engineering.</p>
 
       <div class="photo-slot">
-        <img src="images/08-tuning.svg" alt="Robot being adjusted on the test track" />
+        <img data-src="images/08-tuning.svg" alt="Robot being adjusted on the test track" />
         <div class="photo-caption">Place the robot on the track and run your program!</div>
       </div>
 
@@ -288,7 +289,7 @@
       <p>Once your robot follows a basic oval, try a more complex track!</p>
 
       <div class="photo-slot">
-        <img src="images/09-figure-8-track.svg" alt="Figure-8 track made with black tape" />
+        <img data-src="images/09-figure-8-track.svg" alt="Figure-8 track made with black tape" />
         <div class="photo-caption">A figure-8 track — can your robot complete two full loops?</div>
       </div>
 

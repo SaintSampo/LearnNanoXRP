@@ -7,7 +7,7 @@ const LESSONS = [
     num: 1,
     title: 'Assembling the Robot',
     icon: '🔧',
-    src: 'lessons/lesson1-assembly/index.html',
+    src: 'lessons/lesson1-assembly/',
     scorm: 'scorm-packages/lesson1-assembly.zip',
   },
   {
@@ -15,7 +15,7 @@ const LESSONS = [
     num: 2,
     title: 'The Web Editor & Blockly',
     icon: '💻',
-    src: 'lessons/lesson2-web-editor/index.html',
+    src: 'lessons/lesson2-web-editor/',
     scorm: 'scorm-packages/lesson2-web-editor.zip',
   },
   {
@@ -23,7 +23,7 @@ const LESSONS = [
     num: 3,
     title: 'Making the Robot Drive',
     icon: '🚗',
-    src: 'lessons/lesson3-driving/index.html',
+    src: 'lessons/lesson3-driving/',
     scorm: 'scorm-packages/lesson3-driving.zip',
   },
   {
@@ -31,7 +31,7 @@ const LESSONS = [
     num: 4,
     title: 'Following a Line',
     icon: '〰️',
-    src: 'lessons/lesson4-line-follow/index.html',
+    src: 'lessons/lesson4-line-follow/',
     scorm: 'scorm-packages/lesson4-line-follow.zip',
   },
   {
@@ -39,7 +39,7 @@ const LESSONS = [
     num: 5,
     title: 'Sonar Sensor',
     icon: '📡',
-    src: 'lessons/lesson5-sonar/index.html',
+    src: 'lessons/lesson5-sonar/',
     scorm: 'scorm-packages/lesson5-sonar.zip',
   },
   {
@@ -47,7 +47,7 @@ const LESSONS = [
     num: 6,
     title: 'Wireless Gamepad',
     icon: '🎮',
-    src: 'lessons/lesson6-gamepad/index.html',
+    src: 'lessons/lesson6-gamepad/',
     scorm: 'scorm-packages/lesson6-gamepad.zip',
   },
 ];

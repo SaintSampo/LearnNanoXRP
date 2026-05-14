@@ -6,6 +6,7 @@
   <title>Lesson 3 – Making the Robot Drive</title>
   <link rel="stylesheet" href="../../lessons/shared/lesson.css" />
   <script src="../../lessons/shared/scorm-runtime.js"></script>
+  <script src="../../lessons/shared/image-loader.js"></script>
 </head>
 <body>
 <div id="lesson-shell">
@@ -30,7 +31,7 @@
       <p>Time to drive your robot! In this lesson, you'll learn the most important concept in robot programming: the difference between <strong>blocking</strong> and <strong>non-blocking</strong> commands.</p>
 
       <div class="photo-slot">
-        <img src="images/01-robot-driving.svg" alt="NanoXRP robot driving on a flat surface" />
+        <img data-src="images/01-robot-driving.svg" alt="NanoXRP robot driving on a flat surface" />
         <div class="photo-caption">Your robot, ready to roll!</div>
       </div>
 
@@ -56,7 +57,7 @@
       <p>All the driving commands are in the <strong>DriveTrain</strong> category (the rust-orange blocks). Here's what each one does:</p>
 
       <div class="photo-slot">
-        <img src="images/02-drivetrain-blocks.svg" alt="All DriveTrain blocks visible in the toolbox" />
+        <img data-src="images/02-drivetrain-blocks.svg" alt="All DriveTrain blocks visible in the toolbox" />
         <div class="photo-caption">The DriveTrain category has all your driving commands</div>
       </div>
 
@@ -112,7 +113,7 @@
       </div>
 
       <div class="photo-slot">
-        <img src="images/03-blocking-example.svg" alt="Diagram showing blocking command pausing the program" />
+        <img data-src="images/03-blocking-example.svg" alt="Diagram showing blocking command pausing the program" />
         <div class="photo-caption">Blocking: Step 1 must FINISH before Step 2 can start</div>
       </div>
 
@@ -144,7 +145,7 @@
       <p>Let's use blocking commands to drive the robot in a <strong>square!</strong></p>
 
       <div class="photo-slot">
-        <img src="images/04-drive-square.svg" alt="Robot driving in a square path on the floor" />
+        <img data-src="images/04-drive-square.svg" alt="Robot driving in a square path on the floor" />
         <div class="photo-caption">Four forward moves + four right turns = a perfect square!</div>
       </div>
 
@@ -195,7 +196,7 @@
       </div>
 
       <div class="photo-slot">
-        <img src="images/05-nonblocking-example.svg" alt="Diagram showing non-blocking command continuing immediately" />
+        <img data-src="images/05-nonblocking-example.svg" alt="Diagram showing non-blocking command continuing immediately" />
         <div class="photo-caption">Non-blocking: the code keeps running while the motors are going!</div>
       </div>
 
@@ -301,7 +302,7 @@
       <p>Use blocking commands to make your robot drive an L-shape path. Here's the route:</p>
 
       <div class="photo-slot">
-        <img src="images/06-challenge-path.svg" alt="L-shaped path drawn on the floor for the robot to follow" />
+        <img data-src="images/06-challenge-path.svg" alt="L-shaped path drawn on the floor for the robot to follow" />
         <div class="photo-caption">Program the robot to drive this L-shaped path using blocking commands</div>
       </div>
 
@@ -346,7 +347,7 @@
       <p>You can't do this with blocking commands! Only non-blocking allows you to change speed mid-run.</p>
 
       <div class="photo-slot">
-        <img src="images/07-speed-ramp.svg" alt="Graph showing robot speed increasing over time" />
+        <img data-src="images/07-speed-ramp.svg" alt="Graph showing robot speed increasing over time" />
         <div class="photo-caption">The robot starts slow, speeds up, then stops — like a real vehicle!</div>
       </div>
     </div>

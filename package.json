@@ -5,7 +5,8 @@
   "scripts": {
     "generate-images": "node generate-placeholders.js",
     "package-scorm": "node package-scorm.js",
-    "build": "node generate-placeholders.js && node package-scorm.js"
+    "build": "node generate-placeholders.js && node package-scorm.js",
+    "dev": "node dev-server.js"
   },
   "devDependencies": {
     "archiver": "^6.0.1"

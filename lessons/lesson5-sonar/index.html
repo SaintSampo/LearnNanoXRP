@@ -6,6 +6,7 @@
   <title>Lesson 5 – Sonar Sensor</title>
   <link rel="stylesheet" href="../../lessons/shared/lesson.css" />
   <script src="../../lessons/shared/scorm-runtime.js"></script>
+  <script src="../../lessons/shared/image-loader.js"></script>
 </head>
 <body>
 <div id="lesson-shell">
@@ -30,7 +31,7 @@
       <p>In this lesson, you'll use the <strong>sonar (ultrasonic distance) sensor</strong> to make your robot see what's in front of it and stop before crashing!</p>
 
       <div class="photo-slot">
-        <img src="images/01-robot-stops-before-wall.svg" alt="NanoXRP robot stopping just before a wall" />
+        <img data-src="images/01-robot-stops-before-wall.svg" alt="NanoXRP robot stopping just before a wall" />
         <div class="photo-caption">The robot detects the wall and stops safely — no crash!</div>
       </div>
 
@@ -57,7 +58,7 @@
       <p>The ultrasonic sensor is the part at the front of your robot that looks like two round eyes. It's called a <strong>rangefinder</strong>.</p>
 
       <div class="photo-slot">
-        <img src="images/02-sensor-front-view.svg" alt="Front view of robot showing the ultrasonic sensor" />
+        <img data-src="images/02-sensor-front-view.svg" alt="Front view of robot showing the ultrasonic sensor" />
         <div class="photo-caption">The two "eyes" on the front of the robot are the sonar sensor</div>
       </div>
 
@@ -88,7 +89,7 @@
       <p>Let's look at exactly what happens each time the sonar takes a measurement.</p>
 
       <div class="photo-slot">
-        <img src="images/03-sonar-diagram.svg" alt="Diagram showing sound waves leaving the sensor and bouncing off a wall" />
+        <img data-src="images/03-sonar-diagram.svg" alt="Diagram showing sound waves leaving the sensor and bouncing off a wall" />
         <div class="photo-caption">Sound pulse goes out → bounces off object → echo returns → distance calculated!</div>
       </div>
 
@@ -130,7 +131,7 @@
       <p>Reading the sonar sensor in Blockly is super simple! There's one block for it in the <strong>Sensors → Distance</strong> category.</p>
 
       <div class="photo-slot">
-        <img src="images/04-distance-block.svg" alt="The get sonar distance block in Blockly" />
+        <img data-src="images/04-distance-block.svg" alt="The get sonar distance block in Blockly" />
         <div class="photo-caption">The distance block — it returns the distance in centimeters</div>
       </div>
 
@@ -160,7 +161,7 @@
       <p>Now let's write the full program: drive forward and stop when something is within <strong>20 cm</strong>.</p>
 
       <div class="photo-slot">
-        <img src="images/05-stop-code.svg" alt="Blockly program showing stop-before-wall code" />
+        <img data-src="images/05-stop-code.svg" alt="Blockly program showing stop-before-wall code" />
         <div class="photo-caption">The complete stop-before-wall program</div>
       </div>
 
@@ -199,7 +200,7 @@
       <p>Let's set up a test and see if your robot stops safely!</p>
 
       <div class="photo-slot">
-        <img src="images/06-wall-test-setup.svg" alt="Robot placed facing a book stack on a table" />
+        <img data-src="images/06-wall-test-setup.svg" alt="Robot placed facing a book stack on a table" />
         <div class="photo-caption">A stack of books makes a great test wall!</div>
       </div>
 
@@ -241,7 +242,7 @@
       <p>Right now the robot drives at full speed and then abruptly stops. Can we make it slow down first, like a real car?</p>
 
       <div class="photo-slot">
-        <img src="images/07-gradual-stop.svg" alt="Graph showing robot speed decreasing as it approaches a wall" />
+        <img data-src="images/07-gradual-stop.svg" alt="Graph showing robot speed decreasing as it approaches a wall" />
         <div class="photo-caption">A gradual slowdown is smoother and more realistic!</div>
       </div>
 

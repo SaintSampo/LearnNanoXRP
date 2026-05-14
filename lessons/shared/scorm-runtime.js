@@ -118,4 +118,14 @@
     },
   };
 
+  // On production (GitHub Pages / SCORM), image-loader.js doesn't run.
+  // Convert data-src → src here so lesson images still load.
+  if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('img[data-src]').forEach(function (img) {
+        img.src = img.getAttribute('data-src');
+      });
+    });
+  }
+
 })();
