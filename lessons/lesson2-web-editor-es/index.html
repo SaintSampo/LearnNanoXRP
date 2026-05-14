@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lección 2 – El Editor Web y Blockly</title>
+  <link rel="stylesheet" href="../../lessons/shared/lesson.css" />
+  <script src="../../lessons/shared/scorm-runtime.js"></script>
+  <script src="../../lessons/shared/image-loader.js"></script>
+</head>
+<body>
+<div id="lesson-shell">
+
+  <header class="lesson-header">
+    <div class="lesson-header-left">
+      <h2>💻 Lección 2: El Editor Web y Blockly</h2>
+      <p>Aventuras de Programación del Robot NanoXRP</p>
+    </div>
+    <span class="slide-counter" id="slideCounter">1 de 9</span>
+  </header>
+
+  <div class="lesson-progress-track">
+    <div class="lesson-progress-fill" id="progressFill" style="width:11%"></div>
+  </div>
+
+  <div class="slides-area">
+
+    <!-- ══ SLIDE 1 ══ -->
+    <div class="slide active" id="slide-1">
+      <h1>💻 ¡Bienvenido al Editor Web de XRP!</h1>
+      <p>Ahora que tu robot está construido, ¡es hora de hacer que haga cosas increíbles! Escribirás programas usando una herramienta llamada el <strong>Editor Web de XRP</strong>.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/01-web-editor-homepage.svg" alt="Página de inicio del Editor Web de XRP en un navegador" />
+        <div class="photo-caption">El Editor Web de XRP — ¡tu base de operaciones para programar!</div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">🌐</span>
+        <div class="callout-body">
+          <strong>Abre el editor</strong>
+          <p>Tu maestro te dará la dirección web. Escríbela en tu navegador Chrome o Edge y presiona Enter. ¡El editor funciona directamente en tu navegador web, sin necesidad de instalación!</p>
+        </div>
+      </div>
+
+      <p>En esta lección aprenderás:</p>
+      <ul>
+        <li>Cómo conectar tu robot al editor</li>
+        <li>Cómo navegar por el editor</li>
+        <li>Cómo escribir tu primer programa en Blockly</li>
+        <li>Cómo ejecutar tu código en el robot</li>
+      </ul>
+    </div>
+
+    <!-- ══ SLIDE 2 ══ -->
+    <div class="slide" id="slide-2">
+      <h1>🔌 Conectando Tu Robot</h1>
+      <p>Antes de programar, necesitas conectar tu robot a la computadora con un cable USB.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/02-usb-connection.svg" alt="Cable USB conectando el robot a una computadora portátil" />
+        <div class="photo-caption">Enchufa el cable USB en el robot y en tu computadora</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Conecta el cable USB</h3>
+            <p>Conecta un extremo del cable USB al puerto en la placa controladora del robot, y el otro extremo a tu computadora.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Enciende el robot</h3>
+            <p>Mueve el interruptor de encendido en la placa controladora a la posición <strong>ON</strong>. Deberías ver una luz LED verde encenderse.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>Haz clic en "Connect" en el editor</h3>
+            <p>En el editor web, haz clic en el botón <strong>Connect</strong> en la parte superior. Aparecerá una lista de puertos. Elige uno que diga algo como "XRP" o "COM" y haz clic en Connect.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3>Busca el indicador verde</h3>
+            <p>Cuando esté conectado, el editor muestra un indicador verde "Connected". ¡Estás listo para programar!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 3 ══ -->
+    <div class="slide" id="slide-3">
+      <h1>🗺️ Tour del Editor</h1>
+      <p>Veamos rápidamente las partes principales del Editor Web de XRP.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/03-editor-overview.svg" alt="Diagrama etiquetado de la interfaz del Editor Web de XRP" />
+        <div class="photo-caption">Las áreas principales del Editor Web de XRP</div>
+      </div>
+
+      <h2>Áreas Clave:</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">A</div>
+          <div class="step-content">
+            <h3>Barra de Herramientas (arriba)</h3>
+            <p>Botones para Conectar, Ejecutar, Detener y Guardar tu programa.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">B</div>
+          <div class="step-content">
+            <h3>Caja de Herramientas de Bloques (izquierda)</h3>
+            <p>Categorías de bloques que puedes usar. Haz clic en una categoría para ver los bloques dentro.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">C</div>
+          <div class="step-content">
+            <h3>Espacio de Trabajo de Blockly (centro)</h3>
+            <p>El área grande donde arrastras y conectas bloques para escribir tu programa.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">D</div>
+          <div class="step-content">
+            <h3>Vista de Código Python (lado derecho)</h3>
+            <p>Esto te muestra el código Python que generan tus bloques. ¡Muy genial!</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">E</div>
+          <div class="step-content">
+            <h3>Terminal (abajo)</h3>
+            <p>Muestra mensajes de tu robot — como si algo salió mal, o si usaste un bloque de impresión.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 4 ══ -->
+    <div class="slide" id="slide-4">
+      <h1>🧱 ¿Qué es Blockly?</h1>
+      <p>Blockly es una forma de escribir programas <strong>encajando bloques</strong> — ¡como piezas de un rompecabezas! Cada bloque hace una cosa específica.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/04-blockly-workspace.svg" alt="Espacio de trabajo de Blockly con bloques coloridos encajados" />
+        <div class="photo-caption">Los bloques se encajan para construir un programa — ¡sin necesidad de escribir!</div>
+      </div>
+
+      <div class="compare-grid">
+        <div class="compare-card good">
+          <h3>✅ Blockly</h3>
+          <p>Arrastra y suelta bloques coloridos. Es difícil cometer errores de tipeo. ¡Excelente para principiantes!</p>
+        </div>
+        <div class="compare-card">
+          <h3>🐍 Python</h3>
+          <p>Escribe el código tú mismo. Más poderoso, pero tienes que conseguir que cada letra sea perfecta.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-fun">
+        <span class="callout-icon">🤔</span>
+        <div class="callout-body">
+          <strong>¿Sabías que?</strong>
+          <p>Cuando usas Blockly, el editor automáticamente convierte tus bloques en código Python real. Los ingenieros profesionales usan Python para programar robots, satélites y mucho más.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 5 ══ -->
+    <div class="slide" id="slide-5">
+      <h1>📚 Categorías de Bloques</h1>
+      <p>Los bloques se organizan en categorías por color. Aquí están los más importantes para el NanoXRP:</p>
+
+      <div class="photo-slot">
+        <img data-src="images/05-block-categories.svg" alt="Caja de herramientas de categorías de bloques mostrando categorías de colores" />
+        <div class="photo-caption">Haz clic en cualquier categoría para ver los bloques dentro</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" style="background:#a5675b">🚗</div>
+          <div class="step-content">
+            <h3>DriveTrain (naranja óxido)</h3>
+            <p>Hace que el robot avance, retroceda y gire.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:#80a55b">📡</div>
+          <div class="step-content">
+            <h3>Sensores (verde)</h3>
+            <p>Lee el sensor de distancia, sensores de línea, giroscopio y más.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:#5ba580">💡</div>
+          <div class="step-content">
+            <h3>Placa de Control (azul verdoso)</h3>
+            <p>Controla la luz LED y lee el botón en la placa.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:#ff9248">🎮</div>
+          <div class="step-content">
+            <h3>Gamepad (naranja)</h3>
+            <p>Lee la entrada del joystick y botones de un controlador gamepad.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:#5b80a5">⚙️</div>
+          <div class="step-content">
+            <h3>Control (azul grisáceo)</h3>
+            <p>Bucles, sentencias if, bloques de espera — la lógica de tu programa.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 6 ══ -->
+    <div class="slide" id="slide-6">
+      <h1>✋ Tu Primer Programa</h1>
+      <p>¡Hagamos que el robot parpadee su luz LED! Este es el clásico "Hola Mundo" de la robótica.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/06-first-program.svg" alt="Espacio de trabajo de Blockly mostrando un programa de parpadeo de LED" />
+        <div class="photo-caption">¡Tu primer programa: haz parpadear el LED encendido y apagado!</div>
+      </div>
+
+      <h2>Construye este programa paso a paso:</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Encuentra el bucle "forever"</h3>
+            <p>En la categoría <strong>Control</strong>, encuentra el bloque <strong>repeat forever</strong> y arrástralo al espacio de trabajo.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Añade bloque LED On</h3>
+            <p>En <strong>Control Board</strong>, arrastra <strong>LED on</strong> dentro del bucle forever.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>Añade un bloque de espera</h3>
+            <p>En <strong>Control</strong>, encuentra <strong>wait [0.5] seconds</strong> y añádelo después de LED on.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3>Añade LED Off y otra espera</h3>
+            <p>Añade <strong>LED off</strong> y otro bloque <strong>wait 0.5 seconds</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="block-diagram">
+        <div style="margin-bottom:6px">
+          <span class="block gray">🔁 repeat forever</span>
+        </div>
+        <div class="block-indent">
+          <span class="block teal">💡 LED on</span>
+        </div><br/>
+        <div class="block-indent">
+          <span class="block gray">⏱ wait</span>
+          <span class="block-value">0.5</span>
+          <span> seconds</span>
+        </div><br/>
+        <div class="block-indent">
+          <span class="block teal">💡 LED off</span>
+        </div><br/>
+        <div class="block-indent">
+          <span class="block gray">⏱ wait</span>
+          <span class="block-value">0.5</span>
+          <span> seconds</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 7 ══ -->
+    <div class="slide" id="slide-7">
+      <h1>▶️ Ejecutando Tu Código</h1>
+      <p>Una vez que tus bloques están en su lugar, ¡es hora de enviar el programa al robot y verlo ejecutarse!</p>
+
+      <div class="photo-slot">
+        <img data-src="images/07-run-button.svg" alt="Botón Run resaltado en la barra de herramientas del Editor Web de XRP" />
+        <div class="photo-caption">Haz clic en el botón verde Run para enviar tu programa al robot</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Asegúrate de que el robot está conectado</h3>
+            <p>Verifica que el indicador verde "Connected" esté mostrándose en la barra de herramientas.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Haz clic en el botón Run ▶️</h3>
+            <p>El editor convierte tus bloques a Python y lo envía al robot. La Terminal mostrará qué está pasando.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>¡Observa tu robot!</h3>
+            <p>El LED en la placa debe parpadear encendido y apagado cada medio segundo. ¡Felicidades — acabas de ejecutar tu primer programa de robot!</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3>Detén el programa</h3>
+            <p>Haz clic en el botón rojo <strong>Stop</strong> ⏹ para detener la ejecución del programa. El LED dejará de parpadear.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-warning">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>¿Algo salió mal?</strong>
+          <p>Verifica el área de Terminal en busca de mensajes de error en rojo. El problema más común es no estar conectado — intenta hacer clic en Connect de nuevo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 8 ══ -->
+    <div class="slide" id="slide-8">
+      <h1>💾 Guardando Tu Trabajo</h1>
+      <p>¡Guardar tus programas es importante! Aquí está cómo guardar y volver a abrir tu trabajo.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/08-save-file.svg" alt="Diálogo de guardar en el Editor Web de XRP" />
+        <div class="photo-caption">Guarda tu programa para que puedas volver a él más tarde</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Guarda al Robot</h3>
+            <p>Haz clic en <strong>File → Save to Robot</strong>. Tu programa se guarda en el robot mismo como un archivo llamado <code>main.py</code>. ¡Este programa se ejecuta automáticamente cuando el robot se enciende!</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Guarda en la Computadora</h3>
+            <p>Haz clic en <strong>File → Save</strong> para guardar una copia en tu computadora. Esto es excelente para hacer una copia de seguridad de tu trabajo.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>Abre un archivo guardado</h3>
+            <p>Haz clic en <strong>File → Open</strong> para cargar un programa previamente guardado de nuevo en el editor.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Consejo Pro</strong>
+          <p>Dale a tus archivos nombres descriptivos como <code>blink_led.py</code> o <code>drive_square.py</code> para que puedas encontrarlos fácilmente más tarde.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 9 – QUIZ ══ -->
+    <div class="slide quiz-slide" id="slide-9">
+      <div class="quiz-header">
+        <span class="quiz-icon">🧠</span>
+        <h1>¡Verificación Rápida!</h1>
+        <p>Responde estas preguntas para completar la Lección 2. ¡Necesitas <strong>3 de 4 correctas</strong> para pasar!</p>
+      </div>
+
+      <div id="quizForm">
+
+        <div class="quiz-question" id="q1">
+          <p>1. ¿Qué es Blockly?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="1" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Un tipo de cable USB
+            </button>
+            <button class="quiz-option" data-q="1" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Un lenguaje de programación que escribes a mano
+            </button>
+            <button class="quiz-option" data-q="1" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Una herramienta de programación visual donde arrastras y encajas bloques
+            </button>
+            <button class="quiz-option" data-q="1" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> El soporte de batería en el robot
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q2">
+          <p>2. ¿Dónde arrastras los bloques para construir tu programa?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="2" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> La Terminal
+            </button>
+            <button class="quiz-option" data-q="2" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> La Caja de Herramientas de Bloques
+            </button>
+            <button class="quiz-option" data-q="2" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> El Espacio de Trabajo de Blockly
+            </button>
+            <button class="quiz-option" data-q="2" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> La Vista de Código Python
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q3">
+          <p>3. ¿Qué hace guardar un programa "al Robot"?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="3" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Ejecuta el programa inmediatamente
+            </button>
+            <button class="quiz-option" data-q="3" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Guarda el archivo en la carpeta Descargas de tu computadora
+            </button>
+            <button class="quiz-option" data-q="3" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Guarda el programa en el robot, así se ejecuta automáticamente cuando el robot se enciende
+            </button>
+            <button class="quiz-option" data-q="3" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Elimina el programa antiguo
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q4">
+          <p>4. ¿Qué categoría de bloques usarías para hacer que el robot se mueva?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="4" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Control Board
+            </button>
+            <button class="quiz-option" data-q="4" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> DriveTrain
+            </button>
+            <button class="quiz-option" data-q="4" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Sensores
+            </button>
+            <button class="quiz-option" data-q="4" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Gamepad
+            </button>
+          </div>
+        </div>
+
+        <button class="nav-btn nav-btn-forward" id="submitQuizBtn" onclick="submitQuiz()" style="margin-top:20px">
+          Enviar Respuestas ✓
+        </button>
+      </div>
+
+      <div class="quiz-result" id="quizResult">
+        <h2 id="resultTitle"></h2>
+        <p id="resultMsg"></p>
+        <button class="nav-btn nav-btn-finish" id="finishBtn" onclick="finishLesson()" style="display:none">
+          Finalizar Lección 2 🎉
+        </button>
+        <button class="nav-btn nav-btn-back" onclick="retryQuiz()" id="retryBtn" style="display:none">
+          Intentar de Nuevo
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /slides-area -->
+
+  <nav class="lesson-nav-bar">
+    <button class="nav-btn nav-btn-back" id="prevBtn" onclick="prevSlide()" disabled>← Atrás</button>
+    <button class="nav-btn nav-btn-forward" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+  </nav>
+
+</div>
+
+<script>
+  const LESSON_ID    = 'lesson2';
+  const TOTAL_SLIDES = 9;
+  const QUIZ_SLIDE   = 9;
+  const ANSWERS      = { 1:'c', 2:'c', 3:'c', 4:'b' };
+  let currentSlide = 1, userAnswers = {}, quizAnswered = false;
+
+  LessonRuntime.init(LESSON_ID);
+
+  function showSlide(n) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    document.getElementById('slide-' + n).classList.add('active');
+    currentSlide = n;
+    document.getElementById('slideCounter').textContent = n + ' de ' + TOTAL_SLIDES;
+    document.getElementById('progressFill').style.width = Math.round((n/TOTAL_SLIDES)*100) + '%';
+    document.getElementById('prevBtn').disabled = (n === 1);
+    document.getElementById('nextBtn').disabled = (n === QUIZ_SLIDE);
+    window.scrollTo(0, 0);
+  }
+
+  function nextSlide() { if (currentSlide < QUIZ_SLIDE) showSlide(currentSlide + 1); }
+  function prevSlide() { if (currentSlide > 1) showSlide(currentSlide - 1); }
+
+  function selectOption(btn) {
+    if (quizAnswered) return;
+    document.querySelectorAll('.quiz-option[data-q="'+btn.dataset.q+'"]').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    userAnswers[btn.dataset.q] = btn.dataset.v;
+  }
+
+  function submitQuiz() {
+    if (Object.keys(userAnswers).length < Object.keys(ANSWERS).length) { alert('¡Responde todas las preguntas primero!'); return; }
+    quizAnswered = true;
+    let correct = 0;
+    Object.keys(ANSWERS).forEach(q => {
+      const right = ANSWERS[q], user = userAnswers[q];
+      document.querySelectorAll('.quiz-option[data-q="'+q+'"]').forEach(btn => {
+        btn.classList.add('answered');
+        if (btn.dataset.v === right) btn.classList.add('correct');
+        else if (btn.dataset.v === user) btn.classList.add('wrong');
+      });
+      if (user === right) correct++;
+    });
+    const score = Math.round((correct/Object.keys(ANSWERS).length)*100), passed = score >= 75;
+    const result = document.getElementById('quizResult');
+    result.style.display = 'block';
+    result.className = 'quiz-result ' + (passed ? 'pass' : 'fail');
+    document.getElementById('submitQuizBtn').style.display = 'none';
+    if (passed) {
+      document.getElementById('resultTitle').textContent = '🎉 ¡Excelente! ' + correct + '/' + Object.keys(ANSWERS).length + ' Correctas';
+      document.getElementById('resultMsg').textContent = '¡Obtuviste '+score+'%! ¡Sabes cómo moverte por el Editor Web de XRP!';
+      document.getElementById('finishBtn').style.display = 'inline-flex';
+      LessonRuntime.complete(score);
+    } else {
+      document.getElementById('resultTitle').textContent = '🤔 ¡Casi! ' + correct + '/' + Object.keys(ANSWERS).length + ' Correctas';
+      document.getElementById('resultMsg').textContent = 'Obtuviste '+score+'%. ¡Revisa la lección e intenta de nuevo!';
+      document.getElementById('retryBtn').style.display = 'inline-flex';
+    }
+  }
+
+  function retryQuiz() {
+    quizAnswered = false; userAnswers = {};
+    document.getElementById('quizResult').style.display = 'none';
+    document.getElementById('submitQuizBtn').style.display = 'inline-flex';
+    document.querySelectorAll('.quiz-option').forEach(b => b.className = 'quiz-option');
+  }
+
+  function finishLesson() {
+    document.getElementById('finishBtn').textContent = '✅ ¡Lección Completada!';
+    document.getElementById('finishBtn').disabled = true;
+  }
+
+  showSlide(1);
+</script>
+</body>
+</html>

@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(node generate-placeholders.js)",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(node -e \"const Anthropic = require\\('@anthropic-ai/sdk'\\); console.log\\('SDK OK, version:', require\\('@anthropic-ai/sdk/package.json'\\).version\\)\")",
+      "Bash(node -e \"const Anthropic = require\\('@anthropic-ai/sdk'\\); console.log\\('SDK OK'\\)\")"
     ]
   }
 }

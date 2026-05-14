@@ -125,6 +125,9 @@ LearnNanoXRP/
 # Install dev tools
 npm install
 
+# Start local dev server (http://localhost:3000)
+npm run dev
+
 # Regenerate all placeholder images
 npm run generate-images
 
@@ -133,6 +136,54 @@ npm run package-scorm
 
 # Do both
 npm run build
+```
+
+---
+
+## Translating Lessons
+
+Lessons can be automatically translated into any language using the Claude AI API.
+
+### Setup
+
+1. Get an API key at [console.anthropic.com](https://console.anthropic.com/)
+2. Set the environment variable:
+
+```powershell
+# Windows (PowerShell)
+$env:ANTHROPIC_API_KEY = "sk-ant-..."
+```
+```bash
+# Mac / Linux
+export ANTHROPIC_API_KEY=sk-ant-...
+```
+
+### Translate
+
+```bash
+# Translate all 6 lessons into Spanish
+npm run translate -- --lang es
+
+# Multiple languages at once
+npm run translate -- --lang es,fr,de
+
+# Re-translate after editing lesson content
+npm run translate -- --lang es --force
+
+# Translate specific lessons only
+npm run translate -- --lang es --lessons lesson1,lesson2
+```
+
+**Supported language codes:** `es` (Spanish), `fr` (French), `de` (German), `pt` (Portuguese), `it` (Italian), `zh` (Chinese), `ja` (Japanese), `ko` (Korean), `ar` (Arabic), `hi` (Hindi), `ru` (Russian), `nl` (Dutch)
+
+After a successful translation run, a 🌐 language picker automatically appears in the site header. Translated lesson folders are created alongside the originals:
+
+```
+lessons/
+├── lesson1-assembly/        ← English (source)
+├── lesson1-assembly-es/     ← Spanish (generated)
+├── lesson1-assembly-fr/     ← French (generated)
+└── ...
 ```
 
 ---

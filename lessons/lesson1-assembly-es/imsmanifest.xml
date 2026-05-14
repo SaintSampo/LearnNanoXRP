@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="com.learnnanoxrp.lesson1" version="1.0"
+  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2
+    imscp_rootv1p1p2.xsd
+    http://www.adlnet.org/xsd/adlcp_rootv1p2
+    adlcp_rootv1p2.xsd">
+
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+  </metadata>
+
+  <organizations default="lesson1_org">
+    <organization identifier="lesson1_org">
+      <title>Lesson 1: Assembling the NanoXRP Robot</title>
+      <item identifier="item_lesson1" identifierref="resource_lesson1">
+        <title>Assembling the NanoXRP Robot</title>
+        <adlcp:masteryscore>75</adlcp:masteryscore>
+      </item>
+    </organization>
+  </organizations>
+
+  <resources>
+    <resource identifier="resource_lesson1" type="webcontent"
+      adlcp:scormtype="sco" href="index.html">
+      <file href="index.html"/>
+      <file href="../../lessons/shared/lesson.css"/>
+      <file href="../../lessons/shared/scorm-runtime.js"/>
+      <file href="images/01-completed-robot.svg"/>
+      <file href="images/02-parts-layout.svg"/>
+      <file href="images/02-1-parts-layout.svg"/>
+      <file href="images/03-motor-attachment.svg"/>
+      <file href="images/04-wheels-attached.svg"/>
+      <file href="images/05-controller-board.svg"/>
+      <file href="images/06-sensors-mounted.svg"/>
+      <file href="images/07-motor-wiring.svg"/>
+      <file href="images/08-battery-pack.svg"/>
+    </resource>
+  </resources>
+
+</manifest>

@@ -60,6 +60,14 @@
     } catch {}
   }
 
+  // ── Profile-aware progress key ───────────────────────────
+  function progressKey() {
+    try {
+      const p = localStorage.getItem('learnNanoXRP_currentProfile');
+      return p ? 'learnNanoXRP_progress_' + p : 'learnNanoXRP_progress';
+    } catch { return 'learnNanoXRP_progress'; }
+  }
+
   // ── Public LessonRuntime API ─────────────────────────────
   // lesson HTML files call these helpers instead of using the
   // raw SCORM API directly.
@@ -92,9 +100,9 @@
 
       // Also save completion to localStorage directly
       try {
-        const prog = JSON.parse(localStorage.getItem('learnNanoXRP_progress') || '{}');
+        const prog = JSON.parse(localStorage.getItem(progressKey()) || '{}');
         prog[this._lessonId] = 'complete';
-        localStorage.setItem('learnNanoXRP_progress', JSON.stringify(prog));
+        localStorage.setItem(progressKey(), JSON.stringify(prog));
       } catch {}
 
       // Notify parent window (GitHub Pages mode)
@@ -112,7 +120,7 @@
     // Check if this lesson was already completed
     wasCompleted: function () {
       try {
-        const prog = JSON.parse(localStorage.getItem('learnNanoXRP_progress') || '{}');
+        const prog = JSON.parse(localStorage.getItem(progressKey()) || '{}');
         return prog[this._lessonId] === 'complete';
       } catch { return false; }
     },

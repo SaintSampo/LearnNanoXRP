@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lección 3 – Haciendo que el Robot se Mueva</title>
+  <link rel="stylesheet" href="../../lessons/shared/lesson.css" />
+  <script src="../../lessons/shared/scorm-runtime.js"></script>
+  <script src="../../lessons/shared/image-loader.js"></script>
+</head>
+<body>
+<div id="lesson-shell">
+
+  <header class="lesson-header">
+    <div class="lesson-header-left">
+      <h2>🚗 Lección 3: Haciendo que el Robot se Mueva</h2>
+      <p>Aventuras de Programación del Robot NanoXRP</p>
+    </div>
+    <span class="slide-counter" id="slideCounter">1 de 11</span>
+  </header>
+
+  <div class="lesson-progress-track">
+    <div class="lesson-progress-fill" id="progressFill" style="width:9%"></div>
+  </div>
+
+  <div class="slides-area">
+
+    <!-- ══ SLIDE 1 ══ -->
+    <div class="slide active" id="slide-1">
+      <h1>🚗 ¡Vamos a Movernos!</h1>
+      <p>¡Ahora es momento de conducir tu robot! En esta lección, aprenderás el concepto más importante en programación de robots: la diferencia entre comandos <strong>bloqueantes</strong> y <strong>no bloqueantes</strong>.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/01-robot-driving.svg" alt="Robot NanoXRP conduciendo en una superficie plana" />
+        <div class="photo-caption">¡Tu robot, listo para rodar!</div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">🎯</span>
+        <div class="callout-body">
+          <strong>Lo que aprenderás:</strong>
+          <ul>
+            <li>La categoría de bloques DriveTrain</li>
+            <li>Lo que hacen los comandos "bloqueantes"</li>
+            <li>Lo que hacen los comandos "no bloqueantes"</li>
+            <li>Cuándo usar cada tipo</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>Entender bloqueante vs. no bloqueante es una de las ideas más importantes en toda la programación — ¡no solo para robots! Descubrámoslo juntos.</p>
+    </div>
+
+    <!-- ══ SLIDE 2 ══ -->
+    <div class="slide" id="slide-2">
+      <h1>🧱 Descripción General de Bloques DriveTrain</h1>
+      <p>Todos los comandos de conducción están en la categoría <strong>DriveTrain</strong> (los bloques de color naranja oxidado). Esto es lo que hace cada uno:</p>
+
+      <div class="photo-slot">
+        <img data-src="images/02-drivetrain-blocks.svg" alt="Todos los bloques DriveTrain visibles en la caja de herramientas" />
+        <div class="photo-caption">La categoría DriveTrain tiene todos tus comandos de conducción</div>
+      </div>
+
+      <table style="width:100%;border-collapse:collapse;margin:14px 0">
+        <thead>
+          <tr style="background:var(--primary-light)">
+            <th style="padding:8px 12px;text-align:left;border-radius:8px 0 0 0">Nombre del Bloque</th>
+            <th style="padding:8px 12px;text-align:left">Qué hace</th>
+            <th style="padding:8px 12px;text-align:left;border-radius:0 8px 0 0">Tipo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 12px"><strong>straight(dist, effort)</strong></td>
+            <td style="padding:8px 12px">Conducir hacia adelante o hacia atrás una distancia establecida</td>
+            <td style="padding:8px 12px"><span style="color:var(--info);font-weight:700">BLOQUEANTE</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 12px"><strong>turn(degrees, effort)</strong></td>
+            <td style="padding:8px 12px">Rotar a la izquierda o derecha un número específico de grados</td>
+            <td style="padding:8px 12px"><span style="color:var(--info);font-weight:700">BLOQUEANTE</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 12px"><strong>set_effort(left, right)</strong></td>
+            <td style="padding:8px 12px">Establecer la potencia del motor inmediatamente (-1 a 1)</td>
+            <td style="padding:8px 12px"><span style="color:var(--accent);font-weight:700">NO BLOQUEANTE</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 12px"><strong>set_speed(left, right)</strong></td>
+            <td style="padding:8px 12px">Establecer la velocidad del motor en RPM</td>
+            <td style="padding:8px 12px"><span style="color:var(--accent);font-weight:700">NO BLOQUEANTE</span></td>
+          </tr>
+          <tr>
+            <td style="padding:8px 12px"><strong>stop()</strong></td>
+            <td style="padding:8px 12px">Detener ambos motores inmediatamente</td>
+            <td style="padding:8px 12px"><span style="color:var(--accent);font-weight:700">NO BLOQUEANTE</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ══ SLIDE 3 ══ -->
+    <div class="slide" id="slide-3">
+      <h1>⏸️ ¿Qué es un Comando BLOQUEANTE?</h1>
+      <p>Un <strong>comando bloqueante</strong> hace que el programa <strong>se pause y espere</strong> hasta que el comando se complete completamente antes de pasar a la siguiente línea.</p>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">🤔</span>
+        <div class="callout-body">
+          <strong>Piénsalo como una señal de cruce peatonal</strong>
+          <p>Cuando presionas el botón para cruzar, <em>esperas</em> en la acera hasta que el semáforo se pone verde. Aún no cruzas — estás "bloqueado" hasta que se complete. ¡Eso es exactamente lo que hace un comando bloqueante!</p>
+        </div>
+      </div>
+
+      <div class="photo-slot">
+        <img data-src="images/03-blocking-example.svg" alt="Diagrama mostrando un comando bloqueante pausando el programa" />
+        <div class="photo-caption">Bloqueante: el Paso 1 DEBE TERMINAR antes de que el Paso 2 pueda comenzar</div>
+      </div>
+
+      <h2>Los dos comandos de conducción bloqueantes son:</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">📏</div>
+          <div class="step-content">
+            <h3>straight(distance, effort)</h3>
+            <p>Conduce el robot <strong>exactamente esa distancia</strong> y se detiene. El programa espera hasta que el robot ha viajado toda esa distancia antes de ejecutar el siguiente bloque.</p>
+            <p><strong>distance</strong> = centímetros (20 = 20 cm hacia adelante, -20 = hacia atrás)</p>
+            <p><strong>effort</strong> = potencia del motor (0.0 a 1.0 — ¡intenta 0.5 para comenzar!)</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">↩️</div>
+          <div class="step-content">
+            <h3>turn(degrees, effort)</h3>
+            <p>Gira el robot <strong>exactamente esa cantidad de grados</strong> y se detiene. 90 grados = un cuarto de giro. 180 grados = medio giro (giro en U).</p>
+            <p><strong>degrees</strong> = positivo = girar a la derecha, negativo = girar a la izquierda</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 4 ══ -->
+    <div class="slide" id="slide-4">
+      <h1>📐 Comandos Bloqueantes en Acción</h1>
+      <p>Vamos a usar comandos bloqueantes para conducir el robot en un <strong>¡cuadrado!</strong></p>
+
+      <div class="photo-slot">
+        <img data-src="images/04-drive-square.svg" alt="Robot conduciendo en una ruta cuadrada en el piso" />
+        <div class="photo-caption">¡Cuatro movimientos hacia adelante + cuatro giros a la derecha = un cuadrado perfecto!</div>
+      </div>
+
+      <p>Aquí está el programa Blockly. El robot conduce hacia adelante 30 cm, gira a la derecha 90° y se repite cuatro veces:</p>
+
+      <div class="block-diagram">
+        <span class="block gray">🔁 repetir <span class="block-value">4</span> veces</span><br/>
+        <div class="block-indent" style="margin-top:6px">
+          <span class="block orange">📏 conducir recto</span>
+          <span class="block-value">30</span> cm
+          <span class="block-value">0.5</span> esfuerzo
+        </div><br/>
+        <div class="block-indent">
+          <span class="block orange">↩️ girar</span>
+          <span class="block-value">90</span> grados
+          <span class="block-value">0.5</span> esfuerzo
+        </div>
+      </div>
+
+      <div class="callout callout-success">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <strong>Por qué esto funciona perfectamente</strong>
+          <p>Porque <code>straight()</code> y <code>turn()</code> son bloqueantes, el robot termina de conducir 30 cm <em>completamente</em> antes de girar. Si no fueran bloqueantes, el robot intentaría conducir y girar al mismo tiempo — ¡un caos total!</p>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>¡Pruébalo!</strong>
+          <p>Construye este programa en Blockly y ejecútalo en tu robot. ¿Forma un cuadrado? Intenta cambiar 30 por 20 o el esfuerzo por 0.7.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 5 ══ -->
+    <div class="slide" id="slide-5">
+      <h1>▶️ ¿Qué es un Comando NO BLOQUEANTE?</h1>
+      <p>Un <strong>comando no bloqueante</strong> inicia la acción e <strong>inmediatamente pasa</strong> a la siguiente línea de código — ¡no espera!</p>
+
+      <div class="callout callout-fun">
+        <span class="callout-icon">🤔</span>
+        <div class="callout-body">
+          <strong>Piénsalo como un microondas</strong>
+          <p>Presionas Iniciar y luego te vas a hacer otra cosa. ¡El microondas está funcionando, pero ya estás haciendo lo siguiente! Eso es no bloqueante.</p>
+        </div>
+      </div>
+
+      <div class="photo-slot">
+        <img data-src="images/05-nonblocking-example.svg" alt="Diagrama mostrando un comando no bloqueante continuando inmediatamente" />
+        <div class="photo-caption">No bloqueante: ¡el código sigue ejecutándose mientras los motores siguen funcionando!</div>
+      </div>
+
+      <h2>Comandos de conducción no bloqueantes:</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">⚡</div>
+          <div class="step-content">
+            <h3>set_effort(left, right)</h3>
+            <p>Establece ambos motores a un nivel de potencia de <strong>-1.0 a 1.0</strong>. Positivo = hacia adelante, negativo = hacia atrás. <em>¡Los motores siguen girando hasta que les digas que se detengan!</em></p>
+            <p>set_effort(0.5, 0.5) = ambos motores al 50% hacia adelante</p>
+            <p>set_effort(-0.5, -0.5) = ambos motores al 50% hacia atrás</p>
+            <p>set_effort(0.5, -0.5) = girar en el lugar (izquierda hacia adelante, derecha hacia atrás)</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">⚡</div>
+          <div class="step-content">
+            <h3>stop()</h3>
+            <p>Detiene ambos motores ahora mismo. Úsalo después de <code>set_effort()</code> para detener el robot en el momento correcto.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 6 ══ -->
+    <div class="slide" id="slide-6">
+      <h1>⚡ No Bloqueante en Acción</h1>
+      <p>Los comandos no bloqueantes se usan cuando <strong>tú decides cuándo detener</strong> — a menudo con una lectura de sensor o un temporizador.</p>
+
+      <h2>Ejemplo: Conducir durante 2 segundos y luego detener</h2>
+
+      <div class="block-diagram">
+        <div><span class="block orange">⚡ establecer esfuerzo</span> izquierda <span class="block-value">0.5</span> derecha <span class="block-value">0.5</span></div><br/>
+        <div><span class="block gray">⏱ esperar</span> <span class="block-value">2</span> <span>segundos</span></div><br/>
+        <div><span class="block red">⏹ detener motores</span></div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>¿Qué sucede aquí?</strong>
+          <ol>
+            <li><code>set_effort(0.5, 0.5)</code> inicia ambos motores — el código se mueve inmediatamente al siguiente bloque</li>
+            <li><code>wait(2)</code> pausa el código durante 2 segundos (¡pero los motores siguen funcionando!)</li>
+            <li><code>stop()</code> apaga ambos motores</li>
+          </ol>
+        </div>
+      </div>
+
+      <h2>Ejemplo: Conducir y verificar sensor al mismo tiempo</h2>
+
+      <div class="block-diagram">
+        <div><span class="block orange">⚡ establecer esfuerzo</span> izquierda <span class="block-value">0.5</span> derecha <span class="block-value">0.5</span></div><br/>
+        <div><span class="block gray">🔁 repetir hasta</span> <span class="block-value">distancia &lt; 20 cm</span></div><br/>
+        <div class="block-indent">
+          <span class="block gray">⏱ esperar</span> <span class="block-value">0.05</span> <span>segundos</span>
+        </div><br/>
+        <div><span class="block red">⏹ detener motores</span></div>
+      </div>
+
+      <p>El robot conduce hacia adelante y sigue verificando el sensor sónar. ¡Tan pronto como algo está dentro de 20 cm, se detiene!</p>
+    </div>
+
+    <!-- ══ SLIDE 7 ══ -->
+    <div class="slide" id="slide-7">
+      <h1>🤔 Cuándo Usar Cada Tipo</h1>
+      <p>Elegir el tipo correcto de comando es como elegir la herramienta correcta para el trabajo. Aquí hay una guía:</p>
+
+      <div class="compare-grid">
+        <div class="compare-card good">
+          <h3>✅ Usa BLOQUEANTE cuando...</h3>
+          <ul>
+            <li>Quieras conducir una <strong>distancia exacta</strong></li>
+            <li>Quieras girar un <strong>número exacto de grados</strong></li>
+            <li>Los pasos deben suceder <strong>uno a la vez</strong> en orden</li>
+            <li>Ejemplo: conducir en un cuadrado, navegación de laberinto</li>
+          </ul>
+        </div>
+        <div class="compare-card good">
+          <h3>✅ Usa NO BLOQUEANTE cuando...</h3>
+          <ul>
+            <li>Quieras que el robot conduzca <strong>mientras verifica un sensor</strong></li>
+            <li>Quieras controlar la velocidad <strong>gradualmente</strong></li>
+            <li>Estés usando un <strong>gamepad</strong> (control continuo)</li>
+            <li>Ejemplo: parar en la pared, seguimiento de línea, control de gamepad</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-warning">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>¡Error común con no bloqueante!</strong>
+          <p>Si olvidas llamar a <code>stop()</code> después de <code>set_effort()</code>, el robot <strong>seguirá adelante para siempre</strong> hasta que las baterías se agoten o choque. ¡Siempre recuerda detener!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 8 ══ -->
+    <div class="slide" id="slide-8">
+      <h1>🎯 Desafío: Conducir una Forma de L</h1>
+      <p>Usa comandos bloqueantes para hacer que tu robot conduzca una ruta en forma de L. Aquí está la ruta:</p>
+
+      <div class="photo-slot">
+        <img data-src="images/06-challenge-path.svg" alt="Ruta en forma de L dibujada en el piso para que el robot la siga" />
+        <div class="photo-caption">Programa el robot para conducir esta ruta en forma de L usando comandos bloqueantes</div>
+      </div>
+
+      <h2>La ruta:</h2>
+      <ol>
+        <li>Conducir <strong>hacia adelante 40 cm</strong></li>
+        <li>Girar <strong>a la izquierda 90 grados</strong> (usa -90)</li>
+        <li>Conducir <strong>hacia adelante 20 cm</strong></li>
+      </ol>
+
+      <div class="block-diagram">
+        <div><span class="block orange">📏 conducir recto</span> <span class="block-value">40</span> cm <span class="block-value">0.5</span> esfuerzo</div><br/>
+        <div><span class="block orange">↩️ girar</span> <span class="block-value">-90</span> grados <span class="block-value">0.5</span> esfuerzo</div><br/>
+        <div><span class="block orange">📏 conducir recto</span> <span class="block-value">20</span> cm <span class="block-value">0.5</span> esfuerzo</div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Consejo de ajuste</strong>
+          <p>Si el robot no gira exactamente 90°, intenta ajustar el esfuerzo. Un esfuerzo más bajo (como 0.3) proporciona giros más precisos.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 9 ══ -->
+    <div class="slide" id="slide-9">
+      <h1>🔁 Desafío No Bloqueante</h1>
+      <p>Ahora intenta un desafío no bloqueante: ¡haz que el robot avance, aumente gradualmente la velocidad y luego se detenga!</p>
+
+      <h2>Aumentar velocidad gradualmente:</h2>
+      <div class="block-diagram">
+        <div><span class="block orange">⚡ establecer esfuerzo</span> izquierda <span class="block-value">0.2</span> derecha <span class="block-value">0.2</span></div><br/>
+        <div><span class="block gray">⏱ esperar</span> <span class="block-value">1</span></div><br/>
+        <div><span class="block orange">⚡ establecer esfuerzo</span> izquierda <span class="block-value">0.5</span> derecha <span class="block-value">0.5</span></div><br/>
+        <div><span class="block gray">⏱ esperar</span> <span class="block-value">1</span></div><br/>
+        <div><span class="block orange">⚡ establecer esfuerzo</span> izquierda <span class="block-value">0.8</span> derecha <span class="block-value">0.8</span></div><br/>
+        <div><span class="block gray">⏱ esperar</span> <span class="block-value">1</span></div><br/>
+        <div><span class="block red">⏹ detener motores</span></div>
+      </div>
+
+      <p>¡No puedes hacer esto con comandos bloqueantes! Solo no bloqueante te permite cambiar la velocidad durante la ejecución.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/07-speed-ramp.svg" alt="Gráfico mostrando la velocidad del robot aumentando con el tiempo" />
+        <div class="photo-caption">¡El robot comienza lento, acelera y luego se detiene — como un vehículo real!</div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 10 ══ -->
+    <div class="slide" id="slide-10">
+      <h1>📝 Resumen</h1>
+      <p>¡Revisemos lo que aprendiste sobre hacer que el robot se mueva!</p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h3>⏸️ BLOQUEANTE</h3>
+          <p><strong>straight(dist, effort)</strong><br/>Conducir distancia exacta, esperar hasta que termine.</p>
+          <p><strong>turn(deg, effort)</strong><br/>Girar grados exactos, esperar hasta que termine.</p>
+          <p>Mejor para: rutas paso a paso</p>
+        </div>
+        <div class="compare-card">
+          <h3>▶️ NO BLOQUEANTE</h3>
+          <p><strong>set_effort(L, R)</strong><br/>Establecer potencia del motor, seguir adelante.</p>
+          <p><strong>stop()</strong><br/>Detener motores ahora mismo.</p>
+          <p>Mejor para: parada basada en sensor, control gradual</p>
+        </div>
+      </div>
+
+      <div class="callout callout-success">
+        <span class="callout-icon">🏆</span>
+        <div class="callout-body">
+          <strong>¡Eres un experto en conducción!</strong>
+          <p>Entender esta diferencia te pone por delante de muchos programadores principiantes. ¡Ahora toma el cuestionario para terminar esta lección!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 11 – QUIZ ══ -->
+    <div class="slide quiz-slide" id="slide-11">
+      <div class="quiz-header">
+        <span class="quiz-icon">🧠</span>
+        <h1>¡Verificación Rápida!</h1>
+        <p>¡Necesitas <strong>4 de 5 correctas</strong> para pasar!</p>
+      </div>
+
+      <div id="quizForm">
+
+        <div class="quiz-question" id="q1">
+          <p>1. ¿Qué hace un comando BLOQUEANTE?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="1" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Hace que el robot vaya más rápido
+            </button>
+            <button class="quiz-option" data-q="1" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Pausa el programa y espera hasta que la acción se complete completamente
+            </button>
+            <button class="quiz-option" data-q="1" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Inicia la acción e inmediatamente pasa a la siguiente línea
+            </button>
+            <button class="quiz-option" data-q="1" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Bloquea el robot para que no se mueva hacia atrás
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q2">
+          <p>2. ¿Qué comando usarías para conducir el robot EXACTAMENTE 30 cm hacia adelante?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="2" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> set_effort(0.5, 0.5)
+            </button>
+            <button class="quiz-option" data-q="2" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> stop()
+            </button>
+            <button class="quiz-option" data-q="2" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> straight(30, 0.5)
+            </button>
+            <button class="quiz-option" data-q="2" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> turn(30, 0.5)
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q3">
+          <p>3. Quieres conducir el robot hacia adelante mientras verificas un sensor. ¿Con qué tipo de comando deberías comenzar?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="3" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Bloqueante (straight)
+            </button>
+            <button class="quiz-option" data-q="3" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> No bloqueante (set_effort)
+            </button>
+            <button class="quiz-option" data-q="3" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> No importa
+            </button>
+            <button class="quiz-option" data-q="3" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Ninguno — no puedes verificar sensores mientras conduces
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q4">
+          <p>4. ¿Qué sucede si usas set_effort() pero olvidas llamar a stop()?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="4" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> El robot se detiene automáticamente después de 1 segundo
+            </button>
+            <button class="quiz-option" data-q="4" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Los motores del robot siguen funcionando hasta que las baterías se agoten o choque
+            </button>
+            <button class="quiz-option" data-q="4" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> El robot va hacia atrás
+            </button>
+            <button class="quiz-option" data-q="4" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Nada, el robot se detiene normalmente
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q5">
+          <p>5. Para hacer que un robot conduzca en un cuadrado perfecto, ¿qué tipo de comandos deberías usar?</p>
+          <div class="quiz-options">
+            <button class="quiz-option"

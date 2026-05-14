@@ -16,6 +16,11 @@
       </div>
     </div>
     <div class="header-right">
+      <div class="profile-pill" id="profilePill" style="display:none">
+        <span class="profile-avatar" id="profileAvatar"></span>
+        <span class="profile-pill-name" id="profilePillName"></span>
+        <button class="btn-switch" onclick="app.switchProfile()">Switch</button>
+      </div>
       <div class="overall-progress" id="overallProgress">
         <span class="progress-label">Progress</span>
         <div class="progress-bar-outer">
@@ -23,6 +28,11 @@
         </div>
         <span class="progress-pct" id="progressPct">0%</span>
       </div>
+      <div class="lang-picker-wrap" id="langPickerWrap" style="display:none">
+        <span class="lang-globe">🌐</span>
+        <select id="langPicker" class="lang-picker" onchange="app.setLanguage(this.value)"></select>
+      </div>
+      <button class="btn-teacher" onclick="app.showTeacherView()">👩‍🏫 Teacher</button>
       <a href="https://github.com/jrw4561/LearnNanoXRP" target="_blank" class="github-link" title="View on GitHub">
         <svg height="22" viewBox="0 0 16 16" width="22" fill="currentColor">
           <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
@@ -101,6 +111,58 @@
 
   </div>
 
+  <!-- Profile selection screen -->
+  <div id="profileScreen" class="profile-screen" style="display:none">
+    <div class="profile-content">
+      <div class="profile-hero">🤖</div>
+      <h2>Who's Learning Today?</h2>
+      <p>Click your name, or add yourself below!</p>
+      <div class="profile-list" id="profileList"></div>
+      <p class="profile-empty-msg" id="profileEmptyMsg" style="display:none">
+        No students yet — be the first to add your name!
+      </p>
+      <div class="profile-add-section">
+        <h3>New Student</h3>
+        <div class="profile-input-row">
+          <input
+            type="text"
+            id="profileNameInput"
+            placeholder="Type your name..."
+            maxlength="30"
+            onkeydown="if(event.key==='Enter') app.createProfile()"
+          />
+          <button class="btn btn-primary" onclick="app.createProfile()">Let's Go! →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Teacher dashboard modal -->
+  <div id="teacherModal" class="modal-overlay" style="display:none">
+    <div class="teacher-dashboard">
+      <div class="teacher-header">
+        <h2>👩‍🏫 Teacher Dashboard</h2>
+        <button class="btn btn-outline" onclick="app.closeTeacherView()">Close ✕</button>
+      </div>
+      <table class="teacher-table">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th title="Assembling the Robot">L1</th>
+            <th title="The Web Editor &amp; Blockly">L2</th>
+            <th title="Making the Robot Drive">L3</th>
+            <th title="Following a Line">L4</th>
+            <th title="Sonar Sensor">L5</th>
+            <th title="Wireless Gamepad">L6</th>
+            <th>Progress</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="teacherTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
   <!-- Lesson complete modal -->
   <div class="modal-overlay" id="completionModal" style="display:none">
     <div class="modal-card">
@@ -114,6 +176,7 @@
     </div>
   </div>
 
+  <script src="languages.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
