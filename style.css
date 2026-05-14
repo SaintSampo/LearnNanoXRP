@@ -1,0 +1,434 @@
+/* ============================================================
+   LearnNanoXRP – Main Stylesheet
+   ============================================================ */
+
+:root {
+  --primary:      #4F46E5;
+  --primary-dark: #3730A3;
+  --primary-light:#EEF2FF;
+  --accent:       #F97316;
+  --accent-dark:  #EA580C;
+  --success:      #10B981;
+  --success-bg:   #D1FAE5;
+  --warning:      #F59E0B;
+  --warning-bg:   #FEF3C7;
+  --danger:       #EF4444;
+  --locked:       #9CA3AF;
+  --locked-bg:    #F3F4F6;
+  --bg:           #F8FAFC;
+  --surface:      #FFFFFF;
+  --border:       #E2E8F0;
+  --text:         #1E293B;
+  --text-muted:   #64748B;
+  --header-h:     60px;
+  --sidebar-w:    260px;
+  --radius:       12px;
+  --radius-sm:    8px;
+  --shadow:       0 1px 4px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.06);
+  --shadow-lg:    0 8px 30px rgba(0,0,0,.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.site-header {
+  height: var(--header-h);
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(79,70,229,.4);
+  z-index: 100;
+}
+
+.header-left { display: flex; align-items: center; gap: 12px; }
+
+.logo {
+  font-size: 32px;
+  line-height: 1;
+  animation: bob 3s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+.header-title h1 { font-size: 1.3rem; font-weight: 800; letter-spacing: -.5px; }
+.header-sub      { font-size: .75rem; opacity: .8; margin-top: 1px; }
+
+.header-right { display: flex; align-items: center; gap: 16px; }
+
+.overall-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,.15);
+  border-radius: 20px;
+  padding: 4px 12px;
+}
+
+.progress-label { font-size: .75rem; opacity: .85; white-space: nowrap; }
+.progress-bar-outer {
+  width: 100px;
+  height: 8px;
+  background: rgba(255,255,255,.3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-bar-inner {
+  height: 100%;
+  background: #FCD34D;
+  border-radius: 4px;
+  transition: width .5s ease;
+}
+.progress-pct { font-size: .8rem; font-weight: 700; min-width: 30px; }
+
+.github-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  text-decoration: none;
+  font-size: .8rem;
+  font-weight: 600;
+  background: rgba(255,255,255,.15);
+  border-radius: 20px;
+  padding: 5px 12px;
+  transition: background .2s;
+}
+.github-link:hover { background: rgba(255,255,255,.25); }
+
+/* ── Layout ──────────────────────────────────────────────── */
+.app-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: width .3s ease;
+}
+
+.sidebar.collapsed { width: 0; border: none; }
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-header h2 { font-size: 1rem; font-weight: 700; color: var(--primary); }
+
+.sidebar-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 14px;
+  padding: 4px;
+  border-radius: 4px;
+  transition: color .2s;
+}
+.sidebar-toggle:hover { color: var(--primary); }
+
+.lesson-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Lesson card in sidebar */
+.lesson-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all .2s;
+  text-align: left;
+  background: none;
+  width: 100%;
+  color: var(--text);
+}
+
+.lesson-card:hover:not(.locked)  { background: var(--primary-light); border-color: var(--primary); }
+.lesson-card.active              { background: var(--primary-light); border-color: var(--primary); }
+.lesson-card.locked              { opacity: .55; cursor: not-allowed; }
+.lesson-card.complete .card-icon { color: var(--success); }
+.lesson-card.active  .card-icon  { color: var(--primary); }
+.lesson-card.locked  .card-icon  { color: var(--locked); }
+.lesson-card.in-progress .card-icon { color: var(--accent); }
+
+.card-icon { font-size: 20px; flex-shrink: 0; }
+.card-info { flex: 1; min-width: 0; }
+.card-num  { font-size: .65rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+.card-name { font-size: .85rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-badge {
+  font-size: .65rem;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.badge-done    { background: var(--success-bg); color: #065F46; }
+.badge-active  { background: #FEF3C7; color: #92400E; }
+.badge-locked  { background: var(--locked-bg); color: var(--locked); }
+
+/* Sidebar footer – downloads */
+.sidebar-footer {
+  border-top: 1px solid var(--border);
+  padding: 14px 14px 16px;
+  background: #FAFBFF;
+}
+.sidebar-footer h3 { font-size: .8rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+.download-hint     { font-size: .72rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4; }
+.download-links    { display: flex; flex-direction: column; gap: 3px; }
+.download-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .75rem;
+  color: var(--primary);
+  text-decoration: none;
+  padding: 4px 6px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background .2s;
+}
+.download-link:hover { background: var(--primary-light); }
+
+/* Collapsed sidebar reveal button */
+.sidebar-reveal {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 0 8px 8px 0;
+  padding: 16px 8px;
+  cursor: pointer;
+  font-size: .75rem;
+  font-weight: 700;
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  letter-spacing: 1px;
+  z-index: 50;
+  transition: background .2s;
+}
+.sidebar-reveal:hover { background: var(--primary-dark); }
+
+/* ── Lesson Viewer ───────────────────────────────────────── */
+.lesson-viewer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.viewer-chrome {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.viewer-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  gap: 16px;
+}
+
+.current-lesson-title {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--primary);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.viewer-controls { display: flex; gap: 8px; flex-shrink: 0; }
+
+.iframe-container {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+#lessonFrame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* ── Welcome Screen ──────────────────────────────────────── */
+.welcome-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 32px;
+  overflow-y: auto;
+}
+
+.welcome-content {
+  max-width: 780px;
+  text-align: center;
+}
+
+.welcome-robot {
+  font-size: 72px;
+  margin-bottom: 16px;
+  animation: bob 2s ease-in-out infinite;
+}
+
+.welcome-content h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.welcome-content > p {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.lesson-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+  text-align: left;
+}
+
+.overview-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.overview-card:hover { border-color: var(--primary); box-shadow: var(--shadow); transform: translateY(-2px); }
+.overview-card.oc-complete { border-color: var(--success); background: var(--success-bg); }
+
+.oc-icon  { font-size: 28px; margin-bottom: 6px; }
+.oc-num   { font-size: .7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+.oc-title { font-size: .9rem; font-weight: 700; color: var(--text); margin-top: 2px; }
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: .85rem;
+  font-weight: 700;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: var(--primary-dark); }
+
+.btn-outline { background: transparent; border-color: var(--primary); color: var(--primary); }
+.btn-outline:hover:not(:disabled) { background: var(--primary-light); }
+
+.btn-large { padding: 12px 28px; font-size: 1rem; border-radius: 10px; }
+
+/* ── Completion Modal ────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn .2s ease;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 40px 48px;
+  text-align: center;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+  animation: popIn .25s cubic-bezier(.34,1.56,.64,1);
+}
+
+@keyframes popIn {
+  from { transform: scale(.8); opacity: 0; }
+  to   { transform: scale(1);  opacity: 1; }
+}
+
+.modal-emoji { font-size: 64px; margin-bottom: 12px; }
+.modal-card h2 { font-size: 1.6rem; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+.modal-card p  { font-size: 1rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.5; }
+.modal-actions { display: flex; gap: 12px; justify-content: center; }
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar         { width: 6px; }
+::-webkit-scrollbar-track   { background: transparent; }
+::-webkit-scrollbar-thumb   { background: #CBD5E1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .lesson-overview-grid { grid-template-columns: repeat(2, 1fr); }
+  .header-sub, .overall-progress { display: none; }
+  .sidebar { width: 220px; }
+  --sidebar-w: 220px;
+}

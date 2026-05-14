@@ -1,0 +1,64 @@
+name: Build & Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # ── Checkout ────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── Node.js setup ───────────────────────────────────────
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # ── Install dependencies ─────────────────────────────────
+      - name: Install dependencies
+        run: npm install
+
+      # ── Generate placeholder images (if not already present) ─
+      - name: Generate placeholder images
+        run: node generate-placeholders.js
+
+      # ── Package SCORM ZIPs ───────────────────────────────────
+      - name: Package SCORM lessons
+        run: node package-scorm.js
+
+      # ── Commit SCORM packages back to repo ──────────────────
+      - name: Commit SCORM packages
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add scorm-packages/*.zip || true
+          git diff --cached --quiet || git commit -m "chore: rebuild SCORM packages [skip ci]"
+          git push || true
+
+      # ── Deploy to GitHub Pages ───────────────────────────────
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

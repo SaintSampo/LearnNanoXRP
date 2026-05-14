@@ -1,0 +1,13 @@
+{
+  "name": "learnnanoxrp",
+  "version": "1.0.0",
+  "description": "SCORM-based learning modules for the NanoXRP robot",
+  "scripts": {
+    "generate-images": "node generate-placeholders.js",
+    "package-scorm": "node package-scorm.js",
+    "build": "node generate-placeholders.js && node package-scorm.js"
+  },
+  "devDependencies": {
+    "archiver": "^6.0.1"
+  }
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- =============================================
+       PLACEHOLDER IMAGE
+       Lesson: lesson3-driving
+       File:   04-drive-square.svg
+
+       REPLACE THIS FILE with a real photo named:
+         04-drive-square.png
+       Then update <img src="images/04-drive-square.svg">
+       to        <img src="images/04-drive-square.png">
+       ============================================= -->
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="#FFF1F2" rx="12"/>
+
+  <!-- Dashed border -->
+  <rect x="12" y="12" width="776" height="476" fill="none"
+    stroke="#F43F5E" stroke-width="2.5"
+    stroke-dasharray="14,7" rx="8"/>
+
+  <!-- Camera icon group -->
+  <g transform="translate(400, 160)" opacity="0.5">
+    <!-- Camera body -->
+    <rect x="-40" y="-28" width="80" height="60" rx="8" fill="#F43F5E"/>
+    <!-- Camera lens -->
+    <circle cx="0" cy="12" r="20" fill="white" opacity="0.6"/>
+    <circle cx="0" cy="12" r="12" fill="#F43F5E" opacity="0.5"/>
+    <!-- Camera bump top -->
+    <rect x="-12" y="-36" width="24" height="12" rx="4" fill="#F43F5E"/>
+    <!-- Flash/indicator -->
+    <circle cx="26" cy="-18" r="5" fill="#FCD34D" opacity="0.8"/>
+  </g>
+
+  <!-- "PHOTO PLACEHOLDER" label -->
+  <rect x="280" y="82" width="240" height="28" rx="14" fill="#F43F5E" opacity="0.2"/>
+  <text x="400" y="101" font-family="Arial, sans-serif" font-size="13" font-weight="700"
+    fill="#F43F5E" text-anchor="middle" letter-spacing="2">📸  PHOTO PLACEHOLDER</text>
+
+  <!-- Main description text -->
+<text x="400" y="248" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#9F1239" text-anchor="middle">Robot Path: Perfect Square</text>
+<text x="400" y="278" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#9F1239" text-anchor="middle">(overhead view)</text>
+
+  <!-- Sub-description -->
+<text x="400" y="326" font-family="Arial, sans-serif" font-size="14" fill="#64748B" text-anchor="middle">Floor view showing robot tracks making a square</text>
+<text x="400" y="348" font-family="Arial, sans-serif" font-size="14" fill="#64748B" text-anchor="middle">numbered corners</text>
+
+  <!-- Replace instruction -->
+  <text x="400" y="455" font-family="Arial, sans-serif" font-size="12"
+    fill="#94A3B8" text-anchor="middle" font-style="italic">
+    Replace with: 04-drive-square.png  •  lesson3-driving
+  </text>
+
+  <!-- Lesson icon badge -->
+  <circle cx="752" cy="50" r="28" fill="#F43F5E" opacity="0.15"/>
+  <text x="752" y="58" font-family="Arial, sans-serif" font-size="22" text-anchor="middle">🚗</text>
+</svg>
