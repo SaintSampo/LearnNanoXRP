@@ -1,8 +1,8 @@
-# LearnNanoXRP 🤖
+# LearnNanoXRP
 
-**Robot Coding Adventures for 5th Graders** — A self-paced, SCORM-compatible learning site for the [XRP (Experiential Robotics Platform)](https://www.sparkfun.com/products/22727) robot by SparkFun / WPI.
+**Learn NanoXRP** — A self-paced, SCORM-compatible learning site for the [XRP (Experiential Robotics Platform)](https://www.sparkfun.com/products/22727) robot by SparkFun / WPI.
 
-🌐 **Live Site:** `https://jrw4561.github.io/LearnNanoXRP`
+🌐 **Live Site:** `https://saintsampo.github.io/LearnNanoXRP`
 
 ---
 
