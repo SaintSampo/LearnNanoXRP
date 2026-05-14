@@ -6,6 +6,34 @@ window.AVAILABLE_LANGUAGES = [
   },
   {
     "code": "es",
-    "label": "Español"
+    "label": "Español",
+    "ui": {
+      "subtitleHero": "Aventura de Programación de Robots",
+      "sidebarTitle": "Lecciones",
+      "progressLabel": "Progreso",
+      "prevBtn": "← Anterior",
+      "nextBtn": "Siguiente Lección →",
+      "allDone": "¡Todo listo! 🎉",
+      "selectLesson": "Selecciona una lección para comenzar",
+      "welcomeTitle": "¡Bienvenido a LearnNanoXRP!",
+      "welcomeDesc": "Aprenderás a construir y programar tu propio robot. ¡Haz clic en una lección a la izquierda para comenzar!",
+      "startLearning": "¡Comenzar a Aprender! →",
+      "lessonLabel": "Lección",
+      "badgeDone": "¡Hecho!",
+      "badgeInProgress": "En Progreso",
+      "stayHere": "Quedarse Aquí",
+      "modalNext": "Siguiente Lección →",
+      "lessonComplete": "¡Lección {n} Completada!",
+      "awesomeWork": "¡Excelente trabajo! Obtuviste {score}%. ¿Listo para la siguiente?",
+      "youDidIt": "¡Lo Lograste!",
+      "allFinished": "¡Completaste las 6 lecciones! ¡Ahora eres un experto en programación de robots XRP!",
+      "whosLearning": "¿Quién está aprendiendo hoy?",
+      "clickYourName": "¡Haz clic en tu nombre o agrégate abajo!",
+      "noStudents": "Aún no hay estudiantes — ¡sé el primero en agregar tu nombre!",
+      "newStudent": "Nuevo Estudiante",
+      "namePlaceholder": "Escribe tu nombre...",
+      "letsGo": "¡Vamos! →",
+      "switchBtn": "Cambiar"
+    }
   }
 ];

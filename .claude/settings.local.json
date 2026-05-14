@@ -4,7 +4,11 @@
       "Bash(node generate-placeholders.js)",
       "Bash(npm install *)",
       "Bash(node -e \"const Anthropic = require\\('@anthropic-ai/sdk'\\); console.log\\('SDK OK, version:', require\\('@anthropic-ai/sdk/package.json'\\).version\\)\")",
-      "Bash(node -e \"const Anthropic = require\\('@anthropic-ai/sdk'\\); console.log\\('SDK OK'\\)\")"
+      "Bash(node -e \"const Anthropic = require\\('@anthropic-ai/sdk'\\); console.log\\('SDK OK'\\)\")",
+      "PowerShell(\\(Get-Content \"c:\\\\Users\\\\Jacob\\\\Documents\\\\GitHub\\\\LearnNanoXRP\\\\style.css\" | Measure-Object -Line\\).Lines)",
+      "PowerShell(\\(Get-Content \"c:\\\\Users\\\\Jacob\\\\Documents\\\\GitHub\\\\LearnNanoXRP\\\\lessons\\\\lesson1-assembly-es\\\\index.html\" | Measure-Object -Line\\).Lines)",
+      "Bash(node -e ' *)",
+      "Bash(node -e \"const fs=require\\('fs'\\); try{new Function\\(fs.readFileSync\\('c:/Users/Jacob/Documents/GitHub/LearnNanoXRP/app.js','utf8'\\)\\); console.log\\('OK'\\)}catch\\(e\\){console.log\\('ERROR:',e.message\\)}\")"
     ]
   }
 }

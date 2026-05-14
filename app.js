@@ -118,7 +118,7 @@ const app = (() => {
     const frame = document.getElementById('lessonFrame');
     frame.style.display = 'none';
     frame.src = '';
-    document.getElementById('currentLessonTitle').textContent = 'Select a lesson to begin';
+    document.getElementById('currentLessonTitle').textContent = t('selectLesson') || 'Select a lesson to begin';
     const prevBtn = document.getElementById('prevLessonBtn');
     const nextBtn = document.getElementById('nextLessonBtn');
     prevBtn.disabled = true;
@@ -183,9 +183,9 @@ const app = (() => {
 
   function statusBadge(status) {
     switch (status) {
-      case 'complete':    return '<span class="card-badge badge-done">Done!</span>';
-      case 'in-progress': return '<span class="card-badge badge-active">In Progress</span>';
-      case 'locked':      return '<span class="card-badge badge-locked">Locked</span>';
+      case 'complete':    return `<span class="card-badge badge-done">${t('badgeDone') || 'Done!'}</span>`;
+      case 'in-progress': return `<span class="card-badge badge-active">${t('badgeInProgress') || 'In Progress'}</span>`;
+      case 'locked':      return '<span class="card-badge badge-locked">🔒</span>';
       default:            return '';
     }
   }
@@ -201,7 +201,7 @@ const app = (() => {
       btn.innerHTML = `
         <span class="card-icon">${statusIcon(status)}</span>
         <span class="card-info">
-          <span class="card-num">Lesson ${lesson.num}</span>
+          <span class="card-num">${t('lessonLabel') || 'Lesson'} ${lesson.num}</span>
           <span class="card-name">${lesson.title}</span>
         </span>
         ${statusBadge(status)}
@@ -210,16 +210,6 @@ const app = (() => {
       nav.appendChild(btn);
     });
 
-    const dl = document.getElementById('downloadLinks');
-    dl.innerHTML = '';
-    LESSONS.forEach(lesson => {
-      const a = document.createElement('a');
-      a.href = lesson.scorm;
-      a.download = '';
-      a.className = 'download-link';
-      a.innerHTML = `📦 Lesson ${lesson.num} SCORM`;
-      dl.appendChild(a);
-    });
   }
 
   function renderWelcomeGrid() {
@@ -232,7 +222,7 @@ const app = (() => {
       card.className = 'overview-card' + (status === 'complete' ? ' oc-complete' : '');
       card.innerHTML = `
         <div class="oc-icon">${lesson.icon}</div>
-        <div class="oc-num">Lesson ${lesson.num}</div>
+        <div class="oc-num">${t('lessonLabel') || 'Lesson'} ${lesson.num}</div>
         <div class="oc-title">${lesson.title}</div>
       `;
       card.addEventListener('click', () => { if (status !== 'locked') loadLesson(idx); });
@@ -247,7 +237,81 @@ const app = (() => {
     document.getElementById('progressPct').textContent = pct + '%';
   }
 
-  // ── Language ──────────────────────────────────────────────
+  // ── Language / UI strings ─────────────────────────────────
+  function t(key, replacements) {
+    const ui = (window.AVAILABLE_LANGUAGES || []).find(l => l.code === currentLang)?.ui;
+    let str = (ui && ui[key]) || null;
+    if (!str) return null;
+    if (replacements) Object.entries(replacements).forEach(([k, v]) => { str = str.replace('{' + k + '}', v); });
+    return str;
+  }
+
+  function applyUIStrings() {
+    const EN = {
+      subtitleHero:    'Robot Coding Adventure',
+      sidebarTitle:    'Lessons',
+      progressLabel:   'Progress',
+      prevBtn:         '← Previous',
+      nextBtn:         'Next Lesson →',
+      allDone:         'All Done! 🎉',
+      selectLesson:    'Select a lesson to begin',
+      welcomeTitle:    'Welcome to LearnNanoXRP!',
+      welcomeDesc:     "You're going to learn how to build and program your very own robot. Click a lesson on the left to get started!",
+      startLearning:   'Start Learning! →',
+      badgeDone:       'Done!',
+      badgeInProgress: 'In Progress',
+      stayHere:        'Stay Here',
+      modalNext:       'Next Lesson →',
+      whosLearning:    "Who's Learning Today?",
+      clickYourName:   'Click your name, or add yourself below!',
+      noStudents:      'No students yet — be the first to add your name!',
+      newStudent:      'New Student',
+      namePlaceholder: 'Type your name...',
+      letsGo:          "Let's Go! →",
+      switchBtn:       'Switch',
+    };
+    const str = key => t(key) || EN[key] || '';
+    const set = (sel, key) => { const el = document.querySelector(sel); if (el) el.textContent = str(key); };
+    const setAttr = (sel, attr, key) => { const el = document.querySelector(sel); if (el) el.setAttribute(attr, str(key)); };
+
+    set('.header-sub',           'subtitleHero');
+    set('.sidebar-header h2',    'sidebarTitle');
+    set('.progress-label',       'progressLabel');
+
+    // Welcome screen
+    set('.welcome-content h2',   'welcomeTitle');
+    set('.welcome-content > p',  'welcomeDesc');
+    const startBtn = document.querySelector('.btn-large');
+    if (startBtn) startBtn.textContent = str('startLearning');
+
+    // Nav buttons
+    const prevBtn = document.getElementById('prevLessonBtn');
+    if (prevBtn) prevBtn.textContent = str('prevBtn');
+    // nextBtn text depends on position — _updateLessonChrome handles it
+
+    // Profile screen
+    set('#profileScreen .profile-content h2', 'whosLearning');
+    set('#profileScreen .profile-content > p', 'clickYourName');
+    const emptyMsg = document.getElementById('profileEmptyMsg');
+    if (emptyMsg) emptyMsg.textContent = str('noStudents');
+    set('.profile-add-section h3', 'newStudent');
+    setAttr('#profileNameInput', 'placeholder', 'namePlaceholder');
+    const letsGoBtn = document.querySelector('.profile-add-section .btn-primary');
+    if (letsGoBtn) letsGoBtn.textContent = str('letsGo');
+    const switchBtn = document.querySelector('.btn-switch');
+    if (switchBtn) switchBtn.textContent = str('switchBtn');
+
+    // Top bar (when no lesson is open)
+    if (currentLessonIdx === -1) {
+      const titleEl = document.getElementById('currentLessonTitle');
+      if (titleEl) titleEl.textContent = str('selectLesson');
+    }
+
+    // Modal stay-here button
+    const stayBtn = document.querySelector('#completionModal .btn-outline');
+    if (stayBtn) stayBtn.textContent = str('stayHere');
+  }
+
   function getLessonSrc(lesson) {
     if (!currentLang || currentLang === 'en') return lesson.src;
     // lesson.src is e.g. 'lessons/lesson1-assembly/'
@@ -258,14 +322,26 @@ const app = (() => {
   function setLanguage(code) {
     currentLang = code;
     try { localStorage.setItem(LANG_KEY, code); } catch {}
-    // Reload the open lesson in the new language
     if (currentLessonIdx >= 0) {
       const frame = document.getElementById('lessonFrame');
       frame.src = getLessonSrc(LESSONS[currentLessonIdx]);
     }
-    // Sync the picker in case setLanguage was called programmatically
     const picker = document.getElementById('langPicker');
     if (picker) picker.value = code;
+    applyUIStrings();
+    renderSidebar();
+    renderWelcomeGrid();
+    if (currentLessonIdx >= 0) _updateLessonChrome(currentLessonIdx);
+  }
+
+  function detectBrowserLanguage(langs) {
+    const available = new Set(langs.map(l => l.code));
+    const preferred = navigator.languages || (navigator.language ? [navigator.language] : []);
+    for (const lang of preferred) {
+      const code = lang.toLowerCase().split('-')[0];
+      if (code !== 'en' && available.has(code)) return code;
+    }
+    return null;
   }
 
   function initLanguagePicker() {
@@ -274,11 +350,23 @@ const app = (() => {
     const picker = document.getElementById('langPicker');
     if (!wrap || !picker) return;
 
-    // Restore saved language
+    // Restore saved language; if none saved, auto-detect from browser
+    let hasSaved = false;
     try {
       const saved = localStorage.getItem(LANG_KEY);
-      if (saved && langs.find(l => l.code === saved)) currentLang = saved;
+      if (saved && langs.find(l => l.code === saved)) {
+        currentLang = saved;
+        hasSaved = true;
+      }
     } catch {}
+
+    if (!hasSaved) {
+      const detected = detectBrowserLanguage(langs);
+      if (detected) {
+        currentLang = detected;
+        try { localStorage.setItem(LANG_KEY, detected); } catch {}
+      }
+    }
 
     // Only show the picker when there are real choices
     if (langs.length < 2) { wrap.style.display = 'none'; return; }
@@ -296,6 +384,24 @@ const app = (() => {
   }
 
   // ── Lesson Loading ────────────────────────────────────────
+  function _updateLessonChrome(idx) {
+    const lesson  = LESSONS[idx];
+    const prevBtn = document.getElementById('prevLessonBtn');
+    const nextBtn = document.getElementById('nextLessonBtn');
+    document.getElementById('currentLessonTitle').textContent =
+      `${t('lessonLabel') || 'Lesson'} ${lesson.num}: ${lesson.title}`;
+    if (prevBtn) {
+      prevBtn.disabled = idx === 0;
+      prevBtn.textContent = t('prevBtn') || '← Previous';
+    }
+    if (nextBtn) {
+      nextBtn.disabled = idx === LESSONS.length - 1 || getLessonStatus(LESSONS[idx + 1]?.id) === 'locked';
+      nextBtn.textContent = idx === LESSONS.length - 1
+        ? (t('allDone') || 'All Done! 🎉')
+        : (t('nextBtn') || 'Next Lesson →');
+    }
+  }
+
   function loadLesson(idx) {
     const lesson = LESSONS[idx];
     if (!lesson) return;
@@ -310,14 +416,7 @@ const app = (() => {
     frame.style.display = 'block';
     frame.src = getLessonSrc(lesson);
 
-    document.getElementById('currentLessonTitle').textContent = `Lesson ${lesson.num}: ${lesson.title}`;
-
-    const prevBtn = document.getElementById('prevLessonBtn');
-    const nextBtn = document.getElementById('nextLessonBtn');
-    prevBtn.disabled = idx === 0;
-    nextBtn.disabled = idx === LESSONS.length - 1 || getLessonStatus(LESSONS[idx + 1]?.id) === 'locked';
-    nextBtn.textContent = idx === LESSONS.length - 1 ? 'All Done! 🎉' : 'Next Lesson →';
-
+    _updateLessonChrome(idx);
     renderSidebar();
     updateProgressBar();
   }
@@ -369,13 +468,14 @@ const app = (() => {
 
     if (isLast) {
       emoji.textContent = '🏆';
-      title.textContent = 'You Did It!';
-      msg.textContent   = 'You finished all 6 lessons! You are now an XRP Robot programming expert!';
+      title.textContent = t('youDidIt') || 'You Did It!';
+      msg.textContent   = t('allFinished') || 'You finished all 6 lessons! You are now an XRP Robot programming expert!';
       nextBtn.style.display = 'none';
     } else {
       emoji.textContent = '🎉';
-      title.textContent = `Lesson ${lesson.num} Complete!`;
-      msg.textContent   = `Awesome work! You scored ${score}%. Ready for the next lesson?`;
+      title.textContent = t('lessonComplete', { n: lesson.num }) || `Lesson ${lesson.num} Complete!`;
+      msg.textContent   = t('awesomeWork', { score }) || `Awesome work! You scored ${score}%. Ready for the next lesson?`;
+      nextBtn.textContent = t('modalNext') || 'Next Lesson →';
       nextBtn.style.display = '';
     }
     modal.style.display = 'flex';
@@ -457,6 +557,19 @@ const app = (() => {
 
       tbody.appendChild(tr);
     });
+
+    const dl = document.getElementById('downloadLinks');
+    if (dl) {
+      dl.innerHTML = '';
+      LESSONS.forEach(lesson => {
+        const a = document.createElement('a');
+        a.href = lesson.scorm;
+        a.download = '';
+        a.className = 'download-link';
+        a.innerHTML = `📦 Lesson ${lesson.num} SCORM`;
+        dl.appendChild(a);
+      });
+    }
   }
 
   function _resetStudentProgress(name) {
@@ -523,6 +636,7 @@ const app = (() => {
     } catch {}
 
     initLanguagePicker();
+    applyUIStrings();
     renderSidebar();
     renderWelcomeGrid();
     updateProgressBar();

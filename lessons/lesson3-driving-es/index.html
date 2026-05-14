@@ -466,4 +466,115 @@
         <div class="quiz-question" id="q5">
           <p>5. Para hacer que un robot conduzca en un cuadrado perfecto, ¿qué tipo de comandos deberías usar?</p>
           <div class="quiz-options">
-            <button class="quiz-option"
+            <button class="quiz-option" data-q="5" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Solo no bloqueantes (set_effort + espera)
+            </button>
+            <button class="quiz-option" data-q="5" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Solo bloqueantes (straight + turn) — para que cada movimiento termine antes del siguiente
+            </button>
+            <button class="quiz-option" data-q="5" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Mezclar bloqueantes y no bloqueantes aleatoriamente
+            </button>
+            <button class="quiz-option" data-q="5" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Los bloqueantes y no bloqueantes hacen lo mismo
+            </button>
+          </div>
+        </div>
+
+        <button class="nav-btn nav-btn-forward" id="submitQuizBtn" onclick="submitQuiz()" style="margin-top:20px">
+          Enviar Respuestas ✓
+        </button>
+      </div>
+
+      <div class="quiz-result" id="quizResult">
+        <h2 id="resultTitle"></h2>
+        <p id="resultMsg"></p>
+        <button class="nav-btn nav-btn-finish" id="finishBtn" onclick="finishLesson()" style="display:none">Finalizar Lección 3 🎉</button>
+        <button class="nav-btn nav-btn-back" onclick="retryQuiz()" id="retryBtn" style="display:none">Intentar de Nuevo</button>
+      </div>
+    </div>
+
+  </div><!-- /slides-area -->
+
+  <nav class="lesson-nav-bar">
+    <button class="nav-btn nav-btn-back" id="prevBtn" onclick="prevSlide()" disabled>← Atrás</button>
+    <button class="nav-btn nav-btn-forward" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+  </nav>
+
+</div>
+
+<script>
+  const LESSON_ID = 'lesson3', TOTAL_SLIDES = 11, QUIZ_SLIDE = 11;
+  const ANSWERS = { 1:'b', 2:'c', 3:'b', 4:'b', 5:'b' };
+  let currentSlide = 1, userAnswers = {}, quizAnswered = false;
+
+  LessonRuntime.init(LESSON_ID);
+
+  function showSlide(n) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    document.getElementById('slide-' + n).classList.add('active');
+    currentSlide = n;
+    document.getElementById('slideCounter').textContent = n + ' de ' + TOTAL_SLIDES;
+    document.getElementById('progressFill').style.width = Math.round((n/TOTAL_SLIDES)*100) + '%';
+    document.getElementById('prevBtn').disabled = (n === 1);
+    document.getElementById('nextBtn').disabled = (n === QUIZ_SLIDE);
+    window.scrollTo(0, 0);
+  }
+
+  function nextSlide() { if (currentSlide < QUIZ_SLIDE) showSlide(currentSlide + 1); }
+  function prevSlide() { if (currentSlide > 1) showSlide(currentSlide - 1); }
+
+  function selectOption(btn) {
+    if (quizAnswered) return;
+    document.querySelectorAll('.quiz-option[data-q="'+btn.dataset.q+'"]').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    userAnswers[btn.dataset.q] = btn.dataset.v;
+  }
+
+  function submitQuiz() {
+    if (Object.keys(userAnswers).length < Object.keys(ANSWERS).length) { alert('¡Responde todas las preguntas primero!'); return; }
+    quizAnswered = true;
+    let correct = 0;
+    Object.keys(ANSWERS).forEach(q => {
+      const right = ANSWERS[q], user = userAnswers[q];
+      document.querySelectorAll('.quiz-option[data-q="'+q+'"]').forEach(btn => {
+        btn.classList.add('answered');
+        if (btn.dataset.v === right) btn.classList.add('correct');
+        else if (btn.dataset.v === user) btn.classList.add('wrong');
+      });
+      if (user === right) correct++;
+    });
+    const total = Object.keys(ANSWERS).length;
+    const score = Math.round((correct/total)*100), passed = score >= 80;
+    const result = document.getElementById('quizResult');
+    result.style.display = 'block';
+    result.className = 'quiz-result ' + (passed ? 'pass' : 'fail');
+    document.getElementById('submitQuizBtn').style.display = 'none';
+    if (passed) {
+      document.getElementById('resultTitle').textContent = '🎉 ¡Excelente! '+correct+'/'+total+' ¡Correctas!';
+      document.getElementById('resultMsg').textContent = 'Puntuación: '+score+'%. ¡Entiendes los comandos bloqueantes y no bloqueantes!';
+      document.getElementById('finishBtn').style.display = 'inline-flex';
+      LessonRuntime.complete(score);
+    } else {
+      document.getElementById('resultTitle').textContent = '🤔 ¡Casi! '+correct+'/'+total+' Correctas';
+      document.getElementById('resultMsg').textContent = 'Obtuviste '+score+'%. ¡Revisa las diapositivas 3-7 y vuelve a intentarlo!';
+      document.getElementById('retryBtn').style.display = 'inline-flex';
+    }
+  }
+
+  function retryQuiz() {
+    quizAnswered = false; userAnswers = {};
+    document.getElementById('quizResult').style.display = 'none';
+    document.getElementById('submitQuizBtn').style.display = 'inline-flex';
+    document.querySelectorAll('.quiz-option').forEach(b => b.className = 'quiz-option');
+  }
+
+  function finishLesson() {
+    document.getElementById('finishBtn').textContent = '✅ ¡Lección Completada!';
+    document.getElementById('finishBtn').disabled = true;
+  }
+
+  showSlide(1);
+</script>
+</body>
+</html>

@@ -92,8 +92,8 @@ async function translateWithClaude(client, html, langCode) {
   const langLabel = LANG_LABELS[langCode] || langCode;
 
   const message = await client.messages.create({
-    model:      'claude-haiku-4-5-20251001',
-    max_tokens: 8192,
+    model:      'claude-sonnet-4-6',
+    max_tokens: 16000,
     messages: [{
       role: 'user',
       content:
@@ -119,7 +119,71 @@ ${html}`,
   // Strip any accidental markdown code fences Claude might add
   result = result.replace(/^```html\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```\s*$/i, '');
 
+  // Detect truncation
+  if (!result.toLowerCase().trim().endsWith('</html>')) {
+    throw new Error('Translation appears truncated (does not end with </html>). Try re-running with --force.');
+  }
+
   return result;
+}
+
+// ── Translate UI strings for the outer shell ──────────────
+async function translateUIStrings(client, langCode) {
+  const langLabel = LANG_LABELS[langCode] || langCode;
+
+  const UI_KEYS = {
+    subtitleHero:    'Robot Coding Adventure',
+    sidebarTitle:    'Lessons',
+    progressLabel:   'Progress',
+    prevBtn:         '← Previous',
+    nextBtn:         'Next Lesson →',
+    allDone:         'All Done! 🎉',
+    selectLesson:    'Select a lesson to begin',
+    welcomeTitle:    'Welcome to LearnNanoXRP!',
+    welcomeDesc:     "You're going to learn how to build and program your very own robot. Click a lesson on the left to get started!",
+    startLearning:   'Start Learning! →',
+    lessonLabel:     'Lesson',
+    badgeDone:       'Done!',
+    badgeInProgress: 'In Progress',
+    stayHere:        'Stay Here',
+    modalNext:       'Next Lesson →',
+    lessonComplete:  'Lesson {n} Complete!',
+    awesomeWork:     'Awesome work! You scored {score}%. Ready for the next lesson?',
+    youDidIt:        'You Did It!',
+    allFinished:     'You finished all 6 lessons! You are now an XRP Robot programming expert!',
+    whosLearning:    "Who's Learning Today?",
+    clickYourName:   'Click your name, or add yourself below!',
+    noStudents:      'No students yet — be the first to add your name!',
+    newStudent:      'New Student',
+    namePlaceholder: 'Type your name...',
+    letsGo:          "Let's Go! →",
+    switchBtn:       'Switch',
+  };
+
+  const message = await client.messages.create({
+    model:      'claude-sonnet-4-6',
+    max_tokens: 2048,
+    messages: [{
+      role: 'user',
+      content:
+`Translate the following JSON UI strings into ${langLabel} (language code: ${langCode}).
+These strings are used in a 5th-grade robot coding learning website.
+
+Rules:
+1. Translate ALL string values into natural, friendly ${langLabel}.
+2. Preserve {n}, {score}, and other {placeholder} tokens exactly as-is — they are filled in at runtime.
+3. Keep "LearnNanoXRP", "NanoXRP", "XRP" in English.
+4. Keep emoji exactly as they appear.
+5. Return ONLY valid JSON with the same keys — no explanation, no markdown fences.
+
+JSON to translate:
+${JSON.stringify(UI_KEYS, null, 2)}`,
+    }],
+  });
+
+  let raw = message.content[0].text.trim();
+  raw = raw.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```\s*$/i, '');
+  return JSON.parse(raw);
 }
 
 // ── Copy a folder recursively (Node 16.7+ fs.cpSync) ──────
@@ -183,8 +247,7 @@ async function translateLesson(client, lesson, langCode, force) {
 }
 
 // ── Update languages.js ───────────────────────────────────
-function updateLanguagesFile(langCode, langLabel) {
-  // Parse existing file
+function updateLanguagesFile(langCode, langLabel, uiStrings) {
   let langs = [{ code: 'en', label: 'English' }];
   if (fs.existsSync(LANG_FILE)) {
     const raw = fs.readFileSync(LANG_FILE, 'utf8');
@@ -194,8 +257,12 @@ function updateLanguagesFile(langCode, langLabel) {
     }
   }
 
-  if (!langs.find(l => l.code === langCode)) {
-    langs.push({ code: langCode, label: langLabel });
+  const existing = langs.find(l => l.code === langCode);
+  const entry = { code: langCode, label: langLabel, ...(uiStrings ? { ui: uiStrings } : {}) };
+  if (existing) {
+    Object.assign(existing, entry);
+  } else {
+    langs.push(entry);
   }
 
   const out = [
@@ -249,7 +316,15 @@ async function main() {
     }
 
     if (allOk && !opts.lessonFilter) {
-      updateLanguagesFile(langCode, langLabel);
+      process.stdout.write(`  ✦  Translating UI strings ... `);
+      let uiStrings = null;
+      try {
+        uiStrings = await translateUIStrings(client, langCode);
+        console.log('done');
+      } catch (err) {
+        console.warn(`\n  ⚠  UI string translation failed: ${err.message}`);
+      }
+      updateLanguagesFile(langCode, langLabel, uiStrings);
     } else if (!allOk) {
       console.warn(`  ⚠  Some translations failed — languages.js not updated for ${langCode}`);
     } else {

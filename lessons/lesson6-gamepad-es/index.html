@@ -508,4 +508,30 @@
     result.className = 'quiz-result ' + (passed ? 'pass' : 'fail');
     document.getElementById('submitQuizBtn').style.display = 'none';
     if (passed) {
-      document.getElementById('resultTitle').textContent =
+      document.getElementById('resultTitle').textContent = '🏆 ¡Lo Lograste! '+correct+'/'+total+' ¡Correctas!';
+      document.getElementById('resultMsg').textContent = 'Puntuación: '+score+'%. ¡Completaste las 6 lecciones de NanoXRP! ¡Eres un Ingeniero Robótico!';
+      document.getElementById('finishBtn').style.display = 'inline-flex';
+      LessonRuntime.complete(score);
+    } else {
+      document.getElementById('resultTitle').textContent = '🤔 ¡Casi! '+correct+'/'+total+' Correctas';
+      document.getElementById('resultMsg').textContent = 'Obtuviste '+score+'%. ¡Revisa las diapositivas del mando y vuelve a intentarlo!';
+      document.getElementById('retryBtn').style.display = 'inline-flex';
+    }
+  }
+
+  function retryQuiz() {
+    quizAnswered = false; userAnswers = {};
+    document.getElementById('quizResult').style.display = 'none';
+    document.getElementById('submitQuizBtn').style.display = 'inline-flex';
+    document.querySelectorAll('.quiz-option').forEach(b => b.className = 'quiz-option');
+  }
+
+  function finishLesson() {
+    document.getElementById('finishBtn').textContent = '🏆 ¡Todo Listo — Ingeniero Robótico!';
+    document.getElementById('finishBtn').disabled = true;
+  }
+
+  showSlide(1);
+</script>
+</body>
+</html>

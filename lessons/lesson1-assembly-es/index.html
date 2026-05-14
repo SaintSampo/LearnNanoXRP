@@ -552,3 +552,42 @@
 
     const score  = Math.round((correct / numQ) * 100);
     const passed = score >= 75;
+    const result = document.getElementById('quizResult');
+    result.style.display = 'block';
+    result.className = 'quiz-result ' + (passed ? 'pass' : 'fail');
+
+    document.getElementById('submitQuizBtn').style.display = 'none';
+
+    if (passed) {
+      document.getElementById('resultTitle').textContent = '🎉 ¡Excelente! ' + correct + '/' + numQ + ' ¡Correctas!';
+      document.getElementById('resultMsg').textContent =
+        '¡Obtuviste ' + score + '%! ¡Sabes cómo construir el robot NanoXRP!';
+      document.getElementById('finishBtn').style.display = 'inline-flex';
+      LessonRuntime.complete(score);
+    } else {
+      document.getElementById('resultTitle').textContent = '🤔 ¡Casi! ' + correct + '/' + numQ + ' Correctas';
+      document.getElementById('resultMsg').textContent =
+        'Obtuviste ' + score + '%. ¡Revisa la lección y vuelve a intentarlo!';
+      document.getElementById('retryBtn').style.display = 'inline-flex';
+    }
+  }
+
+  function retryQuiz() {
+    quizAnswered = false;
+    userAnswers  = {};
+    document.getElementById('quizResult').style.display = 'none';
+    document.getElementById('submitQuizBtn').style.display = 'inline-flex';
+    document.querySelectorAll('.quiz-option').forEach(b => {
+      b.className = 'quiz-option';
+    });
+  }
+
+  function finishLesson() {
+    document.getElementById('finishBtn').textContent = '✅ ¡Lección Completada!';
+    document.getElementById('finishBtn').disabled = true;
+  }
+
+  showSlide(1);
+</script>
+</body>
+</html>
