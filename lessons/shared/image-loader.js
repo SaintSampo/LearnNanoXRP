@@ -31,6 +31,27 @@
       border-radius: 8px;
       pointer-events: none;
     }
+    .photo-slot.paste-ready {
+      outline: 3px solid #4a90d9;
+      outline-offset: 4px;
+      border-radius: 8px;
+      background: rgba(74,144,217,0.07);
+    }
+    .photo-slot.paste-ready::after {
+      content: "Ctrl+V to paste";
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #4a90d9;
+      background: rgba(255,255,255,0.9);
+      padding: 2px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
     .photo-slot.drag-success { outline: 3px solid #4caf50; outline-offset: 4px; }
   `;
   document.head.appendChild(style);
@@ -45,11 +66,96 @@
     } catch { return new Set(); }
   }
 
-  // ── Drag-and-drop: POSTs file bytes to dev-server.js for disk write ───────
-  function addDragDrop(img) {
+  // ── Shared upload function ────────────────────────────────────────────────
+  function extFromFile(file) {
+    if (file.name && file.name.includes('.')) {
+      const e = file.name.split('.').pop().toLowerCase();
+      if (EXTS.includes(e)) return e;
+    }
+    const mime = (file.type || '').split('/')[1];
+    const e = mime === 'jpeg' ? 'jpg' : mime;
+    return EXTS.includes(e) ? e : null;
+  }
+
+  async function uploadToSlot(img, file) {
+    const ext = extFromFile(file);
+    if (!ext) return;
+
+    const origSrc    = img.getAttribute('data-src') || '';
+    const baseName   = origSrc.replace(/^.*\//, '').replace(/\.[^.]+$/, '');
+    const dir        = img.dataset.imagesDir || '';
+    const uploadPath = (dir + baseName + '.' + ext).replace(/^\//, '');
+
+    if (!/^lessons\/(source|translations\/[a-z]{2})\/[^/]+\/images\//.test(uploadPath)) return;
+
+    const slot = img.closest('.photo-slot');
+    try {
+      const res = await fetch('/upload-image?path=' + encodeURIComponent(uploadPath), {
+        method: 'POST',
+        headers: { 'Content-Type': file.type },
+        body: await file.arrayBuffer(),
+      });
+      if (res.ok) {
+        img.src = '/' + uploadPath + '?t=' + Date.now();
+        if (slot) {
+          slot.classList.remove('paste-ready');
+          slot.classList.add('drag-success');
+          setTimeout(() => slot.classList.remove('drag-success'), 2000);
+        }
+        activeImg = null;
+      }
+    } catch (err) {
+      console.error('Image upload failed:', err);
+    }
+  }
+
+  // ── Paste target tracking ────────────────────────────────────────────────
+  // activeImg: set by clicking a slot (sticky until Esc or successful paste)
+  // hoveredImg: set by mouse-entering a slot (used if nothing is clicked)
+  let activeImg = null;
+  let hoveredImg = null;
+
+  function setActive(img) {
+    if (activeImg && activeImg !== img) {
+      activeImg.closest('.photo-slot')?.classList.remove('paste-ready');
+    }
+    activeImg = img;
+    img?.closest('.photo-slot')?.classList.add('paste-ready');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && activeImg) {
+      activeImg.closest('.photo-slot')?.classList.remove('paste-ready');
+      activeImg = null;
+    }
+  });
+
+  document.addEventListener('paste', async e => {
+    const items = Array.from(e.clipboardData?.items || []);
+    const imageItem = items.find(item => item.type.startsWith('image/'));
+    if (!imageItem) return;
+
+    const target = activeImg || hoveredImg;
+    if (!target) return;
+
+    e.preventDefault();
+    const file = imageItem.getAsFile();
+    if (file) await uploadToSlot(target, file);
+  });
+
+  // ── Drag-and-drop + click-to-activate ────────────────────────────────────
+  function addInteraction(img) {
     const slot = img.closest('.photo-slot');
     if (!slot) return;
 
+    // Click → make this the paste target
+    slot.addEventListener('click', () => setActive(img));
+
+    // Hover tracking for paste-without-clicking
+    slot.addEventListener('mouseenter', () => { hoveredImg = img; });
+    slot.addEventListener('mouseleave', () => { if (hoveredImg === img) hoveredImg = null; });
+
+    // Drag-and-drop
     slot.addEventListener('dragover', e => {
       e.preventDefault();
       e.dataTransfer.dropEffect = 'copy';
@@ -63,35 +169,9 @@
     slot.addEventListener('drop', async e => {
       e.preventDefault();
       slot.classList.remove('drag-over');
-
       const file = e.dataTransfer.files[0];
       if (!file || !file.type.startsWith('image/')) return;
-
-      const ext = file.name.split('.').pop().toLowerCase();
-      if (!EXTS.includes(ext)) return;
-
-      // Always derive the target filename from the original placeholder name (data-src)
-      const origSrc  = img.getAttribute('data-src') || '';
-      const baseName = origSrc.replace(/^.*\//, '').replace(/\.[^.]+$/, ''); // e.g. "01-completed-robot"
-      const dir      = img.dataset.imagesDir || ''; // set during DOMContentLoaded
-      const uploadPath = (dir + baseName + '.' + ext).replace(/^\//, '');
-
-      if (!/^lessons\/[^/]+\/images\//.test(uploadPath)) return;
-
-      try {
-        const res = await fetch('/upload-image?path=' + encodeURIComponent(uploadPath), {
-          method: 'POST',
-          headers: { 'Content-Type': file.type },
-          body: await file.arrayBuffer(),
-        });
-        if (res.ok) {
-          img.src = '/' + uploadPath + '?t=' + Date.now();
-          slot.classList.add('drag-success');
-          setTimeout(() => slot.classList.remove('drag-success'), 2000);
-        }
-      } catch (err) {
-        console.error('Image upload failed:', err);
-      }
+      await uploadToSlot(img, file);
     });
   }
 
@@ -105,13 +185,13 @@
     const pageDir   = new URL('./', document.baseURI).pathname;
     const firstSrc  = imgs[0].getAttribute('data-src'); // e.g. "images/01-foo.svg"
     const relImgDir = firstSrc.replace(/\/[^/]+$/, '/'); // "images/"
-    const imagesDir = pageDir + relImgDir;               // "/lessons/lesson1-assembly/images/"
+    const imagesDir = pageDir + relImgDir;               // e.g. "/lessons/source/lesson1-assembly/images/"
 
     // One request: get the complete list of files in this lesson's images/ folder
     const available = await listImages(imagesDir);
 
     imgs.forEach(img => {
-      img.dataset.imagesDir = imagesDir; // stored for drag-drop handler
+      img.dataset.imagesDir = imagesDir; // stored for upload handler
 
       const origSrc  = img.getAttribute('data-src');
       const fileName = origSrc.replace(/^.*\//, '');                 // "01-foo.svg"
@@ -125,7 +205,7 @@
       }
       // else: file deleted and not yet replaced → img.src stays empty, no request, no 404
 
-      addDragDrop(img);
+      addInteraction(img);
     });
   });
 })();

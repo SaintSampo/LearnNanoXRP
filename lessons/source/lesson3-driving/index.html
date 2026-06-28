@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lesson 3 – Making the Robot Drive</title>
+  <link rel="stylesheet" href="../../shared/lesson.css" />
+  <script src="../../shared/scorm-runtime.js"></script>
+  <script src="../../shared/image-loader.js"></script>
+</head>
+<body>
+<div id="lesson-shell">
+
+  <header class="lesson-header">
+    <div class="lesson-header-left">
+      <h2>🚗 Lesson 3: Making the Robot Drive</h2>
+      <p>NanoXRP Robot Coding Adventures</p>
+    </div>
+    <span class="slide-counter" id="slideCounter">1 of 11</span>
+  </header>
+
+  <div class="lesson-progress-track">
+    <div class="lesson-progress-fill" id="progressFill" style="width:9%"></div>
+  </div>
+
+  <div class="slides-area">
+
+    <!-- ══ SLIDE 1 ══ -->
+    <div class="slide active" id="slide-1">
+      <h1>🚗 Let's Get Moving!</h1>
+      <p>Time to drive your robot! In this lesson, you'll learn the most important concept in robot programming: the difference between <strong>blocking</strong> and <strong>non-blocking</strong> commands.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/01-robot-driving.svg" alt="NanoXRP robot driving on a flat surface" />
+        <div class="photo-caption">Your robot, ready to roll!</div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">🎯</span>
+        <div class="callout-body">
+          <strong>What you'll learn:</strong>
+          <ul>
+            <li>The DriveTrain block category</li>
+            <li>What "blocking" commands do</li>
+            <li>What "non-blocking" commands do</li>
+            <li>When to use each type</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>Understanding blocking vs. non-blocking is one of the most important ideas in all of programming — not just for robots! Let's figure it out together.</p>
+    </div>
+
+    <!-- ══ SLIDE 2 ══ -->
+    <div class="slide" id="slide-2">
+      <h1>🧱 DriveTrain Blocks Overview</h1>
+      <p>All the driving commands are in the <strong>DriveTrain</strong> category (the rust-orange blocks). Here's what each one does:</p>
+
+      <div class="photo-slot">
+        <img data-src="images/02-drivetrain-blocks.svg" alt="All DriveTrain blocks visible in the toolbox" />
+        <div class="photo-caption">The DriveTrain category has all your driving commands</div>
+      </div>
+
+      <table style="width:100%;border-collapse:collapse;margin:14px 0">
+        <thead>
+          <tr style="background:var(--primary-light)">
+            <th style="padding:8px 12px;text-align:left;border-radius:8px 0 0 0">Block Name</th>
+            <th style="padding:8px 12px;text-align:left">What it does</th>
+            <th style="padding:8px 12px;text-align:left;border-radius:0 8px 0 0">Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 12px"><strong>straight(dist, effort)</strong></td>
+            <td style="padding:8px 12px">Drive forward or backward a set distance</td>
+            <td style="padding:8px 12px"><span style="color:var(--info);font-weight:700">BLOCKING</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 12px"><strong>turn(degrees, effort)</strong></td>
+            <td style="padding:8px 12px">Rotate left or right a set number of degrees</td>
+            <td style="padding:8px 12px"><span style="color:var(--info);font-weight:700">BLOCKING</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 12px"><strong>set_effort(left, right)</strong></td>
+            <td style="padding:8px 12px">Set motor power immediately (-1 to 1)</td>
+            <td style="padding:8px 12px"><span style="color:var(--accent);font-weight:700">NON-BLOCKING</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 12px"><strong>set_speed(left, right)</strong></td>
+            <td style="padding:8px 12px">Set motor speed in RPM</td>
+            <td style="padding:8px 12px"><span style="color:var(--accent);font-weight:700">NON-BLOCKING</span></td>
+          </tr>
+          <tr>
+            <td style="padding:8px 12px"><strong>stop()</strong></td>
+            <td style="padding:8px 12px">Stop both motors immediately</td>
+            <td style="padding:8px 12px"><span style="color:var(--accent);font-weight:700">NON-BLOCKING</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ══ SLIDE 3 ══ -->
+    <div class="slide" id="slide-3">
+      <h1>⏸️ What is a BLOCKING Command?</h1>
+      <p>A <strong>blocking command</strong> makes the program <strong>pause and wait</strong> until the command is completely finished before moving on to the next line.</p>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">🤔</span>
+        <div class="callout-body">
+          <strong>Think of it like a crosswalk signal</strong>
+          <p>When you press the button to cross, you <em>wait</em> at the curb until the light turns green. You don't cross yet — you're "blocked" until it's done. That's exactly what a blocking command does!</p>
+        </div>
+      </div>
+
+      <div class="photo-slot">
+        <img data-src="images/03-blocking-example.svg" alt="Diagram showing blocking command pausing the program" />
+        <div class="photo-caption">Blocking: Step 1 must FINISH before Step 2 can start</div>
+      </div>
+
+      <h2>The two blocking drive commands are:</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">📏</div>
+          <div class="step-content">
+            <h3>straight(distance, effort)</h3>
+            <p>Drives the robot <strong>exactly that far</strong> and stops. The program waits until the robot has traveled that whole distance before running the next block.</p>
+            <p><strong>distance</strong> = centimeters (20 = 20 cm forward, -20 = backward)</p>
+            <p><strong>effort</strong> = motor power (0.0 to 1.0 — try 0.5 to start!)</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">↩️</div>
+          <div class="step-content">
+            <h3>turn(degrees, effort)</h3>
+            <p>Turns the robot <strong>exactly that many degrees</strong> and stops. 90 degrees = a quarter turn. 180 degrees = a half turn (U-turn).</p>
+            <p><strong>degrees</strong> = positive = turn right, negative = turn left</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 4 ══ -->
+    <div class="slide" id="slide-4">
+      <h1>📐 Blocking Commands in Action</h1>
+      <p>Let's use blocking commands to drive the robot in a <strong>square!</strong></p>
+
+      <div class="photo-slot">
+        <img data-src="images/04-drive-square.svg" alt="Robot driving in a square path on the floor" />
+        <div class="photo-caption">Four forward moves + four right turns = a perfect square!</div>
+      </div>
+
+      <p>Here's the Blockly program. The robot drives forward 30 cm, turns right 90°, and repeats four times:</p>
+
+      <div class="block-diagram">
+        <span class="block gray">🔁 repeat <span class="block-value">4</span> times</span><br/>
+        <div class="block-indent" style="margin-top:6px">
+          <span class="block orange">📏 drive straight</span>
+          <span class="block-value">30</span> cm
+          <span class="block-value">0.5</span> effort
+        </div><br/>
+        <div class="block-indent">
+          <span class="block orange">↩️ turn</span>
+          <span class="block-value">90</span> degrees
+          <span class="block-value">0.5</span> effort
+        </div>
+      </div>
+
+      <div class="callout callout-success">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <strong>Why this works perfectly</strong>
+          <p>Because <code>straight()</code> and <code>turn()</code> are blocking, the robot finishes driving 30 cm <em>completely</em> before turning. If they weren't blocking, the robot would try to drive and turn at the same time — total chaos!</p>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Try it!</strong>
+          <p>Build this program in Blockly and run it on your robot. Does it make a square? Try changing 30 to 20 or the effort to 0.7.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 5 ══ -->
+    <div class="slide" id="slide-5">
+      <h1>▶️ What is a NON-BLOCKING Command?</h1>
+      <p>A <strong>non-blocking command</strong> starts the action and <strong>immediately moves on</strong> to the next line of code — it doesn't wait!</p>
+
+      <div class="callout callout-fun">
+        <span class="callout-icon">🤔</span>
+        <div class="callout-body">
+          <strong>Think of it like a microwave</strong>
+          <p>You press Start and then walk away to do something else. The microwave is running, but you're already doing the next thing! That's non-blocking.</p>
+        </div>
+      </div>
+
+      <div class="photo-slot">
+        <img data-src="images/05-nonblocking-example.svg" alt="Diagram showing non-blocking command continuing immediately" />
+        <div class="photo-caption">Non-blocking: the code keeps running while the motors are going!</div>
+      </div>
+
+      <h2>Non-blocking drive commands:</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">⚡</div>
+          <div class="step-content">
+            <h3>set_effort(left, right)</h3>
+            <p>Sets both motors to a power level from <strong>-1.0 to 1.0</strong>. Positive = forward, negative = backward. <em>The motors keep spinning until you tell them to stop!</em></p>
+            <p>set_effort(0.5, 0.5) = both motors at 50% forward</p>
+            <p>set_effort(-0.5, -0.5) = both motors at 50% backward</p>
+            <p>set_effort(0.5, -0.5) = spin in place (left forward, right backward)</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">⚡</div>
+          <div class="step-content">
+            <h3>stop()</h3>
+            <p>Stops both motors right now. Use this after <code>set_effort()</code> to stop the robot at the right time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 6 ══ -->
+    <div class="slide" id="slide-6">
+      <h1>⚡ Non-Blocking in Action</h1>
+      <p>Non-blocking commands are used when <strong>you decide when to stop</strong> — often with a sensor reading or a timer.</p>
+
+      <h2>Example: Drive for 2 seconds, then stop</h2>
+
+      <div class="block-diagram">
+        <div><span class="block orange">⚡ set effort</span> left <span class="block-value">0.5</span> right <span class="block-value">0.5</span></div><br/>
+        <div><span class="block gray">⏱ wait</span> <span class="block-value">2</span> <span>seconds</span></div><br/>
+        <div><span class="block red">⏹ stop motors</span></div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>What happens here?</strong>
+          <ol>
+            <li><code>set_effort(0.5, 0.5)</code> starts both motors — code moves immediately to the next block</li>
+            <li><code>wait(2)</code> pauses the code for 2 seconds (but the motors keep going!)</li>
+            <li><code>stop()</code> turns both motors off</li>
+          </ol>
+        </div>
+      </div>
+
+      <h2>Example: Drive and check sensor at the same time</h2>
+
+      <div class="block-diagram">
+        <div><span class="block orange">⚡ set effort</span> left <span class="block-value">0.5</span> right <span class="block-value">0.5</span></div><br/>
+        <div><span class="block gray">🔁 repeat until</span> <span class="block-value">distance &lt; 20 cm</span></div><br/>
+        <div class="block-indent">
+          <span class="block gray">⏱ wait</span> <span class="block-value">0.05</span> <span>seconds</span>
+        </div><br/>
+        <div><span class="block red">⏹ stop motors</span></div>
+      </div>
+
+      <p>The robot drives forward and keeps checking the sonar sensor. As soon as something is within 20 cm, it stops!</p>
+    </div>
+
+    <!-- ══ SLIDE 7 ══ -->
+    <div class="slide" id="slide-7">
+      <h1>🤔 When to Use Each Type</h1>
+      <p>Choosing the right type of command is like choosing the right tool for the job. Here's a guide:</p>
+
+      <div class="compare-grid">
+        <div class="compare-card good">
+          <h3>✅ Use BLOCKING when...</h3>
+          <ul>
+            <li>You want to drive an <strong>exact distance</strong></li>
+            <li>You want to turn an <strong>exact number of degrees</strong></li>
+            <li>Steps must happen <strong>one at a time</strong> in order</li>
+            <li>Example: drive in a square, maze navigation</li>
+          </ul>
+        </div>
+        <div class="compare-card good">
+          <h3>✅ Use NON-BLOCKING when...</h3>
+          <ul>
+            <li>You want the robot to drive <strong>while checking a sensor</strong></li>
+            <li>You want to control speed <strong>gradually</strong></li>
+            <li>You're using a <strong>gamepad</strong> (continuous control)</li>
+            <li>Example: stop-at-wall, line following, gamepad control</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-warning">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Common mistake with non-blocking!</strong>
+          <p>If you forget to call <code>stop()</code> after <code>set_effort()</code>, the robot will <strong>keep going forever</strong> until the batteries die or it crashes! Always remember to stop.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 8 ══ -->
+    <div class="slide" id="slide-8">
+      <h1>🎯 Challenge: Drive an L-Shape</h1>
+      <p>Use blocking commands to make your robot drive an L-shape path. Here's the route:</p>
+
+      <div class="photo-slot">
+        <img data-src="images/06-challenge-path.svg" alt="L-shaped path drawn on the floor for the robot to follow" />
+        <div class="photo-caption">Program the robot to drive this L-shaped path using blocking commands</div>
+      </div>
+
+      <h2>The path:</h2>
+      <ol>
+        <li>Drive <strong>forward 40 cm</strong></li>
+        <li>Turn <strong>left 90 degrees</strong> (use -90)</li>
+        <li>Drive <strong>forward 20 cm</strong></li>
+      </ol>
+
+      <div class="block-diagram">
+        <div><span class="block orange">📏 drive straight</span> <span class="block-value">40</span> cm <span class="block-value">0.5</span> effort</div><br/>
+        <div><span class="block orange">↩️ turn</span> <span class="block-value">-90</span> degrees <span class="block-value">0.5</span> effort</div><br/>
+        <div><span class="block orange">📏 drive straight</span> <span class="block-value">20</span> cm <span class="block-value">0.5</span> effort</div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Tuning tip</strong>
+          <p>If the robot doesn't turn exactly 90°, try adjusting the effort. A lower effort (like 0.3) gives more precise turns.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 9 ══ -->
+    <div class="slide" id="slide-9">
+      <h1>🔁 Non-Blocking Challenge</h1>
+      <p>Now try a non-blocking challenge: make the robot drive forward, gradually speed up, then stop!</p>
+
+      <h2>Ramp up speed:</h2>
+      <div class="block-diagram">
+        <div><span class="block orange">⚡ set effort</span> left <span class="block-value">0.2</span> right <span class="block-value">0.2</span></div><br/>
+        <div><span class="block gray">⏱ wait</span> <span class="block-value">1</span></div><br/>
+        <div><span class="block orange">⚡ set effort</span> left <span class="block-value">0.5</span> right <span class="block-value">0.5</span></div><br/>
+        <div><span class="block gray">⏱ wait</span> <span class="block-value">1</span></div><br/>
+        <div><span class="block orange">⚡ set effort</span> left <span class="block-value">0.8</span> right <span class="block-value">0.8</span></div><br/>
+        <div><span class="block gray">⏱ wait</span> <span class="block-value">1</span></div><br/>
+        <div><span class="block red">⏹ stop motors</span></div>
+      </div>
+
+      <p>You can't do this with blocking commands! Only non-blocking allows you to change speed mid-run.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/07-speed-ramp.svg" alt="Graph showing robot speed increasing over time" />
+        <div class="photo-caption">The robot starts slow, speeds up, then stops — like a real vehicle!</div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 10 ══ -->
+    <div class="slide" id="slide-10">
+      <h1>📝 Summary</h1>
+      <p>Let's review what you've learned about making the robot drive!</p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h3>⏸️ BLOCKING</h3>
+          <p><strong>straight(dist, effort)</strong><br/>Drive exact distance, wait until done.</p>
+          <p><strong>turn(deg, effort)</strong><br/>Turn exact degrees, wait until done.</p>
+          <p>Best for: step-by-step paths</p>
+        </div>
+        <div class="compare-card">
+          <h3>▶️ NON-BLOCKING</h3>
+          <p><strong>set_effort(L, R)</strong><br/>Set motor power, keep going.</p>
+          <p><strong>stop()</strong><br/>Stop motors right now.</p>
+          <p>Best for: sensor-based stopping, gradual control</p>
+        </div>
+      </div>
+
+      <div class="callout callout-success">
+        <span class="callout-icon">🏆</span>
+        <div class="callout-body">
+          <strong>You're a driving expert!</strong>
+          <p>Understanding this difference puts you ahead of a lot of beginner programmers. Now take the quiz to finish this lesson!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 11 – QUIZ ══ -->
+    <div class="slide quiz-slide" id="slide-11">
+      <div class="quiz-header">
+        <span class="quiz-icon">🧠</span>
+        <h1>Quick Check!</h1>
+        <p>You need <strong>4 out of 5 correct</strong> to pass!</p>
+      </div>
+
+      <div id="quizForm">
+
+        <div class="quiz-question" id="q1">
+          <p>1. What does a BLOCKING command do?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="1" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> It makes the robot go faster
+            </button>
+            <button class="quiz-option" data-q="1" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> It pauses the program and waits until the action is fully complete
+            </button>
+            <button class="quiz-option" data-q="1" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> It starts the action and immediately moves to the next line
+            </button>
+            <button class="quiz-option" data-q="1" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> It blocks the robot from moving backward
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q2">
+          <p>2. Which command would you use to drive the robot EXACTLY 30 cm forward?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="2" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> set_effort(0.5, 0.5)
+            </button>
+            <button class="quiz-option" data-q="2" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> stop()
+            </button>
+            <button class="quiz-option" data-q="2" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> straight(30, 0.5)
+            </button>
+            <button class="quiz-option" data-q="2" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> turn(30, 0.5)
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q3">
+          <p>3. You want to drive the robot forward while checking a sensor. Which type of command should you start with?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="3" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Blocking (straight)
+            </button>
+            <button class="quiz-option" data-q="3" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Non-blocking (set_effort)
+            </button>
+            <button class="quiz-option" data-q="3" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> It doesn't matter
+            </button>
+            <button class="quiz-option" data-q="3" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Neither — you can't check sensors while driving
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q4">
+          <p>4. What happens if you use set_effort() but forget to call stop()?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="4" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> The robot stops automatically after 1 second
+            </button>
+            <button class="quiz-option" data-q="4" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> The robot motors keep running until the batteries die or it crashes
+            </button>
+            <button class="quiz-option" data-q="4" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> The robot goes backward
+            </button>
+            <button class="quiz-option" data-q="4" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Nothing, the robot stops normally
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q5">
+          <p>5. To make a robot drive in a perfect square, which type of commands should you use?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="5" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Only non-blocking (set_effort + wait)
+            </button>
+            <button class="quiz-option" data-q="5" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Only blocking (straight + turn) — so each move finishes before the next starts
+            </button>
+            <button class="quiz-option" data-q="5" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Mix blocking and non-blocking randomly
+            </button>
+            <button class="quiz-option" data-q="5" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Blocking and non-blocking do the same thing
+            </button>
+          </div>
+        </div>
+
+        <button class="nav-btn nav-btn-forward" id="submitQuizBtn" onclick="submitQuiz()" style="margin-top:20px">
+          Submit Answers ✓
+        </button>
+      </div>
+
+      <div class="quiz-result" id="quizResult">
+        <h2 id="resultTitle"></h2>
+        <p id="resultMsg"></p>
+        <button class="nav-btn nav-btn-finish" id="finishBtn" onclick="finishLesson()" style="display:none">Finish Lesson 3 🎉</button>
+        <button class="nav-btn nav-btn-back" onclick="retryQuiz()" id="retryBtn" style="display:none">Try Again</button>
+      </div>
+    </div>
+
+  </div><!-- /slides-area -->
+
+  <nav class="lesson-nav-bar">
+    <button class="nav-btn nav-btn-back" id="prevBtn" onclick="prevSlide()" disabled>← Back</button>
+    <button class="nav-btn nav-btn-forward" id="nextBtn" onclick="nextSlide()">Next →</button>
+  </nav>
+
+</div>
+
+<script>
+  const LESSON_ID = 'lesson3', TOTAL_SLIDES = 11, QUIZ_SLIDE = 11;
+  const ANSWERS = { 1:'b', 2:'c', 3:'b', 4:'b', 5:'b' };
+  let currentSlide = 1, userAnswers = {}, quizAnswered = false;
+
+  LessonRuntime.init(LESSON_ID);
+
+  function showSlide(n) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    document.getElementById('slide-' + n).classList.add('active');
+    currentSlide = n;
+    document.getElementById('slideCounter').textContent = n + ' of ' + TOTAL_SLIDES;
+    document.getElementById('progressFill').style.width = Math.round((n/TOTAL_SLIDES)*100) + '%';
+    document.getElementById('prevBtn').disabled = (n === 1);
+    document.getElementById('nextBtn').disabled = (n === QUIZ_SLIDE);
+    window.scrollTo(0, 0);
+  }
+
+  function nextSlide() { if (currentSlide < QUIZ_SLIDE) showSlide(currentSlide + 1); }
+  function prevSlide() { if (currentSlide > 1) showSlide(currentSlide - 1); }
+
+  function selectOption(btn) {
+    if (quizAnswered) return;
+    document.querySelectorAll('.quiz-option[data-q="'+btn.dataset.q+'"]').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    userAnswers[btn.dataset.q] = btn.dataset.v;
+  }
+
+  function submitQuiz() {
+    if (Object.keys(userAnswers).length < Object.keys(ANSWERS).length) { alert('Answer all questions first!'); return; }
+    quizAnswered = true;
+    let correct = 0;
+    Object.keys(ANSWERS).forEach(q => {
+      const right = ANSWERS[q], user = userAnswers[q];
+      document.querySelectorAll('.quiz-option[data-q="'+q+'"]').forEach(btn => {
+        btn.classList.add('answered');
+        if (btn.dataset.v === right) btn.classList.add('correct');
+        else if (btn.dataset.v === user) btn.classList.add('wrong');
+      });
+      if (user === right) correct++;
+    });
+    const total = Object.keys(ANSWERS).length;
+    const score = Math.round((correct/total)*100), passed = score >= 80;
+    const result = document.getElementById('quizResult');
+    result.style.display = 'block';
+    result.className = 'quiz-result ' + (passed ? 'pass' : 'fail');
+    document.getElementById('submitQuizBtn').style.display = 'none';
+    if (passed) {
+      document.getElementById('resultTitle').textContent = '🎉 Excellent! '+correct+'/'+total+' Correct!';
+      document.getElementById('resultMsg').textContent = 'Score: '+score+'%. You understand blocking vs. non-blocking!';
+      document.getElementById('finishBtn').style.display = 'inline-flex';
+      LessonRuntime.complete(score);
+    } else {
+      document.getElementById('resultTitle').textContent = '🤔 Almost! '+correct+'/'+total+' Correct';
+      document.getElementById('resultMsg').textContent = 'You got '+score+'%. Review slides 3-7 and try again!';
+      document.getElementById('retryBtn').style.display = 'inline-flex';
+    }
+  }
+
+  function retryQuiz() {
+    quizAnswered = false; userAnswers = {};
+    document.getElementById('quizResult').style.display = 'none';
+    document.getElementById('submitQuizBtn').style.display = 'inline-flex';
+    document.querySelectorAll('.quiz-option').forEach(b => b.className = 'quiz-option');
+  }
+
+  function finishLesson() {
+    document.getElementById('finishBtn').textContent = '✅ Lesson Complete!';
+    document.getElementById('finishBtn').disabled = true;
+  }
+
+  showSlide(1);
+</script>
+</body>
+</html>

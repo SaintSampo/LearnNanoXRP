@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lección 4 – Seguir una Línea</title>
+  <link rel="stylesheet" href="../../../shared/lesson.css" />
+  <script src="../../../shared/scorm-runtime.js"></script>
+  <script src="../../../shared/image-loader.js"></script>
+</head>
+<body>
+<div id="lesson-shell">
+
+  <header class="lesson-header">
+    <div class="lesson-header-left">
+      <h2>〰️ Lección 4: Seguir una Línea</h2>
+      <p>Aventuras de Programación con Robots NanoXRP</p>
+    </div>
+    <span class="slide-counter" id="slideCounter">1 de 9</span>
+  </header>
+
+  <div class="lesson-progress-track">
+    <div class="lesson-progress-fill" id="progressFill" style="width:11%"></div>
+  </div>
+
+  <div class="slides-area">
+
+    <!-- ══ SLIDE 1 ══ -->
+    <div class="slide active" id="slide-1">
+      <h1>〰️ ¡Sigue Esa Línea!</h1>
+      <p>¡Una de las cosas más geniales que pueden hacer los robots es seguir una línea en el piso! Los autos que se conducen solos, los robots de almacén y hasta los juegos de parques de diversiones usan esta tecnología.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/01-robot-on-line.svg" alt="Robot NanoXRP siguiendo una línea de cinta negra en una superficie blanca" />
+        <div class="photo-caption">El NanoXRP siguiendo una línea de cinta negra en el piso</div>
+      </div>
+
+      <div class="callout callout-fun">
+        <span class="callout-icon">🤔</span>
+        <div class="callout-body">
+          <strong>¿Sabías que...?</strong>
+          <p>Las tiendas de abarrotes usan robots que siguen líneas en sus almacenes para llevar cajas de un estante a otro. ¡El robot sigue líneas pintadas en el piso!</p>
+        </div>
+      </div>
+
+      <p>En esta lección, aprenderás:</p>
+      <ul>
+        <li>Cómo funciona el sensor de seguimiento de línea</li>
+        <li>Cómo leer valores de sensores en Blockly</li>
+        <li>Cómo escribir un programa para seguir líneas</li>
+        <li>Cómo configurar una pista y probar tu robot</li>
+      </ul>
+    </div>
+
+    <!-- ══ SLIDE 2 ══ -->
+    <div class="slide" id="slide-2">
+      <h1>🔍 Conoce los Sensores de Reflectancia</h1>
+      <p>Tu robot tiene una <strong>placa seguidora de línea</strong> en la parte inferior con dos sensores pequeños: un <strong>sensor izquierdo</strong> y un <strong>sensor derecho</strong>.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/02-sensor-bottom-view.svg" alt="Vista inferior del robot que muestra los sensores de reflectancia" />
+        <div class="photo-caption">Parte inferior del robot — los dos sensores de reflectancia están en la parte delantera</div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>¿Qué son los sensores de reflectancia?</strong>
+          <p>Cada sensor tiene una pequeña <strong>luz infrarroja (IR)</strong> que brilla hacia el piso, y un receptor que mide cuánta luz rebota.</p>
+          <ul>
+            <li><strong>Superficie blanca</strong> → rebota mucha luz → el sensor lee <strong>un valor bajo (cerca de 0)</strong></li>
+            <li><strong>Línea negra</strong> → absorbe la luz → el sensor lee <strong>un valor alto (cerca de 1)</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="photo-slot">
+        <img data-src="images/03-ir-diagram.svg" alt="Diagrama de cómo funciona la reflexión infrarroja" />
+        <div class="photo-caption">Cómo funciona la reflexión IR: el negro absorbe la luz, el blanco la refleja</div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 3 ══ -->
+    <div class="slide" id="slide-3">
+      <h1>📊 Leer Valores de Sensores</h1>
+      <p>En Blockly, puedes leer los valores de los sensores usando bloques en la categoría <strong>Sensores → Reflectancia</strong>.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/04-sensor-blocks.svg" alt="Bloques de sensores de Blockly para reflectancia izquierda y derecha" />
+        <div class="photo-caption">Los bloques de sensores de reflectancia izquierdo y derecho</div>
+      </div>
+
+      <h2>Qué significan los valores:</h2>
+      <table style="width:100%;border-collapse:collapse;margin:14px 0">
+        <thead>
+          <tr style="background:var(--primary-light)">
+            <th style="padding:8px 12px;text-align:left">Lectura del Sensor</th>
+            <th style="padding:8px 12px;text-align:left">Lo que ve el sensor</th>
+            <th style="padding:8px 12px;text-align:left">Acción del robot</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 12px"><strong>Bajo (0.0 – 0.4)</strong></td>
+            <td style="padding:8px 12px">Piso blanco (fuera de la línea)</td>
+            <td style="padding:8px 12px">Gira hacia la línea</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 12px"><strong>Alto (0.5 – 1.0)</strong></td>
+            <td style="padding:8px 12px">Cinta negra (¡en la línea!)</td>
+            <td style="padding:8px 12px">¡En la pista!</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>El umbral exacto depende de tu piso</strong>
+          <p>Diferentes pisos tienen diferentes niveles de brillo. Deberás probar qué valor funciona mejor — intenta usar <strong>0.5</strong> como tu línea divisoria entre blanco y negro.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 4 ══ -->
+    <div class="slide" id="slide-4">
+      <h1>🗺️ Configura Tu Pista</h1>
+      <p>¡Antes de poder probar el seguimiento de línea, necesitas crear una pista en el piso!</p>
+
+      <div class="photo-slot">
+        <img data-src="images/05-tape-track.svg" alt="Pista de cinta negra en una superficie blanca en forma ovalada" />
+        <div class="photo-caption">Usa cinta eléctrica negra o cinta de enmascarar en una superficie blanca o de color claro</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Elige tu superficie</h3>
+            <p>Necesitas una <strong>superficie plana de color claro</strong> — una cartulina blanca o un piso de color claro funciona genial.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Aplica la cinta</h3>
+            <p>Usa <strong>cinta eléctrica negra</strong> (de aproximadamente 2 cm de ancho) para crear una pista. ¡Comienza simple — un óvalo o una gran letra O es excelente para principiantes!</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>Alisa la cinta</h3>
+            <p>Presiona la cinta firmemente para que se adhiera bien. La cinta arrugada o con bultos puede confundir el sensor.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3>Evita esquinas agudas</h3>
+            <p>Mantén las curvas de tu pista suave — ¡el robot necesita tiempo para reaccionar! Una esquina de 90 grados será muy difícil de seguir.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 5 ══ -->
+    <div class="slide" id="slide-5">
+      <h1>🧠 La Lógica del Seguimiento de Línea</h1>
+      <p>Así es como el robot "piensa" acerca de seguir una línea. Usa una estrategia llamada <strong>control bang-bang</strong> (un enfoque de encendido-apagado):</p>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">🤔</span>
+        <div class="callout-body">
+          <strong>La idea:</strong>
+          <ul>
+            <li>Si el <strong>sensor derecho</strong> ve la línea negra → gira <strong>derecha</strong> (te has desviado a la izquierda)</li>
+            <li>Si el <strong>sensor izquierdo</strong> ve la línea negra → gira <strong>izquierda</strong> (te has desviado a la derecha)</li>
+            <li>Si <strong>ningún sensor</strong> ve la línea → conduce recto</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="photo-slot">
+        <img data-src="images/06-steering-logic.svg" alt="Diagrama que muestra al robot girando izquierda y derecha según las lecturas de los sensores" />
+        <div class="photo-caption">Lógica de giro: los sensores detectan la desviación y corrigen la trayectoria del robot</div>
+      </div>
+
+      <div class="callout callout-fun">
+        <span class="callout-icon">🤖</span>
+        <div class="callout-body">
+          <strong>¡Esto es un ciclo de retroalimentación!</strong>
+          <p>El robot sensa su posición, la compara con donde debería estar, y hace una corrección. ¡Esta es la misma idea usada en pilotos automáticos de aviones, termostatos y autos que se conducen solos!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 6 ══ -->
+    <div class="slide" id="slide-6">
+      <h1>🧱 Construyendo el Código en Blockly</h1>
+      <p>Aquí está el programa de Blockly para el seguimiento básico de línea. Este es un enfoque <strong>no-bloqueante</strong> porque necesitamos revisar constantemente los sensores mientras conducimos.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/07-blockly-line-follow.svg" alt="Programa de seguimiento de línea en Blockly en el área de trabajo" />
+        <div class="photo-caption">Tu programa completo de seguimiento de línea en Blockly</div>
+      </div>
+
+      <div class="block-diagram">
+        <div><span class="block gray">🔁 repetir siempre</span></div>
+
+        <div class="block-indent" style="margin-top:6px">
+          <span class="block gray">si</span> <span class="block green">📡 sensor derecho</span> <span class="block-arrow">></span> <span class="block-value">0.5</span>
+        </div>
+        <div class="block-indent" style="margin-left:56px">
+          <span class="block orange">⚡ establecer esfuerzo</span> izquierda <span class="block-value">0.4</span> derecha <span class="block-value">0.1</span>
+          <em style="color:var(--text-muted);font-size:.8rem"> (gira a la derecha)</em>
+        </div>
+
+        <div class="block-indent" style="margin-top:4px">
+          <span class="block gray">si no</span> <span class="block green">📡 sensor izquierdo</span> <span class="block-arrow">></span> <span class="block-value">0.5</span>
+        </div>
+        <div class="block-indent" style="margin-left:56px">
+          <span class="block orange">⚡ establecer esfuerzo</span> izquierda <span class="block-value">0.1</span> derecha <span class="block-value">0.4</span>
+          <em style="color:var(--text-muted);font-size:.8rem"> (gira a la izquierda)</em>
+        </div>
+
+        <div class="block-indent" style="margin-top:4px">
+          <span class="block gray">si no</span>
+        </div>
+        <div class="block-indent" style="margin-left:56px">
+          <span class="block orange">⚡ establecer esfuerzo</span> izquierda <span class="block-value">0.3</span> derecha <span class="block-value">0.3</span>
+          <em style="color:var(--text-muted);font-size:.8rem"> (conduce recto)</em>
+        </div>
+
+        <div class="block-indent" style="margin-top:4px">
+          <span class="block gray">⏱ esperar</span> <span class="block-value">0.02</span> segundos
+        </div>
+      </div>
+
+      <p>El <code>esperar 0.02</code> al final mantiene el bucle funcionando a un ritmo constante — ¡aproximadamente 50 veces por segundo!</p>
+    </div>
+
+    <!-- ══ SLIDE 7 ══ -->
+    <div class="slide" id="slide-7">
+      <h1>🔧 Pruebas y Ajustes</h1>
+      <p>¡Ejecuta tu programa de seguimiento de línea y observa cómo el robot avanza! Si no funciona perfectamente la primera vez, no hay problema — ajustar es parte de la ingeniería.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/08-tuning.svg" alt="Robot siendo ajustado en la pista de prueba" />
+        <div class="photo-caption">¡Coloca el robot en la pista y ejecuta tu programa!</div>
+      </div>
+
+      <h2>Problemas comunes y soluciones:</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">🔧</div>
+          <div class="step-content">
+            <h3>El robot se sale de la pista</h3>
+            <p>El umbral (0.5) podría ser incorrecto para tu piso. Intenta leer los valores del sensor e imprimirlos en la terminal — luego usa un valor entre lo que ves para blanco y negro.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">🔧</div>
+          <div class="step-content">
+            <h3>El robot se mueve demasiado de un lado a otro</h3>
+            <p>Reduce la diferencia entre las velocidades de giro. En lugar de 0.4/0.1, intenta 0.35/0.2.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">🔧</div>
+          <div class="step-content">
+            <h3>El robot es demasiado lento o demasiado rápido</h3>
+            <p>Ajusta la velocidad base (el 0.3 en el caso "conduce recto"). Demasiado rápido y el robot no puede reaccionar a tiempo; demasiado lento y apenas se mueve.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">🔧</div>
+          <div class="step-content">
+            <h3>El robot se confunde en las esquinas</h3>
+            <p>Haz que las esquinas de tu pista sean más graduales, o reduce la velocidad base del robot para giros más cerrados.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 8 ══ -->
+    <div class="slide" id="slide-8">
+      <h1>🏆 Desafío: Pista en Forma de Ocho</h1>
+      <p>¡Una vez que tu robot siga un óvalo básico, intenta una pista más compleja!</p>
+
+      <div class="photo-slot">
+        <img data-src="images/09-figure-8-track.svg" alt="Pista en forma de ocho hecha con cinta negra" />
+        <div class="photo-caption">Una pista en forma de ocho — ¿puede tu robot completar dos vueltas completas?</div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Consejos para el ocho</strong>
+          <ul>
+            <li>Haz cada bucle grande — al menos 60 cm de ancho</li>
+            <li>El punto de cruce en el medio debe ser una X suave, no una esquina aguda</li>
+            <li>Inicia el robot cerca del centro y apúntalo hacia un bucle</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-fun">
+        <span class="callout-icon">🤖</span>
+        <div class="callout-body">
+          <strong>Desafío avanzado</strong>
+          <p>¿Puedes hacer que el robot se detenga automáticamente después de completar 2 vueltas completas? Consejo: ¡podrías contar cuántas veces el sensor derecho cruza la línea y detenerte después de cierto número!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 9 – QUIZ ══ -->
+    <div class="slide quiz-slide" id="slide-9">
+      <div class="quiz-header">
+        <span class="quiz-icon">🧠</span>
+        <h1>¡Verificación Rápida!</h1>
+        <p>¡Necesitas <strong>3 de 4 correctas</strong> para pasar!</p>
+      </div>
+
+      <div id="quizForm">
+
+        <div class="quiz-question" id="q1">
+          <p>1. ¿Qué retorna el sensor de reflectancia cuando ve una línea NEGRA?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="1" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Un valor bajo (cerca de 0)
+            </button>
+            <button class="quiz-option" data-q="1" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Un valor alto (cerca de 1)
+            </button>
+            <button class="quiz-option" data-q="1" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Exactamente 0.5
+            </button>
+            <button class="quiz-option" data-q="1" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Envía un error
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q2">
+          <p>2. Si el sensor DERECHO detecta la línea negra, ¿hacia dónde debe girar el robot?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="2" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Izquierda
+            </button>
+            <button class="quiz-option" data-q="2" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Derecha
+            </button>
+            <button class="quiz-option" data-q="2" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Detente completamente
+            </button>
+            <button class="quiz-option" data-q="2" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Ve más rápido
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q3">
+          <p>3. ¿Por qué el seguimiento de línea es un programa no-bloqueante (usando set_effort en un bucle)?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="3" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Porque el robot necesita revisar sensores MIENTRAS conduce
+            </button>
+            <button class="quiz-option" data-q="3" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Porque los comandos bloqueantes son demasiado lentos
+            </button>
+            <button class="quiz-option" data-q="3" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Porque la línea siempre tiene exactamente 30 cm de largo
+            </button>
+            <button class="quiz-option" data-q="3" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Porque los sensores no funcionan con comandos bloqueantes
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q4">
+          <p>4. ¿Qué color de cinta es mejor para una pista de seguimiento de línea?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="4" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Cinta blanca en una superficie negra
+            </button>
+            <button class="quiz-option" data-q="4" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Cinta amarilla en una superficie verde
+            </button>
+            <button class="quiz-option" data-q="4" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Cinta negra en una superficie clara (blanca)
+            </button>
+            <button class="quiz-option" data-q="4" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Cualquier color de cinta — no importa
+            </button>
+          </div>
+        </div>
+
+        <button class="nav-btn nav-btn-forward" id="submitQuizBtn" onclick="submitQuiz()" style="margin-top:20px">
+          Enviar Respuestas ✓
+        </button>
+      </div>
+
+      <div class="quiz-result" id="quizResult">
+        <h2 id="resultTitle"></h2>
+        <p id="resultMsg"></p>
+        <button class="nav-btn nav-btn-finish" id="finishBtn" onclick="finishLesson()" style="display:none">Terminar Lección 4 🎉</button>
+        <button class="nav-btn nav-btn-back" onclick="retryQuiz()" id="retryBtn" style="display:none">Intentar de Nuevo</button>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="lesson-nav-bar">
+    <button class="nav-btn nav-btn-back" id="prevBtn" onclick="prevSlide()" disabled>← Atrás</button>
+    <button class="nav-btn nav-btn-forward" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+  </nav>
+
+</div>
+
+<script>
+  const LESSON_ID = 'lesson4', TOTAL_SLIDES = 9, QUIZ_SLIDE = 9;
+  const ANSWERS = { 1:'b', 2:'b', 3:'a', 4:'c' };
+  let currentSlide = 1, userAnswers = {}, quizAnswered = false;
+
+  LessonRuntime.init(LESSON_ID);
+
+  function showSlide(n) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    document.getElementById('slide-' + n).classList.add('active');
+    currentSlide = n;
+    document.getElementById('slideCounter').textContent = n + ' de ' + TOTAL_SLIDES;
+    document.getElementById('progressFill').style.width = Math.round((n/TOTAL_SLIDES)*100) + '%';
+    document.getElementById('prevBtn').disabled = (n === 1);
+    document.getElementById('nextBtn').disabled = (n === QUIZ_SLIDE);
+    window.scrollTo(0, 0);
+  }
+
+  function nextSlide() { if (currentSlide < QUIZ_SLIDE) showSlide(currentSlide + 1); }
+  function prevSlide() { if (currentSlide > 1) showSlide(currentSlide - 1); }
+
+  function selectOption(btn) {
+    if (quizAnswered) return;
+    document.querySelectorAll('.quiz-option[data-q="'+btn.dataset.q+'"]').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    userAnswers[btn.dataset.q] = btn.dataset.v;
+  }
+
+  function submitQuiz() {
+    if (Object.keys(userAnswers).length < Object.keys(ANSWERS).length) { alert('¡Contesta todas las preguntas primero!'); return; }
+    quizAnswered = true;
+    let correct = 0;
+    Object.keys(ANSWERS).forEach(q => {
+      const right = ANSWERS[q], user = userAnswers[q];
+      document.querySelectorAll('.quiz-option[data-q="'+q+'"]').forEach(btn => {
+        btn.classList.add('answered');
+        if (btn.dataset.v === right) btn.classList.add('correct');
+        else if (btn.dataset.v === user) btn.classList.add('wrong');
+      });
+      if (user === right) correct++;
+    });
+    const total = Object.keys(ANSWERS).length;
+    const score = Math.round((correct/total)*100), passed = score >= 75;
+    const result = document.getElementById('quizResult');
+    result.style.display = 'block';
+    result.className = 'quiz-result ' + (passed ? 'pass' : 'fail');
+    document.getElementById('submitQuizBtn').style.display = 'none';
+    if (passed) {
+      document.getElementById('resultTitle').textContent = '🎉 ¡Excelente! '+correct+' de '+total+' Correctas';
+      document.getElementById('resultMsg').textContent = 'Puntuación: '+score+'%. ¡Puedes hacer que tu robot siga cualquier línea!';
+      document.getElementById('finishBtn').style.display = 'inline-flex';
+      LessonRuntime.complete(score);
+    } else {
+      document.getElementById('resultTitle').textContent = '🤔 ¡Casi! '+correct+' de '+total+' Correctas';
+      document.getElementById('resultMsg').textContent = 'Obtuviste '+score+'%. ¡Revisa las diapositivas 2-6 e intenta de nuevo!';
+      document.getElementById('retryBtn').style.display = 'inline-flex';
+    }
+  }
+
+  function retryQuiz() {
+    quizAnswered = false; userAnswers = {};
+    document.getElementById('quizResult').style.display = 'none';
+    document.getElementById('submitQuizBtn').style.display = 'inline-flex';
+    document.querySelectorAll('.quiz-option').forEach(b => b.className = 'quiz-option');
+  }
+
+  function finishLesson() {
+    document.getElementById('finishBtn').textContent = '✅ ¡Lección Completada!';
+    document.getElementById('finishBtn').disabled = true;
+  }
+
+  showSlide(1);
+</script>
+</body>
+</html>

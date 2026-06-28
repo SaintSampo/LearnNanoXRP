@@ -8,7 +8,14 @@
       "PowerShell(\\(Get-Content \"c:\\\\Users\\\\Jacob\\\\Documents\\\\GitHub\\\\LearnNanoXRP\\\\style.css\" | Measure-Object -Line\\).Lines)",
       "PowerShell(\\(Get-Content \"c:\\\\Users\\\\Jacob\\\\Documents\\\\GitHub\\\\LearnNanoXRP\\\\lessons\\\\lesson1-assembly-es\\\\index.html\" | Measure-Object -Line\\).Lines)",
       "Bash(node -e ' *)",
-      "Bash(node -e \"const fs=require\\('fs'\\); try{new Function\\(fs.readFileSync\\('c:/Users/Jacob/Documents/GitHub/LearnNanoXRP/app.js','utf8'\\)\\); console.log\\('OK'\\)}catch\\(e\\){console.log\\('ERROR:',e.message\\)}\")"
+      "Bash(node -e \"const fs=require\\('fs'\\); try{new Function\\(fs.readFileSync\\('c:/Users/Jacob/Documents/GitHub/LearnNanoXRP/app.js','utf8'\\)\\); console.log\\('OK'\\)}catch\\(e\\){console.log\\('ERROR:',e.message\\)}\")",
+      "Bash(git mv *)",
+      "Bash(node -e \"const fs=require\\('fs'\\); ['app.js','package-scorm.js','translate.js','generate-placeholders.js'].forEach\\(f=>{try{new Function\\(fs.readFileSync\\('c:/Users/Jacob/Documents/GitHub/LearnNanoXRP/'+f,'utf8'\\)\\);console.log\\('OK: '+f\\)}catch\\(e\\){console.log\\('ERR '+f+': '+e.message\\)}}\\)\")",
+      "Bash(node --check \"c:/Users/Jacob/Documents/GitHub/LearnNanoXRP/package-scorm.js\")",
+      "Bash(node --check \"c:/Users/Jacob/Documents/GitHub/LearnNanoXRP/generate-placeholders.js\")",
+      "Bash(python3 -c ' *)",
+      "PowerShell(\\(Get-Content \"c:\\\\Users\\\\Jacob\\\\Documents\\\\GitHub\\\\LearnNanoXRP\\\\lessons\\\\shared\\\\lesson.css\" | Measure-Object -Line\\).Lines)",
+      "Bash(git add *)"
     ]
   }
 }

@@ -22,14 +22,18 @@ const LESSON_COLORS = {
 
 const IMAGES = {
   'lesson1-assembly': [
-    { file: '01-completed-robot.svg',   desc: 'Completed NanoXRP Robot\n(front 3/4 view)', sub: 'Show the fully assembled robot on a flat surface' },
-    { file: '02-parts-layout.svg',      desc: 'All Robot Parts Laid Out\n(on a table or sheet)', sub: 'Motors, wheels, chassis, board, sensors, batteries, screws' },
-    { file: '03-motor-attachment.svg',  desc: 'Attaching Motors to Chassis\n(close-up)', sub: 'Motor sliding into the side slot of the chassis' },
-    { file: '04-wheels-attached.svg',   desc: 'Wheels Pressed onto Motor Shafts\n(side view)', sub: 'Both wheels on + caster wheel at the rear' },
-    { file: '05-controller-board.svg',  desc: 'XRP Controller Board\nMounted on Chassis', sub: 'Green PCB screwed onto the top of the chassis, USB connector visible' },
-    { file: '06-sensors-mounted.svg',   desc: 'Sensors Connected to Robot\n(front view)', sub: 'Sonar sensor on front, line follower board on bottom' },
-    { file: '07-motor-wiring.svg',      desc: 'Motor Wires Plugged into Board\n(close-up)', sub: 'Left and right motor connectors inserted into Motor 1 and Motor 2 ports' },
-    { file: '08-battery-pack.svg',      desc: 'Battery Pack Attached\n(underside of robot)', sub: 'Battery holder clipped to chassis bottom, wire connecting to controller board' },
+    { file: '01-completed-robot.svg',      desc: 'Completed NanoXRP Robot\n(front 3/4 view)', sub: 'Show the fully assembled robot on a flat surface' },
+    { file: '02-parts-layout.svg',         desc: 'Plastic Parts Laid Out\n(on a table)', sub: 'Chassis, top cover, bottom cover, 2 wheels, 2 caster balls' },
+    { file: '02-1-parts-layout.svg',       desc: 'Electronics Laid Out\n(on a table)', sub: '2 motors, 2 motor wires, controller board, sonar sensor, battery' },
+    { file: '03-motor-wire-connect.svg',   desc: 'Motor Wires Connected to\nNanoXRP Board', sub: 'Close-up of Left and Right motor port connectors plugged into the board — show correct orientation' },
+    { file: '04-battery-connect.svg',      desc: 'Battery Plugged into\nNanoXRP Board', sub: 'Battery connector inserted into the power port on the NanoXRP board' },
+    { file: '05-wheel-press.svg',          desc: 'Pressing Wheel onto\nMotor Shaft', sub: 'Wheel nub facing the motor, being pressed firmly onto the shaft — do NOT push on the encoder magnet wheel' },
+    { file: '06-chassis-assemble.svg',     desc: 'Chassis Upside Down —\nMotors & Casters Pressed In', sub: 'Chassis flipped over, motors clipped in, caster balls inserted, encoder ports facing down' },
+    { file: '07-wire-routing.svg',         desc: 'Motor Wires Routed Through\nRear Wheel Wells', sub: 'Chassis upright, motor wires guided through rear wheel wells, battery routed through the middle — no pinched wires' },
+    { file: '08-bottom-plate.svg',         desc: 'Bottom Plate Clipped\nonto Chassis', sub: 'Bottom plate snapped in, line following sensors visible on the underside for orientation check' },
+    { file: '09-motor-plug.svg',           desc: 'Motor Wires Plugged\ninto the Motors', sub: 'Close-up of motor wire connectors being inserted into the motor ports' },
+    { file: '10-sonar-connect.svg',        desc: 'Sonar Sensor Plugged In\nand Slid into Chassis', sub: '4-pin Dupont connector gently inserted into NanoXRP board, sonar sensor sliding into front chassis slot' },
+    { file: '11-battery-cover.svg',        desc: 'Battery Cover Clipped On\nand Slid Forward', sub: 'Battery cover clipped to top of chassis, slid forward until snug against the sonar sensor' },
   ],
   'lesson2-web-editor': [
     { file: '01-web-editor-homepage.svg', desc: 'XRP Web Editor\nin Chrome Browser', sub: 'Show the full editor interface with Blockly workspace, toolbox, and toolbar' },
@@ -165,7 +169,7 @@ function escXML(str) {
 
 // Generate all images
 let totalGenerated = 0;
-const baseDir = path.join(__dirname, 'lessons');
+const baseDir = path.join(__dirname, 'lessons', 'source');
 
 Object.entries(IMAGES).forEach(([lesson, images]) => {
   const colors = LESSON_COLORS[lesson];

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lección 6 – Control Inalámbrico con Gamepad</title>
+  <link rel="stylesheet" href="../../../shared/lesson.css" />
+  <script src="../../../shared/scorm-runtime.js"></script>
+  <script src="../../../shared/image-loader.js"></script>
+</head>
+<body>
+<div id="lesson-shell">
+
+  <header class="lesson-header">
+    <div class="lesson-header-left">
+      <h2>🎮 Lección 6: Control Inalámbrico con Gamepad</h2>
+      <p>Aventuras de Codificación del Robot NanoXRP</p>
+    </div>
+    <span class="slide-counter" id="slideCounter">1 de 9</span>
+  </header>
+
+  <div class="lesson-progress-track">
+    <div class="lesson-progress-fill" id="progressFill" style="width:11%"></div>
+  </div>
+
+  <div class="slides-area">
+
+    <!-- ══ SLIDE 1 ══ -->
+    <div class="slide active" id="slide-1">
+      <h1>🎮 ¡Controla Tu Robot Como en un Videojuego!</h1>
+      <p>En esta última lección, aprenderás a controlar tu robot NanoXRP con un <strong>controlador de gamepad</strong> — ¡como en un videojuego!</p>
+
+      <div class="photo-slot">
+        <img data-src="images/01-gamepad-control.svg" alt="Estudiante sosteniendo un controlador de gamepad con el robot conduciendo frente a ellos" />
+        <div class="photo-caption">¡Controla tu robot con un controlador de gamepad real!</div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">🤔</span>
+        <div class="callout-body">
+          <strong>¿Cómo funciona?</strong>
+          <p>Un gamepad (como un controlador de Xbox o PlayStation) se conecta a tu computadora. El Editor Web XRP lee las posiciones del joystick y los botones presionados, luego envía esa información a tu robot a través de la conexión USB o Bluetooth.</p>
+        </div>
+      </div>
+
+      <p>Aprenderás:</p>
+      <ul>
+        <li>Cómo conectar un gamepad a tu computadora</li>
+        <li>La distribución del gamepad — joysticks, botones y el D-pad</li>
+        <li>Cómo usar bloques de Gamepad en Blockly</li>
+        <li>Cómo programar arcade drive (un joystick controla velocidad y dirección)</li>
+        <li>Cómo usar botones para acciones adicionales</li>
+      </ul>
+    </div>
+
+    <!-- ══ SLIDE 2 ══ -->
+    <div class="slide" id="slide-2">
+      <h1>🎮 Conectando Tu Gamepad</h1>
+      <p>Primero, conectemos el gamepad a tu computadora y hagamos que el Editor Web XRP lo reconozca.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/02-gamepad-connected.svg" alt="Gamepad enchufado en un puerto USB de computadora, editor web mostrando gamepad conectado" />
+        <div class="photo-caption">Conecta el gamepad y busca el icono del controlador en el editor web</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Enchufa el gamepad</h3>
+            <p>Conecta tu gamepad a tu computadora usando su cable USB (o dongle receptor para gamepads inalámbricos). Windows debería instalar el controlador automáticamente.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Presiona cualquier botón en el gamepad</h3>
+            <p>El navegador necesita que presiones un botón en el gamepad antes de reconocerlo. Presiona cualquier botón (A, B, etc.) una vez.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>Busca el indicador del gamepad</h3>
+            <p>En la barra de herramientas del Editor Web XRP, verás aparecer un icono de gamepad cuando se detecte el controlador. El icono se iluminará cuando muevas los joysticks.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3>Conecta tu robot también</h3>
+            <p>Asegúrate de que tu robot esté conectado al editor a través de USB o Bluetooth — necesitas que tanto el gamepad como el robot estén conectados al mismo tiempo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 3 ══ -->
+    <div class="slide" id="slide-3">
+      <h1>🕹️ Distribución del Gamepad</h1>
+      <p>Aprendamos las diferentes partes del gamepad y cuáles son sus nombres en el sistema XRP.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/03-gamepad-layout.svg" alt="Diagrama etiquetado de gamepad mostrando joystick izquierdo, joystick derecho, botones ABXY, bumpers, triggers y D-pad" />
+        <div class="photo-caption">Las partes principales de un controlador de gamepad estándar</div>
+      </div>
+
+      <table style="width:100%;border-collapse:collapse;margin:14px 0">
+        <thead>
+          <tr style="background:var(--primary-light)">
+            <th style="padding:8px 12px;text-align:left">Parte</th>
+            <th style="padding:8px 12px;text-align:left">Nombre XRP</th>
+            <th style="padding:8px 12px;text-align:left">Valores</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 12px">Joystick izquierdo (izquierda/derecha)</td>
+            <td style="padding:8px 12px"><code>LEFT_X</code></td>
+            <td style="padding:8px 12px">-1.0 (izquierda) a +1.0 (derecha)</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 12px">Joystick izquierdo (arriba/abajo)</td>
+            <td style="padding:8px 12px"><code>LEFT_Y</code></td>
+            <td style="padding:8px 12px">-1.0 (arriba) a +1.0 (abajo)</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 12px">Joystick derecho (izquierda/derecha)</td>
+            <td style="padding:8px 12px"><code>RIGHT_X</code></td>
+            <td style="padding:8px 12px">-1.0 (izquierda) a +1.0 (derecha)</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:8px 12px">Botones A, B, X, Y</td>
+            <td style="padding:8px 12px"><code>BTN_A</code>, <code>BTN_B</code>, etc.</td>
+            <td style="padding:8px 12px">0 (soltado) o 1 (presionado)</td>
+          </tr>
+          <tr>
+            <td style="padding:8px 12px">Bumpers Izquierdo/Derecho</td>
+            <td style="padding:8px 12px"><code>BTN_L</code>, <code>BTN_R</code></td>
+            <td style="padding:8px 12px">0 o 1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ══ SLIDE 4 ══ -->
+    <div class="slide" id="slide-4">
+      <h1>🧱 Bloques de Gamepad en Blockly</h1>
+      <p>La categoría <strong>Gamepad</strong> (naranja) tiene dos bloques para leer la entrada del gamepad.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/04-gamepad-blocks.svg" alt="Categoría de bloques de Gamepad en Blockly mostrando bloques de obtener valor e identificar botón presionado" />
+        <div class="photo-caption">Los dos bloques de Gamepad en Blockly</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>obtener valor gamepad [eje]</h3>
+            <p>Devuelve la posición actual de un eje del joystick. Elige qué eje del menú desplegable (LEFT_X, LEFT_Y, RIGHT_X, RIGHT_Y, etc.).</p>
+            <div class="block-diagram">
+              <span class="block" style="background:#ff9248">🎮 obtener valor gamepad</span>
+              <span class="block-value">LEFT_Y</span>
+            </div>
+            <p style="margin-top:8px">Devuelve un número de -1.0 a 1.0</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>¿botón presionado? [botón]</h3>
+            <p>Devuelve VERDADERO si el botón seleccionado está presionado actualmente, FALSO si no.</p>
+            <div class="block-diagram">
+              <span class="block" style="background:#ff9248">🎮 ¿botón presionado?</span>
+              <span class="block-value">BTN_A</span>
+            </div>
+            <p style="margin-top:8px">Devuelve Verdadero o Falso</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 5 ══ -->
+    <div class="slide" id="slide-5">
+      <h1>🕹️ Arcade Drive</h1>
+      <p><strong>Arcade drive</strong> usa UN joystick para controlar tanto la velocidad como la dirección — como en la mayoría de los videojuegos de carreras. ¡XRP tiene un bloque <code>arcade()</code> integrado para esto!</p>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">🤔</span>
+        <div class="callout-body">
+          <strong>Cómo funciona arcade drive</strong>
+          <ul>
+            <li>Empuja el joystick <strong>arriba</strong> → robot avanza <strong>hacia adelante</strong></li>
+            <li>Empuja el joystick <strong>abajo</strong> → robot retrocede <strong>hacia atrás</strong></li>
+            <li>Empuja el joystick <strong>izquierda</strong> → robot gira <strong>izquierda</strong></li>
+            <li>Empuja el joystick <strong>derecha</strong> → robot gira <strong>derecha</strong></li>
+            <li>¡Empújalo en diagonal → avanza Y gira al mismo tiempo!</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="photo-slot">
+        <img data-src="images/05-arcade-diagram.svg" alt="Posiciones del joystick mapeadas a movimientos del robot" />
+        <div class="photo-caption">¡Un joystick = control completo del robot!</div>
+      </div>
+
+      <div class="callout callout-warning">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>¡El eje Y está invertido!</strong>
+          <p>En la mayoría de los gamepads, empujar el joystick HACIA ARRIBA da un valor Y NEGATIVO (-1.0). Así que cuando lo programes, tendrás que invertir el valor Y: usa <code>-(LEFT_Y)</code> para que arriba = positivo (hacia adelante).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 6 ══ -->
+    <div class="slide" id="slide-6">
+      <h1>🧱 Construyendo el Programa Arcade Drive</h1>
+      <p>Aquí está el programa completo arcade drive usando el joystick izquierdo. El robot continuamente lee el joystick y actualiza sus motores.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/06-arcade-code.svg" alt="Programa Blockly arcade drive" />
+        <div class="photo-caption">El programa completo arcade drive con gamepad</div>
+      </div>
+
+      <div class="block-diagram">
+        <div style="margin-bottom:6px">
+          <em style="color:var(--text-muted);font-size:.85rem"># Ejecutar para siempre, actualizando cada ciclo</em>
+        </div>
+        <div><span class="block gray">🔁 repetir infinitamente</span></div>
+
+        <div class="block-indent" style="margin-top:6px">
+          <span class="block orange">🚗 arcade drive</span>
+        </div>
+        <div class="block-indent" style="margin-left:28px">
+          <span style="font-size:.85rem;color:var(--text-muted)">recto:</span>
+          <span class="block" style="background:#cc6600">-</span>
+          <span class="block" style="background:#ff9248">🎮 obtener valor gamepad</span>
+          <span class="block-value">LEFT_Y</span>
+        </div>
+        <div class="block-indent" style="margin-left:28px">
+          <span style="font-size:.85rem;color:var(--text-muted)">giro:</span>
+          <span class="block" style="background:#ff9248">🎮 obtener valor gamepad</span>
+          <span class="block-value">LEFT_X</span>
+        </div>
+
+        <div class="block-indent" style="margin-top:6px">
+          <span class="block gray">⏱ esperar</span> <span class="block-value">0.02</span>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>¿Por qué invertir LEFT_Y?</strong>
+          <p>La mayoría de los controladores reportan arriba como -1 y abajo como +1. Como queremos arriba = hacia adelante = positivo, invertimos el signo con un bloque de "negación" (el bloque de signo menos en la categoría Matemáticas).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 7 ══ -->
+    <div class="slide" id="slide-7">
+      <h1>🔘 Añadiendo Controles de Botones</h1>
+      <p>¡Ahora añadamos botones para hacer cosas adicionales mientras conduces!</p>
+
+      <h2>Ejemplo: Mantén presionado el botón A para activar claxon / parpadear LED</h2>
+
+      <div class="block-diagram">
+        <div><span class="block gray">🔁 repetir infinitamente</span></div>
+
+        <div class="block-indent" style="margin-top:6px">
+          <span class="block orange">🚗 arcade drive</span>
+          recto: <span class="block" style="background:#cc6600">-</span><span class="block" style="background:#ff9248">🎮 valor</span><span class="block-value">LEFT_Y</span>
+          giro: <span class="block" style="background:#ff9248">🎮 valor</span><span class="block-value">LEFT_X</span>
+        </div>
+
+        <div class="block-indent" style="margin-top:8px">
+          <span class="block gray">si</span> <span class="block" style="background:#ff9248">🎮 ¿botón presionado?</span><span class="block-value">BTN_A</span>
+        </div>
+        <div class="block-indent" style="margin-left:56px">
+          <span class="block teal">💡 LED encendido</span>
+        </div>
+        <div class="block-indent" style="margin-top:4px">
+          <span class="block gray">si no</span>
+        </div>
+        <div class="block-indent" style="margin-left:56px">
+          <span class="block teal">💡 LED apagado</span>
+        </div>
+
+        <div class="block-indent" style="margin-top:6px">
+          <span class="block gray">⏱ esperar</span> <span class="block-value">0.02</span>
+        </div>
+      </div>
+
+      <p>¡Ahora cuando mantengas presionado el <strong>Botón A</strong>, el LED se enciende! Puedes usar botones para activar cualquier acción: parpadear el LED, reproducir un sonido, detener el robot, etc.</p>
+
+      <div class="callout callout-fun">
+        <span class="callout-icon">🏆</span>
+        <div class="callout-body">
+          <strong>Ideas para acciones de botones</strong>
+          <ul>
+            <li><strong>Botón B</strong>: Claxon (parpadear LED rápidamente)</li>
+            <li><strong>Botón X</strong>: Girar en el lugar</li>
+            <li><strong>Botón Y</strong>: Parada de emergencia</li>
+            <li><strong>Bumper izquierdo</strong>: Modo de velocidad lenta</li>
+            <li><strong>Bumper derecho</strong>: Modo de velocidad turbo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 8 ══ -->
+    <div class="slide" id="slide-8">
+      <h1>🏁 ¡Desafío de Conducción Libre!</h1>
+      <p>Es hora del desafío final — ¡un <strong>curso de obstáculos de conducción libre</strong>!</p>
+
+      <div class="photo-slot">
+        <img data-src="images/07-obstacle-course.svg" alt="Configuración de curso de obstáculos con libros y objetos para conducir alrededor" />
+        <div class="photo-caption">¡Configura un curso de obstáculos y conduce a través con tu gamepad!</div>
+      </div>
+
+      <h2>Configura tu curso:</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Coloca obstáculos</h3>
+            <p>Arregla libros, botellas de agua o cajas en la mesa o el piso. ¡Deja suficiente espacio para conducir!</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Añade una línea de meta</h3>
+            <p>Coloca una pieza de cinta o un libro al final como tu objetivo.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>¡Compite!</h3>
+            <p>Cronométrate navegando el curso. ¿Puedes pasar sin golpear nada? ¡Desafía a un compañero de clase!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-success">
+        <span class="callout-icon">🎉</span>
+        <div class="callout-body">
+          <strong>¡Felicitaciones!</strong>
+          <p>¡Has aprendido todas las 6 lecciones! Ahora puedes construir, programar y controlar el robot NanoXRP. ¡Oficialmente eres un ingeniero de robots!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 9 – QUIZ ══ -->
+    <div class="slide quiz-slide" id="slide-9">
+      <div class="quiz-header">
+        <span class="quiz-icon">🏆</span>
+        <h1>¡Verificación Final!</h1>
+        <p>¡Ya casi terminas! Necesitas <strong>3 de 4 correctas</strong> para aprobar y completar las 6 lecciones!</p>
+      </div>
+
+      <div id="quizForm">
+
+        <div class="quiz-question" id="q1">
+          <p>1. ¿Cómo recibe el Editor Web XRP la entrada del gamepad desde un controlador enchufado en tu computadora?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="1" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Vía satélite
+            </button>
+            <button class="quiz-option" data-q="1" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> La API de Gamepad del navegador detecta el controlador, y el editor envía esos datos al robot a través del puerto serial conectado
+            </button>
+            <button class="quiz-option" data-q="1" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Tienes que escribir manualmente las entradas del controlador
+            </button>
+            <button class="quiz-option" data-q="1" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> El gamepad se conecta directamente al Wi-Fi del robot
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q2">
+          <p>2. Cuando el eje Y del joystick izquierdo devuelve -1.0, ¿qué significa eso?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="2" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> El joystick se empuja todo lo posible hacia la derecha
+            </button>
+            <button class="quiz-option" data-q="2" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> El joystick se empuja todo lo posible hacia arriba
+            </button>
+            <button class="quiz-option" data-q="2" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> El joystick se empuja todo lo posible hacia abajo
+            </button>
+            <button class="quiz-option" data-q="2" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> No se presiona ningún botón
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q3">
+          <p>3. En arcade drive, ¿qué eje controla si el robot gira izquierda o derecha?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="3" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> LEFT_Y (arriba/abajo)
+            </button>
+            <button class="quiz-option" data-q="3" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> LEFT_X (izquierda/derecha)
+            </button>
+            <button class="quiz-option" data-q="3" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> BTN_A
+            </button>
+            <button class="quiz-option" data-q="3" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> RIGHT_X
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q4">
+          <p>4. ¿Por qué usamos un bucle "repetir infinitamente" para el control con gamepad?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="4" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Porque el gamepad solo funciona una vez
+            </button>
+            <button class="quiz-option" data-q="4" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Porque el robot necesita leer continuamente el joystick y actualizar sus motores muchas veces por segundo
+            </button>
+            <button class="quiz-option" data-q="4" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Porque si no, el LED no se encenderá
+            </button>
+            <button class="quiz-option" data-q="4" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Para evitar que el programa se guarde
+            </button>
+          </div>
+        </div>
+
+        <button class="nav-btn nav-btn-forward" id="submitQuizBtn" onclick="submitQuiz()" style="margin-top:20px">
+          Enviar Respuestas Finales ✓
+        </button>
+      </div>
+
+      <div class="quiz-result" id="quizResult">
+        <h2 id="resultTitle"></h2>
+        <p id="resultMsg"></p>
+        <button class="nav-btn nav-btn-finish" id="finishBtn" onclick="finishLesson()" style="display:none">
+          🏆 ¡Completar Todas las Lecciones!
+        </button>
+        <button class="nav-btn nav-btn-back" onclick="retryQuiz()" id="retryBtn" style="display:none">Intentar de Nuevo</button>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="lesson-nav-bar">
+    <button class="nav-btn nav-btn-back" id="prevBtn" onclick="prevSlide()" disabled>← Atrás</button>
+    <button class="nav-btn nav-btn-forward" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+  </nav>
+
+</div>
+
+<script>
+  const LESSON_ID = 'lesson6', TOTAL_SLIDES = 9, QUIZ_SLIDE = 9;
+  const ANSWERS = { 1:'b', 2:'b', 3:'b', 4:'b' };
+  let currentSlide = 1, userAnswers = {}, quizAnswered = false;
+
+  LessonRuntime.init(LESSON_ID);
+
+  function showSlide(n) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    document.getElementById('slide-' + n).classList.add('active');
+    currentSlide = n;
+    document.getElementById('slideCounter').textContent = n + ' de ' + TOTAL_SLIDES;
+    document.getElementById('progressFill').style.width = Math.round((n/TOTAL_SLIDES)*100) + '%';
+    document.getElementById('prevBtn').disabled = (n === 1);
+    document.getElementById('nextBtn').disabled = (n === QUIZ_SLIDE);
+    window.scrollTo(0, 0);
+  }
+
+  function nextSlide() { if (currentSlide < QUIZ_SLIDE) showSlide(currentSlide + 1); }
+  function prevSlide() { if (currentSlide > 1) showSlide(currentSlide - 1); }
+
+  function selectOption(btn) {
+    if (quizAnswered) return;
+    document.querySelectorAll('.quiz-option[data-q="'+btn.dataset.q+'"]').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    userAnswers[btn.dataset.q] = btn.dataset.v;
+  }
+
+  function submitQuiz() {
+    if (Object.keys(userAnswers).length < Object.keys(ANSWERS).length) { alert('¡Responde todas las preguntas primero!'); return; }
+    quizAnswered = true;
+    let correct = 0;
+    Object.keys(ANSWERS).forEach(q => {
+      const right = ANSWERS[q], user = userAnswers[q];
+      document.querySelectorAll('.quiz-option[data-q="'+q+'"]').forEach(btn => {
+        btn.classList.add('answered');
+        if (btn.dataset.v === right) btn.classList.add('correct');
+        else if (btn.dataset.v === user) btn.classList.add('wrong');
+      });
+      if (user === right) correct++;
+    });
+    const total = Object.keys(ANSWERS).length;
+    const score = Math.round((correct/total)*100), passed = score >= 75;
+    const result = document.getElementById('quizResult');
+    result.style.display = 'block';
+    result.className = 'quiz-result ' + (passed ? 'pass' : 'fail');
+    document.getElementById('submitQuizBtn').style.display = 'none';
+    if (passed) {
+      document.getElementById('resultTitle').textContent = '🏆 ¡Lo Lograste! '+correct+'/'+total+' ¡Correctas!';
+      document.getElementById('resultMsg').textContent = 'Puntuación: '+score+'%. ¡Completaste las 6 lecciones de NanoXRP! ¡Eres un Ingeniero Robótico!';
+      document.getElementById('finishBtn').style.display = 'inline-flex';
+      LessonRuntime.complete(score);
+    } else {
+      document.getElementById('resultTitle').textContent = '🤔 ¡Casi! '+correct+'/'+total+' Correctas';
+      document.getElementById('resultMsg').textContent = 'Obtuviste '+score+'%. ¡Revisa las diapositivas del mando y vuelve a intentarlo!';
+      document.getElementById('retryBtn').style.display = 'inline-flex';
+    }
+  }
+
+  function retryQuiz() {
+    quizAnswered = false; userAnswers = {};
+    document.getElementById('quizResult').style.display = 'none';
+    document.getElementById('submitQuizBtn').style.display = 'inline-flex';
+    document.querySelectorAll('.quiz-option').forEach(b => b.className = 'quiz-option');
+  }
+
+  function finishLesson() {
+    document.getElementById('finishBtn').textContent = '🏆 ¡Todo Listo — Ingeniero Robótico!';
+    document.getElementById('finishBtn').disabled = true;
+  }
+
+  showSlide(1);
+</script>
+</body>
+</html>

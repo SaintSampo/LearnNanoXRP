@@ -48,12 +48,12 @@ http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Cache-Control', 'no-store');
 
-  // ── GET /list-images?dir=lessons/<name>/images/ ───────────────────────────
+  // ── GET /list-images?dir=lessons/<lang>/<name>/images/ ──────────────────────
   // Returns JSON array of filenames in the given images/ folder.
   // Used by image-loader.js to detect real photos without probing each file.
   if (method === 'GET' && pathname === '/list-images') {
     const dir = parsed.searchParams.get('dir') || '';
-    if (!/^lessons\/[^/]+\/images\/?$/.test(dir)) {
+    if (!/^lessons\/(source|translations\/[a-z]{2})\/[^/]+\/images\/?$/.test(dir)) {
       res.writeHead(400); res.end('Invalid dir'); return;
     }
     const absDir = toFilePath(dir);
@@ -64,10 +64,10 @@ http.createServer((req, res) => {
     return;
   }
 
-  // ── POST /upload-image?path=lessons/<name>/images/<file>.<ext> ────────────
+  // ── POST /upload-image?path=lessons/<lang>/<name>/images/<file>.<ext> ───────
   if (method === 'POST' && pathname === '/upload-image') {
     const relPath = parsed.searchParams.get('path') || '';
-    if (!/^lessons\/[^/]+\/images\/[^/]+\.(png|jpg|jpeg|webp)$/i.test(relPath)) {
+    if (!/^lessons\/(source|translations\/[a-z]{2})\/[^/]+\/images\/[^/]+\.(png|jpg|jpeg|webp)$/i.test(relPath)) {
       res.writeHead(400, { 'Content-Type': 'text/plain' });
       res.end('Invalid path');
       return;

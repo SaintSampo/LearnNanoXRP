@@ -2,12 +2,12 @@
 // Handles navigation, progress tracking (localStorage), and SCORM bridge.
 
 const LESSONS = [
-  { id: 'lesson1', num: 1, title: 'Assembling the Robot',     icon: '🔧', src: 'lessons/lesson1-assembly/',    scorm: 'scorm-packages/lesson1-assembly.zip'    },
-  { id: 'lesson2', num: 2, title: 'The Web Editor & Blockly', icon: '💻', src: 'lessons/lesson2-web-editor/',  scorm: 'scorm-packages/lesson2-web-editor.zip'  },
-  { id: 'lesson3', num: 3, title: 'Making the Robot Drive',   icon: '🚗', src: 'lessons/lesson3-driving/',     scorm: 'scorm-packages/lesson3-driving.zip'     },
-  { id: 'lesson4', num: 4, title: 'Following a Line',         icon: '〰️', src: 'lessons/lesson4-line-follow/', scorm: 'scorm-packages/lesson4-line-follow.zip' },
-  { id: 'lesson5', num: 5, title: 'Sonar Sensor',             icon: '📡', src: 'lessons/lesson5-sonar/',       scorm: 'scorm-packages/lesson5-sonar.zip'       },
-  { id: 'lesson6', num: 6, title: 'Wireless Gamepad',         icon: '🎮', src: 'lessons/lesson6-gamepad/',     scorm: 'scorm-packages/lesson6-gamepad.zip'     },
+  { id: 'lesson1', num: 1, title: 'Assembling the Robot',     icon: '🔧', src: 'lessons/source/lesson1-assembly/',    scorm: 'scorm-packages/lesson1-assembly.zip'    },
+  { id: 'lesson2', num: 2, title: 'The Web Editor & Blockly', icon: '💻', src: 'lessons/source/lesson2-web-editor/',  scorm: 'scorm-packages/lesson2-web-editor.zip'  },
+  { id: 'lesson3', num: 3, title: 'Making the Robot Drive',   icon: '🚗', src: 'lessons/source/lesson3-driving/',     scorm: 'scorm-packages/lesson3-driving.zip'     },
+  { id: 'lesson4', num: 4, title: 'Following a Line',         icon: '〰️', src: 'lessons/source/lesson4-line-follow/', scorm: 'scorm-packages/lesson4-line-follow.zip' },
+  { id: 'lesson5', num: 5, title: 'Sonar Sensor',             icon: '📡', src: 'lessons/source/lesson5-sonar/',       scorm: 'scorm-packages/lesson5-sonar.zip'       },
+  { id: 'lesson6', num: 6, title: 'Wireless Gamepad',         icon: '🎮', src: 'lessons/source/lesson6-gamepad/',     scorm: 'scorm-packages/lesson6-gamepad.zip'     },
 ];
 
 const STORAGE_BASE  = 'learnNanoXRP_progress';
@@ -314,9 +314,9 @@ const app = (() => {
 
   function getLessonSrc(lesson) {
     if (!currentLang || currentLang === 'en') return lesson.src;
-    // lesson.src is e.g. 'lessons/lesson1-assembly/'
-    // translated version is 'lessons/lesson1-assembly-es/'
-    return lesson.src.replace(/\/$/, '') + '-' + currentLang + '/';
+    // lesson.src is e.g. 'lessons/source/lesson1-assembly/'
+    // translated version is  'lessons/translations/es/lesson1-assembly/'
+    return lesson.src.replace('lessons/source/', 'lessons/translations/' + currentLang + '/');
   }
 
   function setLanguage(code) {

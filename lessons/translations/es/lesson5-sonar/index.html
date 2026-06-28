@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lección 5 – Sensor Sonar</title>
+  <link rel="stylesheet" href="../../../shared/lesson.css" />
+  <script src="../../../shared/scorm-runtime.js"></script>
+  <script src="../../../shared/image-loader.js"></script>
+</head>
+<body>
+<div id="lesson-shell">
+
+  <header class="lesson-header">
+    <div class="lesson-header-left">
+      <h2>📡 Lección 5: El Sensor Sonar</h2>
+      <p>Aventuras de Programación del Robot NanoXRP</p>
+    </div>
+    <span class="slide-counter" id="slideCounter">1 of 9</span>
+  </header>
+
+  <div class="lesson-progress-track">
+    <div class="lesson-progress-fill" id="progressFill" style="width:11%"></div>
+  </div>
+
+  <div class="slides-area">
+
+    <!-- ══ SLIDE 1 ══ -->
+    <div class="slide active" id="slide-1">
+      <h1>📡 ¡No Golpees la Pared!</h1>
+      <p>En esta lección, usarás el <strong>sensor sonar (sensor ultrasónico de distancia)</strong> para que tu robot vea lo que está frente a él y se detenga antes de chocar.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/01-robot-stops-before-wall.svg" alt="Robot NanoXRP deteniéndose justo antes de una pared" />
+        <div class="photo-caption">El robot detecta la pared y se detiene con seguridad — ¡sin choques!</div>
+      </div>
+
+      <div class="callout callout-fun">
+        <span class="callout-icon">🦇</span>
+        <div class="callout-body">
+          <strong>¡Inspirado en la naturaleza!</strong>
+          <p>Los murciélagos navegan en la oscuridad haciendo chillidos agudos y escuchando el eco. Si el eco regresa rápidamente, ¡la pared está cerca! El sensor sonar de tu robot funciona de la misma manera — esto se llama <strong>ecolocalización</strong>.</p>
+        </div>
+      </div>
+
+      <p>Aprenderás:</p>
+      <ul>
+        <li>Cómo funciona el sensor ultrasónico de distancia</li>
+        <li>Cómo leer la distancia en Blockly</li>
+        <li>Cómo hacer que el robot se detenga a una distancia establecida</li>
+        <li>Cómo hacer que el robot disminuya la velocidad gradualmente</li>
+      </ul>
+    </div>
+
+    <!-- ══ SLIDE 2 ══ -->
+    <div class="slide" id="slide-2">
+      <h1>👁️ El Sensor Sonar en Tu Robot</h1>
+      <p>El sensor ultrasónico es la parte en la parte frontal de tu robot que parece dos ojos redondos. Se llama <strong>medidor de distancia</strong>.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/02-sensor-front-view.svg" alt="Vista frontal del robot mostrando el sensor ultrasónico" />
+        <div class="photo-caption">Los dos "ojos" en la parte frontal del robot son el sensor sonar</div>
+      </div>
+
+      <h2>Los dos círculos son:</h2>
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h3>📢 Transmisor</h3>
+          <p>Envía un impulso muy corto de sonido ultrasónico (demasiado agudo para que los humanos lo escuchen).</p>
+        </div>
+        <div class="compare-card">
+          <h3>👂 Receptor</h3>
+          <p>Escucha el eco de ese sonido rebotando en los objetos.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Cómo calcula la distancia</strong>
+          <p>El sensor mide cuánto tiempo tarda el eco en regresar. El sonido viaja a aproximadamente 343 metros por segundo, así que la computadora del robot puede calcular: <br/><strong>Distancia = (tiempo × velocidad del sonido) ÷ 2</strong><br/>¡Se divide por 2 porque el sonido viaja allá y de regreso!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 3 ══ -->
+    <div class="slide" id="slide-3">
+      <h1>🔊 Cómo el Sonar Mide la Distancia</h1>
+      <p>Veamos exactamente qué sucede cada vez que el sonar toma una medición.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/03-sonar-diagram.svg" alt="Diagrama mostrando ondas de sonido saliendo del sensor y rebotando en una pared" />
+        <div class="photo-caption">El pulso de sonido sale → rebota en el objeto → el eco regresa → ¡se calcula la distancia!</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>El sensor envía un pulso</h3>
+            <p>El transmisor envía un rápido "ping" de sonido ultrasónico — 8 pulsos a 40,000 Hz. ¡No puedes escucharlo!</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>El sonido viaja por el aire</h3>
+            <p>El sonido se aleja del robot a la velocidad del sonido — aproximadamente 343 m/s (¡lo mismo que un trueno!).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>El eco rebota</h3>
+            <p>Cuando el sonido golpea un objeto sólido, rebota como un eco en una cueva.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3>Se calcula la distancia</h3>
+            <p>El sensor mide cuánto tiempo tomó el viaje redondo y lo convierte a centímetros. El bloque devuelve este valor a tu programa.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 4 ══ -->
+    <div class="slide" id="slide-4">
+      <h1>🧱 El Bloque de Distancia en Blockly</h1>
+      <p>¡Leer el sensor sonar en Blockly es muy simple! Hay un bloque para ello en la categoría <strong>Sensores → Distancia</strong>.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/04-distance-block.svg" alt="El bloque get sonar distance en Blockly" />
+        <div class="photo-caption">El bloque de distancia — devuelve la distancia en centímetros</div>
+      </div>
+
+      <div class="block-diagram">
+        <span class="block green">📡 obtener distancia sonar (cm)</span>
+      </div>
+
+      <p>Este bloque devuelve un <strong>número en centímetros</strong>. Puedes usarlo en cualquier lugar donde se espere un número — en una declaración if, almacenado en una variable, o impreso en la terminal.</p>
+
+      <h2>Probar el sensor — intenta esto primero:</h2>
+      <div class="block-diagram">
+        <div><span class="block gray">🔁 repetir siempre</span></div>
+        <div class="block-indent">
+          <span class="block purple">📝 imprimir</span> <span class="block green">📡 obtener distancia sonar (cm)</span>
+        </div>
+        <div class="block-indent">
+          <span class="block gray">⏱ esperar</span> <span class="block-value">0.1</span>
+        </div>
+      </div>
+
+      <p>¡Ejecútalo y mira la Terminal! Mueve tu mano frente al sensor y ve cómo cambian los números. Cuando nada está en rango, podría mostrar un número muy grande (como 999 o similar).</p>
+    </div>
+
+    <!-- ══ SLIDE 5 ══ -->
+    <div class="slide" id="slide-5">
+      <h1>🛑 Detente Antes de Golpear una Pared</h1>
+      <p>Ahora escribamos el programa completo: avanza y detente cuando algo esté dentro de <strong>20 cm</strong>.</p>
+
+      <div class="photo-slot">
+        <img data-src="images/05-stop-code.svg" alt="Programa Blockly mostrando código de detención antes de pared" />
+        <div class="photo-caption">El programa completo de detención antes de pared</div>
+      </div>
+
+      <div class="block-diagram">
+        <div style="margin-bottom:6px">
+          <em style="color:var(--text-muted);font-size:.85rem"># Comienza a avanzar</em>
+        </div>
+        <div><span class="block orange">⚡ establecer esfuerzo</span> izquierda <span class="block-value">0.5</span> derecha <span class="block-value">0.5</span></div>
+        <br/>
+        <div style="margin-bottom:6px">
+          <em style="color:var(--text-muted);font-size:.85rem"># Sigue adelante hasta que algo esté cerca</em>
+        </div>
+        <div><span class="block gray">🔁 repetir hasta</span> <span class="block green">📡 distancia</span> <span class="block-arrow">&lt;</span> <span class="block-value">20</span></div>
+        <div class="block-indent">
+          <span class="block gray">⏱ esperar</span> <span class="block-value">0.05</span>
+        </div>
+        <br/>
+        <div style="margin-bottom:6px">
+          <em style="color:var(--text-muted);font-size:.85rem"># ¡Detente!</em>
+        </div>
+        <div><span class="block red">⏹ detener motores</span></div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>¿Por qué "repetir HASTA"?</strong>
+          <p>"Repetir hasta" ejecuta el bucle mientras la condición NO es verdadera, luego sale cuando SÍ es verdadera. Entonces el bucle sigue repitiéndose mientras la distancia es 20 cm o más, y sale tan pronto como la distancia cae por debajo de 20 cm.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 6 ══ -->
+    <div class="slide" id="slide-6">
+      <h1>🧪 Probando Tu Programa de Detención en Pared</h1>
+      <p>¡Configuremos una prueba y veamos si tu robot se detiene con seguridad!</p>
+
+      <div class="photo-slot">
+        <img data-src="images/06-wall-test-setup.svg" alt="Robot colocado frente a un apilamiento de libros en una mesa" />
+        <div class="photo-caption">¡Un apilamiento de libros es una excelente pared de prueba!</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Configura tu "pared"</h3>
+            <p>Coloca un libro, una carpeta o una caja en posición vertical en la mesa. Colócalo aproximadamente a 50 cm frente al robot.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Coloca el robot</h3>
+            <p>Apunta el sensor sonar del robot directamente hacia la pared. Asegúrate de que el robot esté en una superficie plana para que avance recto.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>Ejecuta tu programa</h3>
+            <p>Haz clic en Ejecutar y mira cómo el robot avanza hacia la pared. ¡Debería detenerse a unos 20 cm de distancia!</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3>Intenta diferentes distancias</h3>
+            <p>Cambia <code>20</code> a <code>10</code> o <code>30</code> y ve cómo cambia la distancia de detención.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 7 ══ -->
+    <div class="slide" id="slide-7">
+      <h1>🐢 Desafío: Disminuye la Velocidad Gradualmente</h1>
+      <p>Ahora el robot avanza a toda velocidad y luego se detiene abruptamente. ¿Podemos hacer que disminuya la velocidad primero, como un auto real?</p>
+
+      <div class="photo-slot">
+        <img data-src="images/07-gradual-stop.svg" alt="Gráfico mostrando la velocidad del robot disminuyendo a medida que se aproxima a una pared" />
+        <div class="photo-caption">¡Una disminución gradual es más suave y realista!</div>
+      </div>
+
+      <p>Aquí está la idea usando tres zonas de velocidad:</p>
+
+      <div class="block-diagram">
+        <div><span class="block gray">🔁 repetir siempre</span></div>
+
+        <div class="block-indent" style="margin-top:6px">
+          <span class="block gray">si</span> <span class="block green">📡 distancia</span> <span class="block-arrow">&lt;</span> <span class="block-value">15</span>
+        </div>
+        <div class="block-indent" style="margin-left:56px">
+          <span class="block red">⏹ detener motores</span>
+        </div>
+
+        <div class="block-indent" style="margin-top:4px">
+          <span class="block gray">si no si</span> <span class="block green">📡 distancia</span> <span class="block-arrow">&lt;</span> <span class="block-value">30</span>
+        </div>
+        <div class="block-indent" style="margin-left:56px">
+          <span class="block orange">⚡ establecer esfuerzo</span> izquierda <span class="block-value">0.2</span> derecha <span class="block-value">0.2</span>
+          <em style="color:var(--text-muted);font-size:.8rem"> (lento)</em>
+        </div>
+
+        <div class="block-indent" style="margin-top:4px">
+          <span class="block gray">si no</span>
+        </div>
+        <div class="block-indent" style="margin-left:56px">
+          <span class="block orange">⚡ establecer esfuerzo</span> izquierda <span class="block-value">0.5</span> derecha <span class="block-value">0.5</span>
+          <em style="color:var(--text-muted);font-size:.8rem"> (toda velocidad)</em>
+        </div>
+
+        <div class="block-indent" style="margin-top:4px">
+          <span class="block gray">⏱ esperar</span> <span class="block-value">0.05</span>
+        </div>
+      </div>
+
+      <p>Ahora el robot: avanza rápido cuando está lejos → disminuye a 30 cm → se detiene a 15 cm.</p>
+    </div>
+
+    <!-- ══ SLIDE 8 ══ -->
+    <div class="slide" id="slide-8">
+      <h1>💡 Consejos del Sensor Sonar</h1>
+      <p>El sensor sonar es poderoso pero tiene algunas características especiales. Aquí está lo que debes saber:</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">✅</div>
+          <div class="step-content">
+            <h3>Funciona mejor en superficies planas y duras</h3>
+            <p>Los libros, las paredes, las cajas y los muebles duros dan lecturas claras. Los objetos suaves como las almohadas absorben el sonido y dan resultados extraños.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">✅</div>
+          <div class="step-content">
+            <h3>Rango: aproximadamente 2 cm a 400 cm</h3>
+            <p>El sensor tiene dificultades con objetos demasiado cerca (menos de 2 cm) o demasiado lejos (más de 4 metros). Para uso en el aula, 5–200 cm funciona excelente.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">⚠️</div>
+          <div class="step-content">
+            <h3>Cono de detección estrecho</h3>
+            <p>El sonar solo "ve" en un cono estrecho directamente hacia adelante. Un objeto a un lado podría no ser detectado — por eso el sensor necesita apuntar directamente a lo que está midiendo.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">⚠️</div>
+          <div class="step-content">
+            <h3>Ten cuidado con lecturas falsas</h3>
+            <p>Si el sensor devuelve un número muy grande o muy pequeño inesperadamente, podría estar rebotando en algo detrás de ti o el piso. Añade una verificación: si distancia > 300 o distancia &lt; 2, ignora la lectura.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 9 – QUIZ ══ -->
+    <div class="slide quiz-slide" id="slide-9">
+      <div class="quiz-header">
+        <span class="quiz-icon">🧠</span>
+        <h1>¡Verificación Rápida!</h1>
+        <p>¡Necesitas <strong>3 de 4 correctas</strong> para pasar!</p>
+      </div>
+
+      <div id="quizForm">
+
+        <div class="quiz-question" id="q1">
+          <p>1. ¿Cómo mide la distancia el sensor ultrasónico?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="1" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Usa una cámara para tomar fotos
+            </button>
+            <button class="quiz-option" data-q="1" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Envía un pulso de sonido y cronometra cuánto tiempo tarda el eco en regresar
+            </button>
+            <button class="quiz-option" data-q="1" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Mide la reflexión de la luz infrarroja
+            </button>
+            <button class="quiz-option" data-q="1" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Cuenta el número de rotaciones de la rueda
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q2">
+          <p>2. ¿Qué unidad devuelve el bloque <code>rangefinder.distance()</code>?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="2" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Metros
+            </button>
+            <button class="quiz-option" data-q="2" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Pulgadas
+            </button>
+            <button class="quiz-option" data-q="2" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Centímetros
+            </button>
+            <button class="quiz-option" data-q="2" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Segundos
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q3">
+          <p>3. En el programa de detención antes de pared, ¿qué tipo de comando inicia el avance del robot?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="3" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Bloqueante (recto)
+            </button>
+            <button class="quiz-option" data-q="3" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> No bloqueante (set_effort) — para que el bucle pueda verificar el sensor mientras avanza
+            </button>
+            <button class="quiz-option" data-q="3" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Bloqueante (giro)
+            </button>
+            <button class="quiz-option" data-q="3" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> No importa
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q4">
+          <p>4. ¿Qué tipo de superficie da las MEJORES lecturas de sonar?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="4" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Una almohada suave
+            </button>
+            <button class="quiz-option" data-q="4" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Una superficie dura y plana como una pared o libro
+            </button>
+            <button class="quiz-option" data-q="4" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> El cabello de una persona
+            </button>
+            <button class="quiz-option" data-q="4" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Una superficie negra (como la cinta de seguimiento de línea)
+            </button>
+          </div>
+        </div>
+
+        <button class="nav-btn nav-btn-forward" id="submitQuizBtn" onclick="submitQuiz()" style="margin-top:20px">
+          Enviar Respuestas ✓
+        </button>
+      </div>
+
+      <div class="quiz-result" id="quizResult">
+        <h2 id="resultTitle"></h2>
+        <p id="resultMsg"></p>
+        <button class="nav-btn nav-btn-finish" id="finishBtn" onclick="finishLesson()" style="display:none">Finalizar Lección 5 🎉</button>
+        <button class="nav-btn nav-btn-back" onclick="retryQuiz()" id="retryBtn" style="display:none">Intentar de Nuevo</button>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="lesson-nav-bar">
+    <button class="nav-btn nav-btn-back" id="prevBtn" onclick="prevSlide()" disabled>← Atrás</button>
+    <button class="nav-btn nav-btn-forward" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+  </nav>
+
+</div>
+
+<script>
+  const LESSON_ID = 'lesson5', TOTAL_SLIDES = 9, QUIZ_SLIDE = 9;
+  const ANSWERS = { 1:'b', 2:'c', 3:'b', 4:'b' };
+  let currentSlide = 1, userAnswers = {}, quizAnswered = false;
+
+  LessonRuntime.init(LESSON_ID);
+
+  function showSlide(n) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    document.getElementById('slide-' + n).classList.add('active');
+    currentSlide = n;
+    document.getElementById('slideCounter').textContent = n + ' of ' + TOTAL_SLIDES;
+    document.getElementById('progressFill').style.width = Math.round((n/TOTAL_SLIDES)*100) + '%';
+    document.getElementById('prevBtn').disabled = (n === 1);
+    document.getElementById('nextBtn').disabled = (n === QUIZ_SLIDE);
+    window.scrollTo(0, 0);
+  }
+
+  function nextSlide() { if (currentSlide < QUIZ_SLIDE) showSlide(currentSlide + 1); }
+  function prevSlide() { if (currentSlide > 1) showSlide(currentSlide - 1); }
+
+  function selectOption(btn) {
+    if (quizAnswered) return;
+    document.querySelectorAll('.quiz-option[data-q="'+btn.dataset.q+'"]').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    userAnswers[btn.dataset.q] = btn.dataset.v;
+  }
+
+  function submitQuiz() {
+    if (Object.keys(userAnswers).length < Object.keys(ANSWERS).length) { alert('¡Contesta todas las preguntas primero!'); return; }
+    quizAnswered = true;
+    let correct = 0;
+    Object.keys(ANSWERS).forEach(q => {
+      const right = ANSWERS[q], user = userAnswers[q];
+      document.querySelectorAll('.quiz-option[data-q="'+q+'"]').forEach(btn => {
+        btn.classList.add('answered');
+        if (btn.dataset.v === right) btn.classList.add('correct');
+        else if (btn.dataset.v === user) btn.classList.add('wrong');
+      });
+      if (user === right) correct++;
+    });
+    const total = Object.keys(ANSWERS).length;
+    const score = Math.round((correct/total)*100), passed = score >= 75;
+    const result = document.getElementById('quizResult');
+    result.style.display = 'block';
+    result.className = 'quiz-result ' + (passed ? 'pass' : 'fail');
+    document.getElementById('submitQuizBtn').style.display = 'none';
+    if (passed) {
+      document.getElementById('resultTitle').textContent = '🎉 ¡Experto en Sonar! '+correct+'/'+total+' Correctas';
+      document.getElementById('resultMsg').textContent = 'Puntuación: '+score+'%. ¡Tu robot ahora puede evitar obstáculos!';
+      document.getElementById('finishBtn').style.display = 'inline-flex';
+      LessonRuntime.complete(score);
+    } else {
+      document.getElementById('resultTitle').textContent = '🤔 ¡Casi! '+correct+'/'+total+' Correctas';
+      document.getElementById('resultMsg').textContent = 'Obtuviste '+score+'%. ¡Revisa las diapositivas 2-5 e intenta de nuevo!';
+      document.getElementById('retryBtn').style.display = 'inline-flex';
+    }
+  }
+
+  function retryQuiz() {
+    quizAnswered = false; userAnswers = {};
+    document.getElementById('quizResult').style.display = 'none';
+    document.getElementById('submitQuizBtn').style.display = 'inline-flex';
+    document.querySelectorAll('.quiz-option').forEach(b => b.className = 'quiz-option');
+  }
+
+  function finishLesson() {
+    document.getElementById('finishBtn').textContent = '✅ ¡Lección Completada!';
+    document.getElementById('finishBtn').disabled = true;
+  }
+
+  showSlide(1);
+</script>
+</body>
+</html>

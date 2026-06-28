@@ -21,9 +21,9 @@ const LESSONS = [
   'lesson6-gamepad',
 ];
 
-const OUTPUT_DIR = path.join(__dirname, 'scorm-packages');
-const LESSONS_DIR = path.join(__dirname, 'lessons');
-const SHARED_DIR  = path.join(LESSONS_DIR, 'shared');
+const OUTPUT_DIR  = path.join(__dirname, 'scorm-packages');
+const LESSONS_DIR = path.join(__dirname, 'lessons', 'source');
+const SHARED_DIR  = path.join(__dirname, 'lessons', 'shared');
 
 if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 

@@ -395,3 +395,74 @@ html, body {
 .nav-btn-forward:hover:not(:disabled) { background: var(--primary-dark); }
 .nav-btn-finish  { background: var(--success); color: #fff; }
 .nav-btn-finish:hover:not(:disabled)  { background: #059669; }
+
+/* ── Interactive checklist ───────────────────────────────── */
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.15s, border-color 0.15s;
+  line-height: 1.4;
+}
+
+.checklist-item:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.checklist-item input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  cursor: pointer;
+  background: var(--surface);
+  transition: background 0.15s, border-color 0.15s;
+  position: relative;
+}
+
+.checklist-item input[type="checkbox"]:checked {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.checklist-item input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 8px;
+  height: 12px;
+  border: 2.5px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.checklist-item:has(input:checked) {
+  background: var(--success-bg);
+  border-color: var(--success);
+}
+
+.checklist-item:has(input:checked) span {
+  color: var(--text-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--success);
+}

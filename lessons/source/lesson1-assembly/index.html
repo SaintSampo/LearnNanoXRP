@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lesson 1 – Assembling the Robot</title>
+  <link rel="stylesheet" href="../../shared/lesson.css" />
+  <script src="../../shared/scorm-runtime.js"></script>
+  <script src="../../shared/image-loader.js"></script>
+</head>
+<body>
+<div id="lesson-shell">
+
+  <!-- Header -->
+  <header class="lesson-header">
+    <div class="lesson-header-left">
+      <h2>🔧 Lesson 1: Assembling the Robot</h2>
+      <p>NanoXRP Robot Coding Adventures</p>
+    </div>
+    <span class="slide-counter" id="slideCounter">1 of 10</span>
+  </header>
+
+  <!-- Progress bar -->
+  <div class="lesson-progress-track">
+    <div class="lesson-progress-fill" id="progressFill" style="width:10%"></div>
+  </div>
+
+  <!-- Slides -->
+  <div class="slides-area">
+
+    <!-- ══ SLIDE 1 ══ -->
+    <div class="slide active" id="slide-1">
+      <h1>🤖 Let's Build Your Robot!</h1>
+      <p>Welcome to your first lesson! Today you're going to put together your very own <strong>NanoXRP robot</strong>. By the end, you'll have a working robot ready to program!</p>
+
+      <div class="photo-slot">
+        <img data-src="images/01-completed-robot.svg" alt="Completed NanoXRP robot" />
+        <div class="photo-caption">Your completed NanoXRP robot will look like this!</div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>What is the NanoXRP?</strong>
+          <p>The NanoXRP is a small robot on wheels that you can program using a computer. It has motors, sensors, and a tiny computer brain — just like real robots used by engineers!</p>
+        </div>
+      </div>
+
+      <p>This lesson has <strong>10 slides</strong> and a short quiz at the end. Take your time reading each step carefully.</p>
+    </div>
+
+    <!-- ══ SLIDE 2 ══ -->
+    <div class="slide" id="slide-2">
+      <h1>🧰 What's in the Box?</h1>
+      <p>Before you start building, let's make sure you have all the parts. Lay everything out on a flat surface and check each item off the list!</p>
+
+      <div class="photo-slot">
+        <img data-src="images/02-parts-layout.jpg" alt="Plastic robot parts laid out on a table" />
+        <div class="photo-caption">Plastic robot parts</div>
+      </div>
+
+      <h2>Plastics Checklist</h2>
+      <ul class="checklist">
+        <li><label class="checklist-item"><input type="checkbox" /><span><strong>Chassis (the frame)</strong> – the body your robot sits on</span></label></li>
+        <li><label class="checklist-item"><input type="checkbox" /><span><strong>Top cover</strong> – cowling to cover the battery and sonar sensor</span></label></li>
+        <li><label class="checklist-item"><input type="checkbox" /><span><strong>Bottom cover</strong> – plate that holds the electronics in place</span></label></li>
+        <li><label class="checklist-item"><input type="checkbox" /><span><strong>2 Wheels</strong> – attach to the motors</span></label></li>
+        <li><label class="checklist-item"><input type="checkbox" /><span><strong>2 Caster balls</strong> – the little round nylon balls</span></label></li>
+      </ul>
+
+      <div class="photo-slot">
+        <img data-src="images/02-1-parts-layout.jpg" alt="Electronics laid out on a table" />
+        <div class="photo-caption">Electronics</div>
+      </div>
+
+      <h2>Electronics Checklist</h2>
+      <ul class="checklist">
+        <li><label class="checklist-item"><input type="checkbox" /><span><strong>2 motors with encoders</strong> – these spin the wheels</span></label></li>
+        <li><label class="checklist-item"><input type="checkbox" /><span><strong>2 motor wires</strong> – rainbow cables connect the motors to the controller</span></label></li>
+        <li><label class="checklist-item"><input type="checkbox" /><span><strong>Controller Board</strong> – the purple board, it's the robot's computer brain</span></label></li>
+        <li><label class="checklist-item"><input type="checkbox" /><span><strong>Ultrasonic Distance Sensor</strong> – sees how far objects are</span></label></li>
+        <li><label class="checklist-item"><input type="checkbox" /><span><strong>Battery</strong> – the robot's power source</span></label></li>
+      </ul>
+
+      <div class="callout callout-warning">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Missing a part?</strong>
+          <p>Raise your hand and ask your teacher before continuing. Don't try to build with missing pieces!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 3 ══ -->
+    <div class="slide" id="slide-3">
+      <h1>🦺 Safety First!</h1>
+      <p>Building robots is awesome, but we need to be safe about it. Follow these rules every time you work with your robot.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Be extra careful with the battery</h3>
+            <p>Be gentle with the wires, do not drop or damage the battery.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Handle the circuit board carefully</h3>
+            <p>The controller board has tiny electronic parts. Hold it by the edges and don't touch the metal parts on the bottom.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>Don't force anything</h3>
+            <p>Parts should fit together easily. If something doesn't fit, stop and ask for help — don't push or break it!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-success">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <strong>Ready to build?</strong>
+          <p>Once you've reviewed the safety rules, let's start putting the robot together!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 4 ══ -->
+    <div class="slide" id="slide-4">
+      <h1>Step 1: Connect the Wires &amp; Battery</h1>
+
+      <div class="photo-slot">
+        <img data-src="images/03-motor-wire-connect.svg" alt="Motor wires plugged into the Left and Right motor ports on the NanoXRP board" />
+        <div class="photo-caption">Connect the motor wires to the Left and Right motor ports on the NanoXRP board</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Connect the motor wires</h3>
+            <p>Grab the motor wires and the NanoXRP board. Connect the motor wires to the <strong>Left</strong> and <strong>Right</strong> motor ports. Make sure the connectors are facing the right way — plugging them in backwards can damage the pins!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="photo-slot">
+        <img data-src="images/04-battery-connect.svg" alt="Battery plugged into the NanoXRP board" />
+        <div class="photo-caption">Plug the battery connector into the NanoXRP board</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Plug in the battery</h3>
+            <p>Take the battery and plug it into the NanoXRP board.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-warning">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Check the connector direction!</strong>
+          <p>The motor wire connectors only go in one way. Look carefully before pushing — forcing them in backwards can bend or break the pins.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 5 ══ -->
+    <div class="slide" id="slide-5">
+      <h1>Step 2: Attach the Wheels &amp; Chassis</h1>
+
+      <div class="photo-slot">
+        <img data-src="images/05-wheel-press.svg" alt="Wheel being pressed onto motor shaft with nub facing the motor" />
+        <div class="photo-caption">Press the wheel onto the shaft — the nub faces the motor</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Press the wheels onto the motor shafts</h3>
+            <p>The wheel nub should face the motor. You may need to press hard — that's normal! <strong>Do not push on the small encoder magnet wheel</strong> on the back of the motor.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="photo-slot">
+        <img data-src="images/06-chassis-assemble.svg" alt="Chassis flipped over with caster balls and motors pressed in, encoder ports facing down" />
+        <div class="photo-caption">Flip the chassis over — encoder ports should face down</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Press the motors &amp; casters into the chassis</h3>
+            <p>Flip the chassis upside down. Press the caster balls and the motors into the chassis. Make sure the <strong>encoder ports are facing down</strong>, like in the image above.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 6 ══ -->
+    <div class="slide" id="slide-6">
+      <h1>Step 3: Route the Wires</h1>
+
+      <div class="photo-slot">
+        <img data-src="images/07-wire-routing.svg" alt="Motor wires guided through the rear wheel wells and battery through the middle of the robot" />
+        <div class="photo-caption">Route the motor wires through the rear wheel wells and the battery through the middle</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Guide the wires into place</h3>
+            <p>Flip the chassis upright. Guide the <strong>motor wires up through the rear wheel wells</strong>, and the <strong>battery through the middle</strong> of the robot. Check that no wires are pinched or caught between parts.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>No pinched wires!</strong>
+          <p>Gently tug each wire to make sure it moves freely. A pinched wire can cause the robot to behave oddly or stop working.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 7 ══ -->
+    <div class="slide" id="slide-7">
+      <h1>Step 4: Clip on the Bottom Plate</h1>
+
+      <div class="photo-slot">
+        <img data-src="images/08-bottom-plate.svg" alt="Bottom plate being clipped onto the NanoXRP board with line following sensors visible" />
+        <div class="photo-caption">Clip the bottom plate in — check the line following sensors for correct orientation</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Clip on the bottom plate</h3>
+            <p>Once the board is in place, clip it in with the bottom plate — it should snap into place. Look for the <strong>line following sensors</strong> to make sure the orientation is correct.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="photo-slot">
+        <img data-src="images/09-motor-plug.svg" alt="Motor wires being plugged into the motors" />
+        <div class="photo-caption">Plug the motor wires into the motors</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Plug in the motor wires</h3>
+            <p>Now that the bottom plate is clipped in, plug the motor wires into the motors.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 8 ══ -->
+    <div class="slide" id="slide-8">
+      <h1>Step 5: Sonar Sensor &amp; Battery Cover</h1>
+
+      <div class="photo-slot">
+        <img data-src="images/10-sonar-connect.svg" alt="Sonar sensor plugged into the NanoXRP board and slid into the chassis" />
+        <div class="photo-caption">Plug the sonar sensor into the NanoXRP board, then slide it into the chassis</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>Connect the sonar sensor</h3>
+            <p>Plug the sonar sensor into the NanoXRP board. Be gentle with the 4-pin Dupont connector on the board. Once plugged in, slide the sonar sensor into the chassis.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="photo-slot">
+        <img data-src="images/11-battery-cover.svg" alt="Battery cover clipped onto the top of the chassis and slid forward against the sonar sensor" />
+        <div class="photo-caption">Clip on the battery cover and slide it forward until it's snug against the sonar sensor</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>Attach the battery cover</h3>
+            <p>Clip the battery cover onto the top of the chassis and slide it forward so it is snug with the sonar sensor. <strong>Congratulations — your robot is fully assembled!</strong> 🎉</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-success">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <strong>Assembly complete!</strong>
+          <p>Great work! Your NanoXRP robot is built and ready to program. In the next lesson you'll connect it to your computer and write your first program!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 9 – QUIZ ══ -->
+    <div class="slide quiz-slide" id="slide-9">
+      <div class="quiz-header">
+        <span class="quiz-icon">🧠</span>
+        <h1>Quick Check!</h1>
+        <p>Answer these questions to complete Lesson 1. You need <strong>3 out of 4 correct</strong> to pass!</p>
+      </div>
+
+      <div id="quizForm">
+
+        <div class="quiz-question" id="q1">
+          <p>1. What should you do if a part doesn't seem to fit during assembly?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="1" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Push harder until you hear a click
+            </button>
+            <button class="quiz-option" data-q="1" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Swap it with a part from another kit
+            </button>
+            <button class="quiz-option" data-q="1" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Stop and ask your teacher for help — never force it
+            </button>
+            <button class="quiz-option" data-q="1" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Skip that step and come back to it later
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q2">
+          <p>2. What can happen if you plug a motor wire connector in backwards?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="2" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> The motor will just spin the wrong direction
+            </button>
+            <button class="quiz-option" data-q="2" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Nothing — connectors work either way
+            </button>
+            <button class="quiz-option" data-q="2" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> It can bend or break the pins on the board
+            </button>
+            <button class="quiz-option" data-q="2" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> The battery will drain faster
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q3">
+          <p>3. When pressing a wheel onto a motor shaft, which direction should the wheel nub face?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="3" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Away from the motor, toward the outside
+            </button>
+            <button class="quiz-option" data-q="3" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Toward the motor
+            </button>
+            <button class="quiz-option" data-q="3" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> It doesn't matter which way it faces
+            </button>
+            <button class="quiz-option" data-q="3" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Upward, toward the top of the chassis
+            </button>
+          </div>
+        </div>
+
+        <div class="quiz-question" id="q4">
+          <p>4. After clipping on the battery cover, what is the last thing you do to secure it?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-q="4" data-v="a" onclick="selectOption(this)">
+              <span class="option-letter">A</span> Flip the robot over and press down on the bottom plate
+            </button>
+            <button class="quiz-option" data-q="4" data-v="b" onclick="selectOption(this)">
+              <span class="option-letter">B</span> Plug in the USB cable to lock it in place
+            </button>
+            <button class="quiz-option" data-q="4" data-v="c" onclick="selectOption(this)">
+              <span class="option-letter">C</span> Slide it forward until it is snug against the sonar sensor
+            </button>
+            <button class="quiz-option" data-q="4" data-v="d" onclick="selectOption(this)">
+              <span class="option-letter">D</span> Tuck the motor wires underneath it
+            </button>
+          </div>
+        </div>
+
+        <button class="nav-btn nav-btn-forward" id="submitQuizBtn" onclick="submitQuiz()" style="margin-top:20px">
+          Submit Answers ✓
+        </button>
+      </div>
+
+      <div class="quiz-result" id="quizResult">
+        <h2 id="resultTitle"></h2>
+        <p id="resultMsg"></p>
+        <button class="nav-btn nav-btn-finish" id="finishBtn" onclick="finishLesson()" style="display:none">
+          Finish Lesson 1 🎉
+        </button>
+        <button class="nav-btn nav-btn-back" onclick="retryQuiz()" id="retryBtn" style="display:none">
+          Try Again
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /slides-area -->
+
+  <!-- Navigation bar -->
+  <nav class="lesson-nav-bar">
+    <button class="nav-btn nav-btn-back" id="prevBtn" onclick="prevSlide()" disabled>← Back</button>
+    <button class="nav-btn nav-btn-forward" id="nextBtn" onclick="nextSlide()">Next →</button>
+  </nav>
+
+</div><!-- /lesson-shell -->
+
+<script>
+  const LESSON_ID    = 'lesson1';
+  const TOTAL_SLIDES = 9;
+  const QUIZ_SLIDE   = 9;
+
+  // Correct answers
+  const ANSWERS = { 1:'c', 2:'c', 3:'b', 4:'c' };
+
+  let currentSlide = 1;
+  let userAnswers  = {};
+  let quizAnswered = false;
+
+  LessonRuntime.init(LESSON_ID);
+
+  function showSlide(n) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    document.getElementById('slide-' + n).classList.add('active');
+    currentSlide = n;
+
+    document.getElementById('slideCounter').textContent = n + ' of ' + TOTAL_SLIDES;
+    const pct = Math.round((n / TOTAL_SLIDES) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    document.getElementById('prevBtn').disabled = (n === 1);
+    document.getElementById('nextBtn').disabled = (n === QUIZ_SLIDE);
+    document.getElementById('nextBtn').textContent = (n === TOTAL_SLIDES - 1) ? 'Go to Quiz →' : 'Next →';
+
+    window.scrollTo(0, 0);
+  }
+
+  function nextSlide() {
+    if (currentSlide < QUIZ_SLIDE) showSlide(currentSlide + 1);
+  }
+
+  function prevSlide() {
+    if (currentSlide > 1) showSlide(currentSlide - 1);
+  }
+
+  function selectOption(btn) {
+    if (quizAnswered) return;
+    const q = btn.dataset.q;
+    // Deselect others in same question
+    document.querySelectorAll('.quiz-option[data-q="' + q + '"]')
+      .forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    userAnswers[q] = btn.dataset.v;
+  }
+
+  function submitQuiz() {
+    const numQ = Object.keys(ANSWERS).length;
+    if (Object.keys(userAnswers).length < numQ) {
+      alert('Please answer all ' + numQ + ' questions first!');
+      return;
+    }
+
+    quizAnswered = true;
+    let correct = 0;
+
+    Object.keys(ANSWERS).forEach(q => {
+      const rightAns = ANSWERS[q];
+      const userAns  = userAnswers[q];
+      document.querySelectorAll('.quiz-option[data-q="' + q + '"]').forEach(btn => {
+        btn.classList.add('answered');
+        if (btn.dataset.v === rightAns) btn.classList.add('correct');
+        else if (btn.dataset.v === userAns) btn.classList.add('wrong');
+      });
+      if (userAns === rightAns) correct++;
+    });
+
+    const score  = Math.round((correct / numQ) * 100);
+    const passed = score >= 75;
+
+    const result = document.getElementById('quizResult');
+    result.style.display = 'block';
+    result.className = 'quiz-result ' + (passed ? 'pass' : 'fail');
+
+    document.getElementById('submitQuizBtn').style.display = 'none';
+
+    if (passed) {
+      document.getElementById('resultTitle').textContent = '🎉 Great Job! ' + correct + '/' + numQ + ' Correct!';
+      document.getElementById('resultMsg').textContent =
+        'You scored ' + score + '%! You know how to build the NanoXRP robot!';
+      document.getElementById('finishBtn').style.display = 'inline-flex';
+      LessonRuntime.complete(score);
+    } else {
+      document.getElementById('resultTitle').textContent = '🤔 Almost! ' + correct + '/' + numQ + ' Correct';
+      document.getElementById('resultMsg').textContent =
+        'You got ' + score + '%. Go back and review the lesson, then try again!';
+      document.getElementById('retryBtn').style.display = 'inline-flex';
+    }
+  }
+
+  function retryQuiz() {
+    quizAnswered = false;
+    userAnswers  = {};
+    document.getElementById('quizResult').style.display = 'none';
+    document.getElementById('submitQuizBtn').style.display = 'inline-flex';
+    document.querySelectorAll('.quiz-option').forEach(b => {
+      b.className = 'quiz-option';
+    });
+  }
+
+  function finishLesson() {
+    document.getElementById('finishBtn').textContent = '✅ Lesson Complete!';
+    document.getElementById('finishBtn').disabled = true;
+  }
+
+  // Start on slide 1
+  showSlide(1);
+</script>
+</body>
+</html>

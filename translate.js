@@ -16,6 +16,7 @@ const path      = require('path');
 
 const ROOT        = __dirname;
 const LESSONS_DIR = path.join(ROOT, 'lessons');
+const SRC_DIR     = path.join(LESSONS_DIR, 'source');
 const LANG_FILE   = path.join(ROOT, 'languages.js');
 
 // Known languages: code → display label
@@ -70,12 +71,10 @@ function parseArgs() {
 
 // ── Find English source lesson folders ───────────────────
 function findSourceLessons(filter) {
-  return fs.readdirSync(LESSONS_DIR)
+  return fs.readdirSync(SRC_DIR)
     .filter(name => {
-      // Must match lessonN-name pattern but NOT have a lang suffix
-      if (!/^lesson\d+-.+/.test(name))           return false;
-      if (/^lesson\d+-.+-[a-z]{2,3}$/.test(name)) return false;
-      const full = path.join(LESSONS_DIR, name);
+      if (!/^lesson\d+-.+/.test(name)) return false;
+      const full = path.join(SRC_DIR, name);
       return fs.statSync(full).isDirectory() &&
              fs.existsSync(path.join(full, 'index.html'));
     })
@@ -84,7 +83,7 @@ function findSourceLessons(filter) {
       if (!filter) return true;
       return filter.some(f => name.toLowerCase().startsWith(f));
     })
-    .map(name => ({ name, dir: path.join(LESSONS_DIR, name) }));
+    .map(name => ({ name, dir: path.join(SRC_DIR, name) }));
 }
 
 // ── Claude translation call ───────────────────────────────
@@ -204,12 +203,11 @@ function copyDir(src, dst) {
 
 // ── Translate one lesson into one language ────────────────
 async function translateLesson(client, lesson, langCode, force) {
-  const outName = `${lesson.name}-${langCode}`;
-  const outDir  = path.join(LESSONS_DIR, outName);
+  const outDir  = path.join(LESSONS_DIR, 'translations', langCode, lesson.name);
   const outHtml = path.join(outDir, 'index.html');
 
   if (!force && fs.existsSync(outHtml)) {
-    console.log(`  ↷  ${outName}/ already exists — skipping (use --force to overwrite)`);
+    console.log(`  ↷  ${langCode}/${lesson.name}/ already exists — skipping (use --force to overwrite)`);
     return true;
   }
 
